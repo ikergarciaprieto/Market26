@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
+import javax.jws.WebMethod;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -78,9 +79,9 @@ public class DataAccess  {
 		try { 
 	       
 		    //Create sellers 
-			Seller seller1=new Seller("seller1@gmail.com","Aitor Fernandez");
-			Seller seller2=new Seller("seller22@gmail.com","Ane Gaztañaga");
-			Seller seller3=new Seller("seller3@gmail.com","Test Seller");
+			Seller seller1=new Seller("seller1@gmail.com","Aitor Fernandez","aurrera");
+			Seller seller2=new Seller("seller22@gmail.com","Ane Gaztañaga", "aurrera");
+			Seller seller3=new Seller("seller3@gmail.com","Test Seller", "aurrera");
 
 			
 			//Create products
@@ -256,6 +257,17 @@ public void open(){
 	public void close(){
 		db.close();
 		System.out.println("DataAcess closed");
+	}
+	
+	public Seller isUserLogin(String username, String password) {
+		TypedQuery<Seller> query = db.createQuery("SELECT s FROM Seller s WHERE s.name=?1 AND s.password=?2",Seller.class);   
+		query.setParameter(1, username);
+		query.setParameter(2, password);
+		if(!query.getResultList().isEmpty()) {
+			return query.getResultList().get(0);
+		}else {
+			return null;
+		}
 	}
 	
 }
