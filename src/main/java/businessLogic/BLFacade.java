@@ -67,6 +67,12 @@ public interface BLFacade  {
 	
 	@WebMethod public Seller isUserLogin(String username, String password);
 	
+	@WebMethod public boolean isCorrectEmail(String email);
+	
+	@WebMethod public boolean exist(String username);
+	
+	@WebMethod public void register(String username, String pass, String email);
+	
 
 	
 }

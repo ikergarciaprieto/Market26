@@ -114,6 +114,24 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.close();
 		return b;
     }
+    
+    @WebMethod public boolean isCorrectEmail(String email) {
+    //ez dago inplementatuta
+		return true;
+    }
+    
+    @WebMethod public boolean exist(String username) {
+    	dbManager.open();
+		boolean b = (dbManager.exist(username)!=null);
+		dbManager.close();
+		return b;
+        }
+    @WebMethod public void register(String username, String pass, String email) {
+    	dbManager.open();
+		dbManager.register(username, pass, email);
+		dbManager.close();
+		
+    }
 
     
 }
