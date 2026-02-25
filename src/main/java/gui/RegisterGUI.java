@@ -7,10 +7,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import businessLogic.BLFacade;
+import exceptions.UserAlreadyExistException;
 
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -22,6 +24,7 @@ public class RegisterGUI extends JFrame {
 	private JTextField emailaText;
 	private JTextField erabText;
 	private JPasswordField passText;
+	private JLabel errorText;
 
 	/**
 	 * Launch the application.
@@ -50,47 +53,67 @@ public class RegisterGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton registerButtom = new JButton("Register");
+		JButton registerButtom = new JButton(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.ButtonRegister"));
 		registerButtom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				errorText.setVisible(false);
 				BLFacade facade = MainGUI.getBusinessLogic();
-				if(facade.isCorrectEmail(emailaText.getText())){
-					if (!facade.exist(erabText.getText())) {
-						facade.register(erabText.getText(), passText.getPassword().toString(), emailaText.getText());
-					}else {
-						
+				try {
+					if(emailaText.getText().isBlank()||erabText.getText().isBlank()||passText.getPassword().toString().isBlank()) {
+						throw new NullPointerException();//testu hutsak daude
 					}
+					if(facade.isCorrectEmail(emailaText.getText())){
+						if (!facade.exist(emailaText.getText())) {//find EMAIL-a erabiltzen du !!!!!!
+							//dagoeneko username-akin beste pertsonak ez dira existitzen
+							facade.register(erabText.getText(), passText.getPassword().toString(), emailaText.getText());
+						}else {
+							throw new UserAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.UserAlreadyExistException"));
+						}
+					}
+				}catch(NullPointerException e) {
+					System.out.println("StringIsEmptyException");
+					errorText.setVisible(true);
+					errorText.setText(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.StringIsEmptyException"));
+				}catch(UserAlreadyExistException e) {
+					System.out.println("UserAlreadyExistException");
+					errorText.setVisible(true);
+					errorText.setText(e.getMessage());
 				}
 			}
 		});
-		registerButtom.setBounds(175, 206, 89, 23);
+		registerButtom.setBounds(134, 230, 161, 23);
 		contentPane.add(registerButtom);
 		
-		JLabel lblNewLabel = new JLabel("Emaila sartu");
-		lblNewLabel.setBounds(61, 38, 71, 14);
+		JLabel lblNewLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.Email"));
+		lblNewLabel.setBounds(92, 38, 183, 14);
 		contentPane.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("Pasahitza");
-		lblNewLabel_1.setBounds(61, 136, 46, 14);
+		JLabel lblNewLabel_1 = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.Password"));
+		lblNewLabel_1.setBounds(92, 136, 172, 14);
 		contentPane.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("Erabiltzailea");
-		lblNewLabel_2.setBounds(61, 84, 46, 14);
+		JLabel lblNewLabel_2 = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("RegisterGUI.Username"));
+		lblNewLabel_2.setBounds(92, 84, 183, 14);
 		contentPane.add(lblNewLabel_2);
 		
 		emailaText = new JTextField();
-		emailaText.setBounds(167, 35, 86, 20);
+		emailaText.setBounds(285, 36, 86, 20);
 		contentPane.add(emailaText);
 		emailaText.setColumns(10);
 		
 		erabText = new JTextField();
-		erabText.setBounds(167, 81, 86, 20);
+		erabText.setBounds(285, 82, 86, 20);
 		contentPane.add(erabText);
 		erabText.setColumns(10);
 		
 		passText = new JPasswordField();
-		passText.setBounds(175, 133, 104, 20);
+		passText.setBounds(285, 134, 120, 20);
 		contentPane.add(passText);
+		
+		errorText = new JLabel(); //$NON-NLS-1$ //$NON-NLS-2$
+		errorText.setBounds(23, 163, 382, 57);
+		errorText.setVisible(false);
+		contentPane.add(errorText);
 
 	}
 }

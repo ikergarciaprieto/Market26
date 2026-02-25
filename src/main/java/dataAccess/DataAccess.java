@@ -25,6 +25,7 @@ import domain.Sale;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.SaleAlreadyExistException;
+import exceptions.StringIsEmptyException;
 
 /**
  * It implements the data access to the objectDb database
@@ -269,21 +270,18 @@ public void open(){
 			return null;
 		}
 	}
-	public Seller exist(String username) {
-		Seller u = db.find(Seller.class,username);
+	public Seller exist(String email) {//find EMAIL behar du
+		Seller u = db.find(Seller.class,email);
 		return u;
 		
 	}
 	
 	public void register(String username, String pass, String email) {
-			db.getTransaction().begin();
-			
-
-			Seller u = new Seller(email,username, pass);
-
-			db.persist(u); 
-			db.getTransaction().commit();
-			System.out.println("seller created");
+		db.getTransaction().begin();
+		Seller u = new Seller(email,username, pass);
+		db.persist(u); 
+		db.getTransaction().commit();
+		System.out.println("seller created");
 
 	}
 	
