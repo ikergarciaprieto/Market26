@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -7,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import businessLogic.BLFacade;
-import exceptions.UserAlreadyExistException;
+import exceptions.UserAlreadyExistException; 
 
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -59,7 +60,7 @@ public class RegisterGUI extends JFrame {
 				errorText.setVisible(false);
 				BLFacade facade = MainGUI.getBusinessLogic();
 				try {
-					if(emailaText.getText().isBlank()||erabText.getText().isBlank()||passText.getPassword().toString().isBlank()) {
+					if(emailaText.getText().isEmpty()||erabText.getText().isEmpty()||passText.getPassword().toString().isEmpty()) {
 						throw new NullPointerException();//testu hutsak daude
 					}
 					if(facade.isCorrectEmail(emailaText.getText())){
@@ -111,6 +112,7 @@ public class RegisterGUI extends JFrame {
 		contentPane.add(passText);
 		
 		errorText = new JLabel(); //$NON-NLS-1$ //$NON-NLS-2$
+		errorText.setForeground(Color.RED);
 		errorText.setBounds(23, 163, 382, 57);
 		errorText.setVisible(false);
 		contentPane.add(errorText);
