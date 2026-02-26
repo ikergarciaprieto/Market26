@@ -66,7 +66,7 @@ public class RegisterGUI extends JFrame {
 					if(facade.isCorrectEmail(emailaText.getText())){
 						if (!facade.exist(emailaText.getText())) {//find EMAIL-a erabiltzen du !!!!!!
 							//dagoeneko username-akin beste pertsonak ez dira existitzen
-							facade.register(erabText.getText(), passText.getPassword().toString(), emailaText.getText());
+							facade.register(erabText.getText(), new String(passText.getPassword()), emailaText.getText());
 						}else {
 							throw new UserAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.UserAlreadyExistException"));
 						}
