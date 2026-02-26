@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -14,14 +15,16 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 import java.awt.event.ActionEvent;
 
 public class LoginGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textFieldLogin;
-	private JPasswordField passwordField;
+	private JTextField loginText;
+	private JPasswordField passText;
+	private JLabel errorText;
 
 	/**
 	 * Launch the application.
@@ -51,33 +54,49 @@ public class LoginGUI extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel LabelLogin = new JLabel("Login");
-		LabelLogin.setBounds(78, 29, 46, 14);
+		LabelLogin.setBounds(78, 34, 46, 14);
 		contentPane.add(LabelLogin);
 		
 		JLabel LabelPassword = new JLabel("Password");
-		LabelPassword.setBounds(78, 130, 46, 14);
+		LabelPassword.setBounds(78, 92, 46, 14);
 		contentPane.add(LabelPassword);
 		
-		textFieldLogin = new JTextField();
-		textFieldLogin.setBounds(232, 26, 86, 20);
-		contentPane.add(textFieldLogin);
-		textFieldLogin.setColumns(10);
+		loginText = new JTextField();
+		loginText.setBounds(232, 31, 86, 20);
+		contentPane.add(loginText);
+		loginText.setColumns(10);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(232, 127, 86, 20);
-		contentPane.add(passwordField);
+		passText = new JPasswordField();
+		passText.setBounds(232, 89, 86, 20);
+		contentPane.add(passText);
+		
+		errorText = new JLabel(); //$NON-NLS-1$ //$NON-NLS-2$
+		errorText.setForeground(Color.RED);
+		errorText.setBounds(27, 180, 382, 50);
+		errorText.setVisible(false);
+		contentPane.add(errorText);
 		
 		JButton btnLogin = new JButton("Login egin");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				BLFacade facade = MainGUI.getBusinessLogic();
-				Seller b = facade.isUserLogin(textFieldLogin.getText(), new String(passwordField.getPassword()));
+				try {
+				if(loginText.getText().isEmpty()||passText.getPassword().toString().isEmpty()) {
+					throw new NullPointerException();//testu hutsak daude
+				}
+				Seller b = facade.isUserLogin(loginText.getText(), new String(passText.getPassword()));
 				if(b!=null) {
 					new MainGUIErregistratu(null).setVisible(true);
 				}
+				}
+				catch(NullPointerException e) {
+					System.out.println("StringIsEmptyException");
+					errorText.setVisible(true);
+					errorText.setText(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.StringIsEmptyException"));
+			}
 			}
 		});
-		btnLogin.setBounds(166, 188, 89, 23);
+		btnLogin.setBounds(155, 146, 89, 23);
 		contentPane.add(btnLogin);
 
 	}
