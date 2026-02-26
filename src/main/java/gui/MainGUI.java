@@ -75,6 +75,7 @@ public class MainGUI extends JFrame {
 				Locale.setDefault(new Locale("eus"));
 				paintAgain();				}
 		});
+		rdbtnNewRadioButton_1.setSelected(true);
 		buttonGroup.add(rdbtnNewRadioButton_1);
 		
 		rdbtnNewRadioButton_2 = new JRadioButton("Castellano");
@@ -113,7 +114,7 @@ public class MainGUI extends JFrame {
 		jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QuerySales"));
 		jButtonQueryQueries.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				JFrame a = new QuerySalesGUI();
+				JFrame a = new QuerySalesGUI(null);
 
 				a.setVisible(true);
 			}

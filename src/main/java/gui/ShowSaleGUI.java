@@ -47,7 +47,7 @@ public class ShowSaleGUI extends JFrame {
 	private JLabel statusField=new JLabel();
 	private JFrame thisFrame;
 	
-	public ShowSaleGUI(Sale sale) { 
+	public ShowSaleGUI(Sale sale,String zuremail) { 
 		thisFrame=this; 
 		this.setVisible(true);
 		this.getContentPane().setLayout(null);
@@ -132,10 +132,16 @@ public class ShowSaleGUI extends JFrame {
 		statusField = new JLabel(Utils.getStatus(sale.getStatus())); 
 		statusField.setBounds(137, 191, 92, 16);
 		getContentPane().add(statusField);
+		jButtonBuy.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("ez dago implementatuta, zure mail:"+zuremail);
+			}
+		});
 		
 		
 		
 		jButtonBuy.setBounds(new Rectangle(16, 268, 114, 30));
+		jButtonBuy.setEnabled(zuremail!=null);
 		jButtonBuy.setBounds(161, 268, 114, 30);
 		getContentPane().add(jButtonBuy);
 		
@@ -149,9 +155,9 @@ public class ShowSaleGUI extends JFrame {
 				for(int i=0; i<user.getSales().size(); i++) {
 					salelist.add(user.getSales().get(i));
 				}
-				JFrame a=new ShowAccount(user.getName(), salelist);
+				JFrame a=new ShowAccount(user.getName(), salelist, zuremail);
 				a.setVisible(true);
-				
+
 			}
 		});
 		jButtonAccount.setBounds(449, 12, 105, 27);

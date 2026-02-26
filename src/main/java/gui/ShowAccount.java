@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.EventQueue;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -23,13 +24,16 @@ public class ShowAccount extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField userName;
     private JLabel LblUserName = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Username"));
     private JLabel lblSaleList = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("Salelist"));
     private JButton btnShowSale = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSale"));
     private JComboBox sales;
     private DefaultComboBoxModel saleList= new DefaultComboBoxModel();
     private Sale selectedSale;
+    private JFrame thisFrame;
+    private JButton jButtonClose;
+    private JButton closeButton;
+    private JLabel userName;
     
 	/**
 	 * Launch the application.
@@ -40,7 +44,8 @@ public class ShowAccount extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ShowAccount(String User,ArrayList<Sale>SaleList) {
+	public ShowAccount(String User,ArrayList<Sale>SaleList, String zuremail) {
+		thisFrame=this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -48,15 +53,9 @@ public class ShowAccount extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		userName = new JTextField();
-		userName.setBounds(139, 41, 114, 21);
-		contentPane.add(userName);
-		userName.setColumns(10);
-		userName.setText(User);
 		
 		
-		
-		LblUserName.setBounds(166, 12, 61, 17);
+		LblUserName.setBounds(98, 12, 129, 17);
 		contentPane.add(LblUserName);
 		
 		sales = new JComboBox();
@@ -66,11 +65,11 @@ public class ShowAccount extends JFrame {
 				if(selectedSale==null) {
 					btnShowSale.setEnabled(false);
 				}else {
-					btnShowSale.setEnabled(false);
+					btnShowSale.setEnabled(true);
 				}
 			}
 		});
-		sales.setBounds(139, 129, 114, 26);
+		sales.setBounds(83, 127, 213, 26);
 		contentPane.add(sales);
 		sales.setModel(saleList);
 		for(int i=0; i< SaleList.size(); i++) {
@@ -79,10 +78,8 @@ public class ShowAccount extends JFrame {
 		}
 		
 		
-		lblSaleList.setBounds(166, 100, 60, 17);
+		lblSaleList.setBounds(83, 100, 237, 17);
 		contentPane.add(lblSaleList);
-		
-		
 		
 		btnShowSale.setBounds(139, 207, 105, 27);
 		contentPane.add(btnShowSale);
@@ -90,11 +87,26 @@ public class ShowAccount extends JFrame {
 		JLabel lblWarn = new JLabel(""); //$NON-NLS-1$ //$NON-NLS-2$
 		lblWarn.setBounds(166, 179, 60, 17);
 		contentPane.add(lblWarn);
+		
+		closeButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close")); //$NON-NLS-1$ //$NON-NLS-2$
+		closeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				thisFrame.setVisible(false);
+			}
+		});
+		closeButton.setBounds(341, 232, 85, 21);
+		contentPane.add(closeButton);
+		
+		userName = new JLabel(User);
+		userName.setBounds(98, 56, 193, 13);
+		contentPane.add(userName);
+		
+		
 		btnShowSale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(selectedSale!=null) {
-				JFrame a=new ShowSaleGUI(selectedSale);
-				a.setVisible(true);
+					JFrame a=new ShowSaleGUI(selectedSale,zuremail);
+					a.setVisible(true);
 				}else {
 					lblWarn.setText(ResourceBundle.getBundle("Etiquetas").getString("Warning"));
 				}
