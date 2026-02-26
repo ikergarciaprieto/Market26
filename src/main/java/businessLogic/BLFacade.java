@@ -73,6 +73,8 @@ public interface BLFacade  {
 	
 	@WebMethod public void register(String username, String pass, String email);
 	
+	@WebMethod public Seller getUser(String umail);
+	
 
 	
 }

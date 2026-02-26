@@ -132,6 +132,12 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.close();
 		
     }
+    @WebMethod public Seller getUser(String email) {
+    	dbManager.open();
+    	Seller user=dbManager.exist(email);
+    	dbManager.close();
+    	return user;
+    }
 
     
 }

@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 
 import businessLogic.BLFacade;
 import domain.Sale;
+import domain.Seller;
 
 
 public class ShowSaleGUI extends JFrame {
@@ -73,7 +74,7 @@ public class ShowSaleGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				thisFrame.setVisible(false);			}
 		});
-
+		JButton btnShowSale = new JButton("Show Sale");
 		jLabelMsg.setBounds(new Rectangle(275, 214, 305, 20));
 		jLabelMsg.setForeground(Color.red);
 
@@ -132,9 +133,29 @@ public class ShowSaleGUI extends JFrame {
 		statusField.setBounds(137, 191, 92, 16);
 		getContentPane().add(statusField);
 		
+		
+		
 		jButtonBuy.setBounds(new Rectangle(16, 268, 114, 30));
 		jButtonBuy.setBounds(161, 268, 114, 30);
 		getContentPane().add(jButtonBuy);
+		
+		JButton jButtonAccount = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Account")); //$NON-NLS-1$ //$NON-NLS-2$
+		jButtonAccount.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				BLFacade facade = MainGUI.getBusinessLogic();
+				String umail= sale.getSeller().getEmail();
+				ArrayList<Sale>salelist=new ArrayList<Sale>();
+				Seller user=facade.getUser(umail);
+				for(int i=0; i<user.getSales().size(); i++) {
+					salelist.add(user.getSales().get(i));
+				}
+				JFrame a=new ShowAccount(user.getName(), salelist);
+				a.setVisible(true);
+				
+			}
+		});
+		jButtonAccount.setBounds(449, 12, 105, 27);
+		getContentPane().add(jButtonAccount);
 		setVisible(true);
 	}	 
 	public BufferedImage rescale(BufferedImage originalImage)

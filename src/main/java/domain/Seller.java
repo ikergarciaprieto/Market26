@@ -29,6 +29,7 @@ public class Seller implements Serializable {
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private List<Sale> sales=new ArrayList<Sale>();
 
+
 	public Seller() {
 		super();
 	}
@@ -55,7 +56,13 @@ public class Seller implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+	public ArrayList<Sale> getSales(){
+		ArrayList<Sale> sales2= new ArrayList<Sale>();
+		for(int i=0; i<sales.size(); i++) {
+			sales2.add(sales.get(i));
+		}
+		return sales2;
+	}
 
 	
 	
