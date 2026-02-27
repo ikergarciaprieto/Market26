@@ -285,6 +285,11 @@ public void open(){
 
 	}
 
+	public void buy(String selleremail, int sale,String buyermail){
+		//IMPLEMENTATU BEHAR DA
+		//ilhfsdjbnlkawekbdgvahbjsnedfbkhjghkjghsfvbkadeklñmfjhuligbkhd
+		//buy es complicado :I
+	}
 	
 	
 }

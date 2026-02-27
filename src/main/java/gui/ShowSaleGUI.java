@@ -72,7 +72,8 @@ public class ShowSaleGUI extends JFrame {
 		jButtonClose.setBounds(new Rectangle(16, 268, 114, 30));
 		jButtonClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				thisFrame.setVisible(false);			}
+				thisFrame.setVisible(false);
+			}
 		});
 		JButton btnShowSale = new JButton("Show Sale");
 		jLabelMsg.setBounds(new Rectangle(275, 214, 305, 20));
@@ -134,7 +135,10 @@ public class ShowSaleGUI extends JFrame {
 		getContentPane().add(statusField);
 		jButtonBuy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("ez dago implementatuta, zure mail:"+zuremail);
+				System.out.println("buy egingo da ,zure email,eta sale-a:"+zuremail+";"+sale.getTitle());
+				BLFacade facade = MainGUI.getBusinessLogic();
+				facade.buy(sale.getSeller().getEmail(),sale.getSaleNumber(),zuremail);
+				thisFrame.setVisible(false);//buy egin eta oraingo lehioa itxi
 			}
 		});
 		

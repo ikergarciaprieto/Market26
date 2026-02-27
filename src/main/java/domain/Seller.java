@@ -63,7 +63,6 @@ public class Seller implements Serializable {
 		}
 		return sales2;
 	}
-
 	
 	
 	public String toString(){
@@ -90,6 +89,7 @@ public class Seller implements Serializable {
         sales.add(sale);
         return sale;
 	}
+	
 	/**
 	 * This method checks if the ride already exists for that driver
 	 * 
