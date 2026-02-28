@@ -288,9 +288,8 @@ public void open(){
 
 	public void buy(String selleremail, int sale,String buyermail){
 		//IMPLEMENTATU BEHAR DA
-		//ilhfsdjbnlkawekbdgvahbjsnedfbkhjghkjghsfvbkadekl�mfjhuligbkhd
-		//buy es complicado :I
-		
+		//buy complicado :I
+
 		Seller buyer= exist(buyermail);
 		Seller seller= exist(selleremail);
 		Sale boughtsale=null;
@@ -298,19 +297,21 @@ public void open(){
 		for(int i=0; i<seller.getSales().size(); i++) {
 			if(sale==seller.getSales().get(i).getSaleNumber() ) {
 				boughtsale= seller.getSales().get(i);
-				
+				break;
 			}
 		}
-		if(boughtsale!=null) {
+		if(boughtsale!=null) {//gertatzen da ez dela sale-a kentzen saltzailearen Sales listatik
 			db.getTransaction().begin();
-		seller.getSales().remove(boughtsale);
-		buyer.addBought(boughtsale);
-		boughtsale.setBought(true);
-		db.getTransaction().commit();
-		
-	    
+			seller.getSales().remove(boughtsale);
+			buyer.addBought(boughtsale);
+			boughtsale.setBought(true);
+			db.getTransaction().commit();
+			System.out.println("sale aurkitu da");
+
+		}else {
+			System.out.println("sale ez da aurkitu");
 		}
-		}
-	
+	}
+
 	
 }
