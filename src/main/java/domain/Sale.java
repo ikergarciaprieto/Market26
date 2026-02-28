@@ -27,7 +27,7 @@ public class Sale implements Serializable {
 	private float price;
 	private Date pubDate;
 	private String fileName;
-	private Boolean bought;
+	private Boolean bought=false;
 	
 	private Seller seller;  
 	

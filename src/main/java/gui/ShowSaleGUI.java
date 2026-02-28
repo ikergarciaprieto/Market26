@@ -147,6 +147,9 @@ public class ShowSaleGUI extends JFrame {
 		
 		jButtonBuy.setBounds(new Rectangle(16, 268, 114, 30));
 		jButtonBuy.setEnabled(zuremail!=null);
+		if(sale.getBought()) {
+			jButtonBuy.setEnabled(false);
+		}
 		jButtonBuy.setBounds(161, 268, 114, 30);
 		getContentPane().add(jButtonBuy);
 		

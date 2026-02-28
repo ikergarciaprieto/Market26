@@ -207,9 +207,8 @@ public class DataAccess  {
 		
 		List<Sale> sales = query.getResultList();
 	 	 for (Sale sale:sales){
-	 		if(!sale.getBought()) {
+	 		
 		   res.add(sale);
-	 		}
 		  }
 	 	return res;
 	}
@@ -293,15 +292,20 @@ public void open(){
 		//buy es complicado :I
 		Seller buyer= exist(buyermail);
 		Seller seller= exist(selleremail);
-		Sale boughtsale;
+		Sale boughtsale=null;
 		//da error aqui, en el query
-		TypedQuery<Sale> query= db.createQuery("SELECT s FROM Sale WHERE s.saleNumber=?1", Sale.class);
-		
-		query.setParameter(1,sale);
-		if(!query.getResultList().isEmpty()) {
-		boughtsale= query.getResultList().get(0);
+		for(int i=0; i<seller.getSales().size(); i++) {
+			if(sale==seller.getSales().get(i).getSaleNumber() ) {
+				boughtsale= seller.getSales().get(i);
+				
+			}
+		}
+		if(boughtsale!=null) {
 		seller.getSales().remove(boughtsale);
 		buyer.addBought(boughtsale);
+	    db.persist(seller);
+	    db.persist(buyer);
+	    db.persist(boughtsale);
 		}
 		}
 	
