@@ -102,7 +102,7 @@ public class Seller implements Serializable {
 public void addBought(Sale boughtsale) {
 	
 		boughtsales.add(boughtsale);
-		boughtsale.setBought(true);
+		
 	}
 	
 	

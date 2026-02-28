@@ -290,6 +290,7 @@ public void open(){
 		//IMPLEMENTATU BEHAR DA
 		//ilhfsdjbnlkawekbdgvahbjsnedfbkhjghkjghsfvbkadekl�mfjhuligbkhd
 		//buy es complicado :I
+		
 		Seller buyer= exist(buyermail);
 		Seller seller= exist(selleremail);
 		Sale boughtsale=null;
@@ -301,11 +302,13 @@ public void open(){
 			}
 		}
 		if(boughtsale!=null) {
+			db.getTransaction().begin();
 		seller.getSales().remove(boughtsale);
 		buyer.addBought(boughtsale);
-	    db.persist(seller);
-	    db.persist(buyer);
-	    db.persist(boughtsale);
+		boughtsale.setBought(true);
+		db.getTransaction().commit();
+		
+	    
 		}
 		}
 	

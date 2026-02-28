@@ -117,6 +117,7 @@ public class BLFacadeImplementation  implements BLFacade {
     
     @WebMethod public boolean isCorrectEmail(String email) {
     //ez dago inplementatuta
+    	
 		return true;
     }
     

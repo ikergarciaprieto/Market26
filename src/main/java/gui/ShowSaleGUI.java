@@ -138,6 +138,7 @@ public class ShowSaleGUI extends JFrame {
 				System.out.println("buy egingo da ,zure email,eta sale-a:"+zuremail+";"+sale.getTitle());
 				BLFacade facade = MainGUI.getBusinessLogic();
 				facade.buy(sale.getSeller().getEmail(),sale.getSaleNumber(),zuremail);
+				sale.setBought(true);
 				thisFrame.setVisible(false);//buy egin eta oraingo lehioa itxi
 				
 			}
