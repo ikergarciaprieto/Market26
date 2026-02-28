@@ -207,7 +207,9 @@ public class DataAccess  {
 		
 		List<Sale> sales = query.getResultList();
 	 	 for (Sale sale:sales){
+	 		if(!sale.getBought()) {
 		   res.add(sale);
+	 		}
 		  }
 	 	return res;
 	}
@@ -287,9 +289,21 @@ public void open(){
 
 	public void buy(String selleremail, int sale,String buyermail){
 		//IMPLEMENTATU BEHAR DA
-		//ilhfsdjbnlkawekbdgvahbjsnedfbkhjghkjghsfvbkadeklñmfjhuligbkhd
+		//ilhfsdjbnlkawekbdgvahbjsnedfbkhjghkjghsfvbkadeklï¿½mfjhuligbkhd
 		//buy es complicado :I
-	}
+		Seller buyer= exist(buyermail);
+		Seller seller= exist(selleremail);
+		Sale boughtsale;
+		//da error aqui, en el query
+		TypedQuery<Sale> query= db.createQuery("SELECT s FROM Sale WHERE s.saleNumber=?1", Sale.class);
+		
+		query.setParameter(1,sale);
+		if(!query.getResultList().isEmpty()) {
+		boughtsale= query.getResultList().get(0);
+		seller.getSales().remove(boughtsale);
+		buyer.addBought(boughtsale);
+		}
+		}
 	
 	
 }

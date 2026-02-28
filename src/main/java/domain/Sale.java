@@ -27,6 +27,7 @@ public class Sale implements Serializable {
 	private float price;
 	private Date pubDate;
 	private String fileName;
+	private Boolean bought;
 	
 	private Seller seller;  
 	
@@ -57,7 +58,7 @@ public class Sale implements Serializable {
 				//System.out.println("Write error for " + outputfile.getPath()  ": " + ex.getMessage());
 		}
 		}
-
+		this.bought=false;
 		this.seller = seller;
 		
 	}
@@ -139,7 +140,7 @@ public class Sale implements Serializable {
 
 	/**
 	 * Set the status of the sale
-	 * 
+	 * public boolean getBought()
 	 * @param status to be set
 	 */	
 	public void setStatus(int status) {
@@ -156,6 +157,7 @@ public class Sale implements Serializable {
 	public float getPrice() {
 		return price;
 	}
+	
 
 	/**
 	 * Set the price of the sale
@@ -174,7 +176,7 @@ public class Sale implements Serializable {
 	 * @return the publication date  
 	 */
 	public Date getPublicationDate() {
-		return pubDate;
+		return pubDate;	
 	}
 	/**
 	 * Set the publication date  of the sale
@@ -211,6 +213,12 @@ public class Sale implements Serializable {
 	 */
 	public String getFile() {
 		return fileName;
+	}
+	public boolean getBought() {
+		return bought;
+	}
+	public void setBought(boolean status) {
+	this.bought= status;
 	}
 	
 	

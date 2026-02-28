@@ -28,6 +28,7 @@ public class Seller implements Serializable {
 	@XmlIDREF
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private List<Sale> sales=new ArrayList<Sale>();
+	private List<Sale> boughtsales= new ArrayList<Sale>();
 
 
 	public Seller() {
@@ -56,9 +57,16 @@ public class Seller implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public ArrayList<Sale> getSales(){
-		ArrayList<Sale> sales2= new ArrayList<Sale>();
+	public List<Sale> getSales(){
+		List<Sale> sales2= new ArrayList<Sale>();
 		for(int i=0; i<sales.size(); i++) {
+			sales2.add(sales.get(i));
+		}
+		return sales2;
+	}
+	public List<Sale> getBought(){
+		List<Sale> sales2= new ArrayList<Sale>();
+		for(int i=0; i<boughtsales.size(); i++) {
 			sales2.add(sales.get(i));
 		}
 		return sales2;
@@ -89,6 +97,15 @@ public class Seller implements Serializable {
         sales.add(sale);
         return sale;
 	}
+	
+	
+public void addBought(Sale boughtsale) {
+	
+		boughtsales.add(boughtsale);
+		boughtsale.setBought(true);
+	}
+	
+	
 	
 	/**
 	 * This method checks if the ride already exists for that driver

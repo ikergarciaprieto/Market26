@@ -3,6 +3,7 @@ package gui;
 import java.awt.EventQueue;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
@@ -44,7 +45,7 @@ public class ShowAccount extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ShowAccount(String User,ArrayList<Sale>SaleList, String zuremail) {
+	public ShowAccount(String User,List<Sale>SaleList, String zuremail) {
 		thisFrame=this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
