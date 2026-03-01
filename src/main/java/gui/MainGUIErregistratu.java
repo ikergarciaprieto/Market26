@@ -31,7 +31,7 @@ public class MainGUIErregistratu extends JFrame {
 	private JButton jButtonQueryQueries = null;
 
     private static BLFacade appFacadeInterface;
-	
+    
 	public static BLFacade getBusinessLogic(){
 		return appFacadeInterface;
 	}

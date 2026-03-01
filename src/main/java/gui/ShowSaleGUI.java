@@ -148,7 +148,7 @@ public class ShowSaleGUI extends JFrame {
 		
 		jButtonBuy.setBounds(new Rectangle(16, 268, 114, 30));
 		jButtonBuy.setEnabled(zuremail!=null);
-		if(sale.getBought()) {
+		if(sale.isBougth()) {
 			jButtonBuy.setEnabled(false);
 		}
 		jButtonBuy.setBounds(161, 268, 114, 30);
@@ -162,7 +162,9 @@ public class ShowSaleGUI extends JFrame {
 				ArrayList<Sale>salelist=new ArrayList<Sale>();
 				Seller user=facade.getUser(umail);
 				for(int i=0; i<user.getSales().size(); i++) {
-					salelist.add(user.getSales().get(i));
+					if(user.getSales().get(i).isBougth()==false) {
+						salelist.add(user.getSales().get(i));
+					}
 				}
 				JFrame a=new ShowAccount(user.getName(), salelist, zuremail);
 				a.setVisible(true);

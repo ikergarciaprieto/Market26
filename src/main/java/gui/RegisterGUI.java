@@ -26,7 +26,7 @@ public class RegisterGUI extends JFrame {
 	private JTextField erabText;
 	private JPasswordField passText;
 	private JLabel errorText;
-
+	private JFrame thisFrame;
 	/**
 	 * Launch the application.
 	 */
@@ -47,6 +47,7 @@ public class RegisterGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public RegisterGUI() {
+		thisFrame = this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -67,6 +68,8 @@ public class RegisterGUI extends JFrame {
 						if (!facade.exist(emailaText.getText())) {//find EMAIL-a erabiltzen du !!!!!!
 							//dagoeneko username-akin beste pertsonak ez dira existitzen
 							facade.register(erabText.getText(), new String(passText.getPassword()), emailaText.getText());
+							//thisFrame.setVisible(false);
+							
 						}else {
 							throw new UserAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.UserAlreadyExistException"));
 						}
@@ -116,6 +119,15 @@ public class RegisterGUI extends JFrame {
 		errorText.setBounds(23, 163, 382, 57);
 		errorText.setVisible(false);
 		contentPane.add(errorText);
+		
+		JButton exitButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close")); //$NON-NLS-1$ //$NON-NLS-2$
+		exitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				thisFrame.setVisible(false);
+			}
+		});
+		exitButton.setBounds(10, 231, 85, 21);
+		contentPane.add(exitButton);
 
 	}
 }

@@ -214,11 +214,11 @@ public class Sale implements Serializable {
 	public String getFile() {
 		return fileName;
 	}
-	public boolean getBought() {
+	public boolean isBougth() {
 		return bought;
 	}
 	public void setBought(boolean status) {
-	this.bought= status;
+		this.bought= status;
 	}
 	
 	
