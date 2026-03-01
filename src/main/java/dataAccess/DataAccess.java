@@ -26,6 +26,8 @@ import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.SaleAlreadyExistException;
 import exceptions.StringIsEmptyException;
+import exceptions.EmailIsNotCorrectException;
+
 
 /**
  * It implements the data access to the objectDb database

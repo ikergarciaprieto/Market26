@@ -74,6 +74,11 @@ public class RegisterGUI extends JFrame {
 							throw new UserAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.UserAlreadyExistException"));
 						}
 					}
+					else {
+						System.out.println("EmailIsNotCorrectException");
+						errorText.setVisible(true);
+						errorText.setText(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.EmailIsNotCorrectException"));	
+					}
 				}catch(NullPointerException e) {
 					System.out.println("StringIsEmptyException");
 					errorText.setVisible(true);

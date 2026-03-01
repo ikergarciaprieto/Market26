@@ -12,6 +12,7 @@ import domain.Seller;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.SaleAlreadyExistException;
+import exceptions.EmailIsNotCorrectException;
 
 import java.awt.image.BufferedImage;
 import java.awt.Image;
@@ -115,10 +116,13 @@ public class BLFacadeImplementation  implements BLFacade {
 		return b;
     }
     
-    @WebMethod public boolean isCorrectEmail(String email) {
-    //ez dago inplementatuta
-    	
-		return true;
+    @WebMethod public boolean isCorrectEmail(String email){
+    	if (email == null) {
+            return false;
+        }
+    
+    	return email.matches("^[^@\\s]+@[^@\\s]+\\.[A-Za-z]+$"); //ikusteko emailak @ aurretik eta atzetik zerbait duela eta hori eta gero . bat eta letrak daudela
+		
     }
     
     @WebMethod public boolean exist(String username) {
