@@ -25,6 +25,7 @@ public class Seller implements Serializable {
 	private String email;
 	private String name; 
 	private String password;
+	private float txartelDirua= 0;
 	@XmlIDREF
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private List<Sale> sales=new ArrayList<Sale>();
@@ -73,7 +74,9 @@ public class Seller implements Serializable {
 		}
 		return sales2;
 	}
-	
+	public float getDirua() {
+		return txartelDirua;
+	}
 	
 	public String toString(){
 		return email+";"+name+sales;
@@ -107,6 +110,10 @@ public void addBought(Sale boughtsale) {
 		boughtsales.add(boughtsale);
 		
 	}
+
+public void diruaSortu(float diruKop) {
+	txartelDirua=txartelDirua +diruKop;
+}
 	
 	
 	

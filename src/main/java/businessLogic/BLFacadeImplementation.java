@@ -148,6 +148,12 @@ public class BLFacadeImplementation  implements BLFacade {
     	dbManager.buy(selleremail, saleNumber, buyermail);
     	dbManager.close();
     }
+    @WebMethod public float getDirua(String mail) {
+    	dbManager.open();
+    	float dirua= dbManager.getDirua(mail);
+    	dbManager.close();
+    	return dirua;
+    }
     
 }
 

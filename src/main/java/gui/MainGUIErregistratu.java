@@ -43,6 +43,7 @@ public class MainGUIErregistratu extends JFrame {
 	private JRadioButton rdbtnNewRadioButton;
 	private JRadioButton rdbtnNewRadioButton_1;
 	private JRadioButton rdbtnNewRadioButton_2;
+	private JButton btnMov;
 	private JPanel panel;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
@@ -56,6 +57,7 @@ public class MainGUIErregistratu extends JFrame {
 		
 		this.setSize(495, 290);
 		jLabelSelectOption = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.SelectOption"));
+		jLabelSelectOption.setBounds(0, 0, 485, 64);
 		jLabelSelectOption.setFont(new Font("Tahoma", Font.BOLD, 13));
 		jLabelSelectOption.setForeground(Color.BLACK);
 		jLabelSelectOption.setHorizontalAlignment(SwingConstants.CENTER);
@@ -86,11 +88,13 @@ public class MainGUIErregistratu extends JFrame {
 		buttonGroup.add(rdbtnNewRadioButton_2);
 	
 		panel = new JPanel();
+		panel.setBounds(0, 192, 485, 64);
 		panel.add(rdbtnNewRadioButton_1);
 		panel.add(rdbtnNewRadioButton_2);
 		panel.add(rdbtnNewRadioButton);
 		
 		jButtonCreateQuery = new JButton();
+		jButtonCreateQuery.setBounds(0, 64, 485, 64);
 		jButtonCreateQuery.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.CreateSale"));
 		jButtonCreateQuery.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -100,6 +104,7 @@ public class MainGUIErregistratu extends JFrame {
 		});
 		
 		jButtonQueryQueries = new JButton();
+		jButtonQueryQueries.setBounds(0, 128, 485, 64);
 		jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QuerySales"));
 		jButtonQueryQueries.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -110,7 +115,7 @@ public class MainGUIErregistratu extends JFrame {
 		});
 		
 		jContentPane = new JPanel();
-		jContentPane.setLayout(new GridLayout(4, 1, 0, 0));
+		jContentPane.setLayout(null);
 		jContentPane.add(jLabelSelectOption);
 		jContentPane.add(jButtonCreateQuery);
 		jContentPane.add(jButtonQueryQueries);
@@ -118,6 +123,19 @@ public class MainGUIErregistratu extends JFrame {
 		
 		
 		setContentPane(jContentPane);
+		
+		btnMov = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Mov")); //$NON-NLS-1$ //$NON-NLS-2$
+		btnMov.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				BLFacade facade= MainGUI.getBusinessLogic();;
+				float dirua=facade.getDirua(mail) ;
+				
+				JFrame a = new MugimenduakIkusiGUI(dirua, mail);
+				a.setVisible(true);
+			}
+		});
+		btnMov.setBounds(368, 19, 105, 27);
+		jContentPane.add(btnMov);
 		setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.MainTitle") +": "+sellerMail);
 		
 		addWindowListener(new WindowAdapter() {
@@ -134,6 +152,5 @@ public class MainGUIErregistratu extends JFrame {
 		jButtonCreateQuery.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.CreateSale"));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.MainTitle")+ ": "+sellerMail);
 	}
-	
 } // @jve:decl-index=0:visual-constraint="0,0"
 

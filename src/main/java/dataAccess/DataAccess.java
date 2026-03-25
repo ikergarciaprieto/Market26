@@ -301,6 +301,10 @@ public void open(){
 		}
 		db.getTransaction().commit();
 	}
+	public float getDirua(String mail) {
+		Seller u = db.find(Seller.class,mail);
+		return u.getDirua();
+	}
 
 	
 }

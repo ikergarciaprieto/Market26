@@ -76,6 +76,9 @@ public interface BLFacade  {
 	@WebMethod public Seller getUser(String umail);
 	
 	@WebMethod public void buy(String selleremail, int sale,String buyermail);
+
+
+	@WebMethod public float getDirua(String mail);
 	
 	
 	
