@@ -143,9 +143,9 @@ public class BLFacadeImplementation  implements BLFacade {
     	dbManager.close();
     	return user;
     }
-    @WebMethod public void buy(String selleremail, int sale,String buyermail) {
+    @WebMethod public void buy(String selleremail, int saleNumber,String buyermail) {
     	dbManager.open();
-    	dbManager.buy(selleremail, sale, buyermail);
+    	dbManager.buy(selleremail, saleNumber, buyermail);
     	dbManager.close();
     }
     

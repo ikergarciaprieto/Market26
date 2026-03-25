@@ -288,31 +288,18 @@ public void open(){
 
 	}
 
-	public void buy(String selleremail, int sale,String buyermail){
-		//IMPLEMENTATU BEHAR DA
-		//buy complicado :I
-
-		Seller buyer= exist(buyermail);
-		Seller seller= exist(selleremail);
-		Sale boughtsale=null;
-		//da error aqui, en el query
-		for(int i=0; i<seller.getSales().size(); i++) {
-			if(sale==seller.getSales().get(i).getSaleNumber() ) {
-				boughtsale= seller.getSales().get(i);
-				break;
-			}
-		}
+	public void buy(String selleremail, int saleNumber,String buyermail){
+		db.getTransaction().begin();
+		Seller buyer= db.find(Seller.class,buyermail);
+		Sale boughtsale=db.find(Sale.class,saleNumber);
+		
 		if(boughtsale!=null) {//gertatzen da ez dela sale-a kentzen saltzailearen Sales listatik
-			db.getTransaction().begin();
-			seller.getSales().remove(boughtsale);
 			buyer.addBought(boughtsale);
-			boughtsale.setBought(true);
-			db.getTransaction().commit();
 			System.out.println("sale aurkitu da");
-
 		}else {
 			System.out.println("sale ez da aurkitu");
 		}
+		db.getTransaction().commit();
 	}
 
 	
