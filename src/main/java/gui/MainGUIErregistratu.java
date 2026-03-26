@@ -8,12 +8,15 @@ package gui;
 import javax.swing.*;
 
 import businessLogic.BLFacade;
+import domain.Mugimendua;
+import domain.Seller;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -121,20 +124,23 @@ public class MainGUIErregistratu extends JFrame {
 		jContentPane.add(jButtonQueryQueries);
 		jContentPane.add(panel);
 		
-		
 		setContentPane(jContentPane);
 		
-		btnMov = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Mov")); //$NON-NLS-1$ //$NON-NLS-2$
+		
+		btnMov = new JButton();
+		btnMov.setBounds(343, 19, 130, 27);
+		btnMov.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Mov"));
 		btnMov.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				BLFacade facade= MainGUI.getBusinessLogic();;
-				float dirua=facade.getDirua(mail) ;
+				BLFacade facade= MainGUI.getBusinessLogic();
+				Seller seller = facade.getUser(mail);
+				double dirua = seller.getDiruTotala();
+				List<Mugimendua> mugimenduList = seller.getMugimenduak();
 				
-				JFrame a = new MugimenduakIkusiGUI(dirua, mail);
+				JFrame a = new MugimenduakIkusiGUI(dirua, mail, mugimenduList);
 				a.setVisible(true);
 			}
 		});
-		btnMov.setBounds(368, 19, 105, 27);
 		jContentPane.add(btnMov);
 		setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.MainTitle") +": "+sellerMail);
 		
@@ -144,12 +150,15 @@ public class MainGUIErregistratu extends JFrame {
 				System.exit(1);
 			}
 		});
+		
+		
 	}
 	
 	private void paintAgain() {
 		jLabelSelectOption.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.SelectOption"));
 		jButtonQueryQueries.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.QuerySales"));
 		jButtonCreateQuery.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.CreateSale"));
+		btnMov.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Mov"));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.MainTitle")+ ": "+sellerMail);
 	}
 } // @jve:decl-index=0:visual-constraint="0,0"

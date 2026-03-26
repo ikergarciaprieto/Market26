@@ -94,6 +94,8 @@ public class DataAccess  {
 			seller1.addSale("futbol baloia", "oso polita, gutxi erabilita", 2, 10,  today, null);
 			seller1.addSale("salomon mendiko botak", "44 zenbakia, 3 ateraldi",2,  20,  today, null);
 			seller1.addSale("samsung 42\" telebista", "berria, erabili gabe", 1, 175,  today, null);
+			seller1.addMugimendua(today, "ur botila", -10.00);
+			seller1.addMugimendua(today, "Betaurrekoak", +200.00);
 
 
 			seller2.addSale("imac 27", "7 urte, dena ondo dabil", 1, 200,today, null);
@@ -301,9 +303,9 @@ public void open(){
 		}
 		db.getTransaction().commit();
 	}
-	public float getDirua(String mail) {
+	public double getDiruTotala(String mail) {
 		Seller u = db.find(Seller.class,mail);
-		return u.getDirua();
+		return u.getDiruTotala();
 	}
 
 	

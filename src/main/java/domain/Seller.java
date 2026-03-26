@@ -25,13 +25,16 @@ public class Seller implements Serializable {
 	private String email;
 	private String name; 
 	private String password;
-	private float txartelDirua= 0;
+	private double diruTotala = 0;
 	@XmlIDREF
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private List<Sale> sales=new ArrayList<Sale>();
 	@XmlIDREF
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private List<Sale> boughtsales= new ArrayList<Sale>();
+	@XmlIDREF
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+	private List<Mugimendua> mugimenduList= new ArrayList<Mugimendua>();
 
 
 	public Seller() {
@@ -74,8 +77,8 @@ public class Seller implements Serializable {
 		}
 		return sales2;
 	}
-	public float getDirua() {
-		return txartelDirua;
+	public double getDiruTotala() {
+		return diruTotala;
 	}
 	
 	public String toString(){
@@ -103,6 +106,10 @@ public class Seller implements Serializable {
         return sale;
 	}
 	
+	public List<Mugimendua> getMugimenduak(){
+		return mugimenduList;
+	}
+	
 	
 public void addBought(Sale boughtsale) {
 	
@@ -111,8 +118,8 @@ public void addBought(Sale boughtsale) {
 		
 	}
 
-public void diruaSortu(float diruKop) {
-	txartelDirua=txartelDirua +diruKop;
+public void diruaSortu(double diruKop) {
+	diruTotala = diruTotala + diruKop;
 }
 	
 	
@@ -144,6 +151,12 @@ public void diruaSortu(float diruKop) {
 		if (email != other.email)
 			return false;
 		return true;
+	}
+	
+	public Mugimendua addMugimendua(Date data, String deskripzioa, Double dirua)  {
+		Mugimendua mov =new Mugimendua(data, deskripzioa, dirua);
+        mugimenduList.add(mov);
+        return mov;
 	}
 
 	
