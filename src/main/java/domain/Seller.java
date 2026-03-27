@@ -118,11 +118,18 @@ public void addBought(Sale boughtsale) {
 		
 	}
 
-public void diruaSortu(double diruKop) {
+public void diruaSartu(double diruKop, Date data) {
 	diruTotala = diruTotala + diruKop;
+	addMugimendua(data, "Dirua sartu da kontuan" + mugimenduList.size(), diruKop);
+    
 }
 	
+	public void diruaAtera(double diruKop, Date data) {
 	
+		diruTotala = diruTotala - diruKop;
+		addMugimendua(data, "Dirua kendu da kontutik"+ mugimenduList.size(), diruKop);
+		
+	}
 	
 	/**
 	 * This method checks if the ride already exists for that driver
@@ -158,6 +165,7 @@ public void diruaSortu(double diruKop) {
         mugimenduList.add(mov);
         return mov;
 	}
+	
 
 	
 }

@@ -21,6 +21,7 @@ import javax.persistence.TypedQuery;
 import configuration.ConfigXML;
 import configuration.UtilDate;
 import domain.Seller;
+import domain.Mugimendua;
 import domain.Sale;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
@@ -307,6 +308,24 @@ public void open(){
 		Seller u = db.find(Seller.class,mail);
 		return u.getDiruTotala();
 	}
-
+  public void diruaSartu(String mail, double dirua) {
+	  Seller u = db.find(Seller.class,mail);
+	  db.getTransaction().begin();
+	  Date today = UtilDate.trim(new Date());
+	 u.diruaSartu(dirua, today);
+	  db.getTransaction().commit();
+	  
+	  }
+  
+  
+  public void diruaAtera(String mail, double dirua) {
+	  Seller u= db.find(Seller.class,mail);
+	  db.getTransaction().begin();
+	  Date today = UtilDate.trim(new Date());
+	  u.diruaAtera(dirua, today);
+	  db.getTransaction().commit();
+	  
+	  
+  }
 	
 }

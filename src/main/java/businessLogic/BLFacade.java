@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import domain.Mugimendua;
 import domain.Sale;
 import domain.Seller;
 import exceptions.FileNotUploadedException;
@@ -79,6 +80,11 @@ public interface BLFacade  {
 
 
 	@WebMethod public double getDiruTotala(String mail);
+	
+	@WebMethod public void diruaSartu(String mail, double dirua);
+	
+	@WebMethod public void diruaAtera(String mail, double dirua);
+	
 	
 	
 	

@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import businessLogic.BLFacade;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -38,7 +41,6 @@ public class MugimenduakIkusiGUI extends JFrame {
 	private JLabel diruaString;
 	private JLabel diruTotala;
 	
-
 	/**
 	 * Launch the application.
 	 */
@@ -46,7 +48,10 @@ public class MugimenduakIkusiGUI extends JFrame {
 	
 
 	/**
-	 * Create the frame.
+	 * Create the frame.gErrorLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MugimenduakIkusiGUI.lblNewLabel.text")); //$NON-NLS-1$ //$NON-NLS-2$
+		gErrorLabel.setBounds(520, 246, 60, 17);
+		contentPane.add(gErrorLabel);
+		
 	 */
 	public MugimenduakIkusiGUI(double dirua, String sellerMail, List<Mugimendua> mugimenduakList ) {
 		this.dirua = dirua;
@@ -61,13 +66,57 @@ public class MugimenduakIkusiGUI extends JFrame {
 		contentPane.setLayout(null);
 		
 		btnAteraDirua = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MugimenduakIkusiGUI.getMoney"));
+		btnAteraDirua.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					BLFacade facade = MainGUI.getBusinessLogic();
+					double ateraDirua=Double.parseDouble(AdiruKantitatea.getText());
+					if(ateraDirua>0 && ateraDirua<Double.parseDouble(diruTotala.getText())) {
+						facade.diruaAtera(sellerMail, ateraDirua);
+						Seller kontua = facade.getUser(sellerMail);
+						diruTotala.setText(""+ kontua.getDiruTotala());
+						List<Mugimendua> mugList= kontua.getMugimenduak();
+						
+							movModel.addRow(new Object[] {
+									mugList.get(mugList.size()-1).getDeskripzioa(),
+									mugList.get(mugList.size()-1).getDirua(),
+									new SimpleDateFormat("dd-MM-yyyy").format(mugList.get(mugList.size()-1).getData())
+									
+							});
+						
+					}
+					
+				}catch(NumberFormatException exception){
+			}
+			}});
+		
 		btnAteraDirua.setBounds(483, 60, 143, 46);
 		contentPane.add(btnAteraDirua);
 		
 		btnGordeDirua = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MugimenduakIkusiGUI.setMoney"));
 		btnGordeDirua.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				try {
+					BLFacade facade = MainGUI.getBusinessLogic();
+					double gordeDirua=Double.parseDouble(gDiruKant.getText());
+					if(gordeDirua>0) {
+					facade.diruaSartu(sellerMail, gordeDirua);
+					Seller kontua = facade.getUser(sellerMail);
+					diruTotala.setText(""+ kontua.getDiruTotala());
+					
+					List<Mugimendua> mugList= kontua.getMugimenduak();
+					
+					
+				movModel.addRow(new Object[] {
+					mugList.get(mugList.size()-1).getDeskripzioa(),
+						mugList.get(mugList.size()-1).getDirua(),
+						new SimpleDateFormat("dd-MM-yyyy").format(mugList.get(mugList.size()-1).getData())});
+								
 				
+					
+					 }}catch(NumberFormatException exception) {
+					
+				}
 			}
 		});
 		btnGordeDirua.setBounds(483, 188, 143, 46);
@@ -114,6 +163,10 @@ public class MugimenduakIkusiGUI extends JFrame {
 		diruTotala = new JLabel(Double.toString(dirua)); //$NON-NLS-1$ //$NON-NLS-2$
 		diruTotala.setBounds(260, 50, 69, 14);
 		contentPane.add(diruTotala);
+		
+	
+		
+	
 		
 		//labelStatus.setText(new SimpleDateFormat("dd-MM-yyyy").format(sale.getPublicationDate()));
 

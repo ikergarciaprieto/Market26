@@ -7,6 +7,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 
 import dataAccess.DataAccess;
+import domain.Mugimendua;
 import domain.Sale;
 import domain.Seller;
 import exceptions.FileNotUploadedException;
@@ -153,6 +154,18 @@ public class BLFacadeImplementation  implements BLFacade {
     	double dirua= dbManager.getDiruTotala(mail);
     	dbManager.close();
     	return dirua;
+    }
+    @WebMethod public void diruaSartu(String mail, double dirua) {
+    	dbManager.open();
+    	dbManager.diruaSartu(mail, dirua);
+    	dbManager.close();
+    
+    }
+    @WebMethod public void diruaAtera(String mail, double dirua) {
+    	dbManager.open();
+    	dbManager.diruaAtera(mail,dirua);
+    	dbManager.close();
+    	
     }
     
 }
