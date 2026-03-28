@@ -312,7 +312,7 @@ public void open(){
 	  Seller u = db.find(Seller.class,mail);
 	  db.getTransaction().begin();
 	  Date today = UtilDate.trim(new Date());
-	 u.diruaSartu(dirua, today);
+	  u.diruaSartu(dirua, today);
 	  db.getTransaction().commit();
 	  
 	  }

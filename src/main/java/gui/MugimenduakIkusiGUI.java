@@ -70,7 +70,7 @@ public class MugimenduakIkusiGUI extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					BLFacade facade = MainGUI.getBusinessLogic();
-					double ateraDirua=Double.parseDouble(AdiruKantitatea.getText());
+					double ateraDirua = Double.parseDouble(AdiruKantitatea.getText());
 					if(ateraDirua>0 && ateraDirua<Double.parseDouble(diruTotala.getText())) {
 						facade.diruaAtera(sellerMail, ateraDirua);
 						Seller kontua = facade.getUser(sellerMail);
@@ -98,11 +98,11 @@ public class MugimenduakIkusiGUI extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					BLFacade facade = MainGUI.getBusinessLogic();
-					double gordeDirua=Double.parseDouble(gDiruKant.getText());
+					double gordeDirua = Double.parseDouble(gDiruKant.getText());
 					if(gordeDirua>0) {
-					facade.diruaSartu(sellerMail, gordeDirua);
-					Seller kontua = facade.getUser(sellerMail);
-					diruTotala.setText(""+ kontua.getDiruTotala());
+						facade.diruaSartu(sellerMail, gordeDirua);
+						Seller kontua = facade.getUser(sellerMail);
+						diruTotala.setText(""+ kontua.getDiruTotala());
 					
 					List<Mugimendua> mugList= kontua.getMugimenduak();
 					
@@ -133,7 +133,7 @@ public class MugimenduakIkusiGUI extends JFrame {
 		AdiruKantitatea.setColumns(10);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(31, 75, 417, 175);
+		scrollPane.setBounds(22, 75, 435, 175);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -145,7 +145,7 @@ public class MugimenduakIkusiGUI extends JFrame {
 			movModel.addRow(new Object[] {
 					m.getDeskripzioa(),
 					m.getDirua(),
-					new SimpleDateFormat("dd-MM-yyyy").format(m.getData())
+					new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(m.getData())
 					
 			});
 		}

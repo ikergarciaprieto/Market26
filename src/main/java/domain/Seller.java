@@ -120,14 +120,14 @@ public void addBought(Sale boughtsale) {
 
 public void diruaSartu(double diruKop, Date data) {
 	diruTotala = diruTotala + diruKop;
-	addMugimendua(data, "Dirua sartu da kontuan" + mugimenduList.size(), diruKop);
+	addMugimendua(data, "Dirua sartu da kontuan", diruKop);
     
 }
 	
 	public void diruaAtera(double diruKop, Date data) {
 	
 		diruTotala = diruTotala - diruKop;
-		addMugimendua(data, "Dirua kendu da kontutik"+ mugimenduList.size(), diruKop);
+		addMugimendua(data, "Dirua kendu da kontutik", -diruKop);
 		
 	}
 	
@@ -161,7 +161,7 @@ public void diruaSartu(double diruKop, Date data) {
 	}
 	
 	public Mugimendua addMugimendua(Date data, String deskripzioa, Double dirua)  {
-		Mugimendua mov =new Mugimendua(data, deskripzioa, dirua);
+		Mugimendua mov = new Mugimendua(data, deskripzioa, dirua);
         mugimenduList.add(mov);
         return mov;
 	}
