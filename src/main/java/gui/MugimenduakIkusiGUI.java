@@ -2,6 +2,8 @@ package gui;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Rectangle;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -47,6 +49,9 @@ public class MugimenduakIkusiGUI extends JFrame {
 	private JLabel errorText1;
 	private JLabel errorText2;
 	private JLabel errorText3;
+	private JLabel errorText4;
+	private JLabel errorText5;
+	private JFrame thisFrame;
 
 	/**
 	 * Launch the application.
@@ -61,12 +66,13 @@ public class MugimenduakIkusiGUI extends JFrame {
 
 	 */
 	public MugimenduakIkusiGUI(double dirua, String sellerMail, List<Mugimendua> mugimenduakList ) {
+		thisFrame=this;
 		this.dirua = dirua;
 		this.sellerMail = sellerMail;
 		this.mugimenduakList = mugimenduakList;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 652, 300);
+		setBounds(100, 100, 670, 359);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -92,11 +98,34 @@ public class MugimenduakIkusiGUI extends JFrame {
 						});
 
 					}
+					if (ateraDirua <= 0) {
+						throw new MoneyIsNegativeException();
+					}
+
+					if (ateraDirua > Double.parseDouble(diruTotala.getText())) {
+					    throw new IllegalStateException();
+					}
 
 				}catch(NumberFormatException exception){
 					System.out.println("NumberFormatException");
+					errorText4.setVisible(false);
+					errorText5.setVisible(false);
 					errorText1.setVisible(true);
 					errorText1.setText(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.NumberFormatException"));
+				}
+				catch(MoneyIsNegativeException exception) {
+					System.out.println("MoneyIsNegativeException");
+					errorText1.setVisible(false);
+					errorText5.setVisible(false);
+					errorText4.setVisible(true);
+					errorText4.setText(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.MoneyIsNegativeException"));
+				}
+				catch(IllegalStateException exception) {
+					System.out.println("IllegalStateException");
+					errorText1.setVisible(false);
+					errorText4.setVisible(false);
+					errorText5.setVisible(true);
+					errorText5.setText(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.IllegalStateException"));
 				}
 			}});
 
@@ -159,7 +188,7 @@ public class MugimenduakIkusiGUI extends JFrame {
 		AdiruKantitatea.setColumns(10);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(37, 75, 420, 175);
+		scrollPane.setBounds(37, 75, 420, 234);
 		contentPane.add(scrollPane);
 
 		table = new JTable();
@@ -204,6 +233,29 @@ public class MugimenduakIkusiGUI extends JFrame {
 		errorText3.setForeground(Color.RED);
 		errorText3.setBounds(467, 247, 169, 14);
 		contentPane.add(errorText3);
+		
+		errorText4 = new JLabel(); //$NON-NLS-1$ //$NON-NLS-2$
+		errorText4.setForeground(Color.RED);
+		errorText4.setBounds(467, 117, 169, 14);
+		contentPane.add(errorText4);
+		
+		errorText5 = new JLabel(); //$NON-NLS-1$ //$NON-NLS-2$
+		errorText5.setForeground(Color.RED);
+		errorText5.setBounds(467, 117, 187, 14);
+		contentPane.add(errorText5);
+		
+		JButton itxiBt = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close")); //$NON-NLS-1$ //$NON-NLS-2$
+		itxiBt.setBounds(483, 272, 143, 37);
+		itxiBt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				thisFrame.setVisible(false);			}
+		});
+		contentPane.add(itxiBt);
+		
+		JLabel MugimenduakLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Mov")); //$NON-NLS-1$ //$NON-NLS-2$
+		MugimenduakLabel.setBounds(186, 11, 143, 28);
+		MugimenduakLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		contentPane.add(MugimenduakLabel);
 
 
 
