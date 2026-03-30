@@ -166,6 +166,10 @@ public void diruaSartu(double diruKop, Date data) {
         return mov;
 	}
 	
+	public void removeSale(float price) {
+		diruTotala = diruTotala + price;
+	}
+	
 
 	
 }

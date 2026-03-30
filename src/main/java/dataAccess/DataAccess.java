@@ -36,7 +36,7 @@ import exceptions.EmailIsNotCorrectException;
 public class DataAccess  {
 	private  EntityManager  db;
 	private  EntityManagerFactory emf;
-    private static final int baseSize = 160;
+	private static final int baseSize = 160;
 
 	private static final String basePath="src/main/resources/images/";
 
@@ -44,7 +44,7 @@ public class DataAccess  {
 
 	ConfigXML c=ConfigXML.getInstance();
 
-     public DataAccess()  {
+	public DataAccess()  {
 		if (c.isDatabaseInitialized()) {
 			String fileName=c.getDbFilename();
 
@@ -53,9 +53,9 @@ public class DataAccess  {
 				File fileToDeleteTemp= new File(fileName+"$");
 				fileToDeleteTemp.delete();
 				System.out.println("File deleted");
-			 } else {
-				 System.out.println("Operation failed");
-				}
+			} else {
+				System.out.println("Operation failed");
+			}
 		}
 		open();
 		if  (c.isDatabaseInitialized()) 
@@ -65,33 +65,33 @@ public class DataAccess  {
 		close();
 
 	}
-     
-    public DataAccess(EntityManager db) {
-    	this.db=db;
-    }
 
-	
-	
+	public DataAccess(EntityManager db) {
+		this.db=db;
+	}
+
+
+
 	/**
 	 * This method  initializes the database with some products and sellers.
 	 * This method is invoked by the business logic (constructor of BLFacadeImplementation) when the option "initialize" is declared in the tag dataBaseOpenMode of resources/config.xml file
 	 */	
 	public void initializeDB(){
-		
+
 		db.getTransaction().begin();
 
 		try { 
-	       
-		    //Create sellers 
+
+			//Create sellers 
 			Seller seller1=new Seller("seller1@gmail.com","Aitor Fernandez","aurrera");
 			Seller seller2=new Seller("seller22@gmail.com","Ane Gaztañaga", "aurrera");
 			Seller seller3=new Seller("seller3@gmail.com","Test Seller", "aurrera");
 
-			
+
 			//Create products
 			Date today = UtilDate.trim(new Date());
-		
-			
+
+
 			seller1.addSale("futbol baloia", "oso polita, gutxi erabilita", 2, 10,  today, null);
 			seller1.addSale("salomon mendiko botak", "44 zenbakia, 3 ateraldi",2,  20,  today, null);
 			seller1.addSale("samsung 42\" telebista", "berria, erabili gabe", 1, 175,  today, null);
@@ -106,12 +106,12 @@ public class DataAccess  {
 
 			seller3.addSale("sukaldeko mahaia", "1.8*0.8, 4 aulkiekin. Prezio finkoa", 3,45, today, null);
 
-			
+
 			db.persist(seller1);
 			db.persist(seller2);
 			db.persist(seller3);
 
-	
+
 			db.getTransaction().commit();
 			System.out.println("Db initialized");
 		}
@@ -119,8 +119,8 @@ public class DataAccess  {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	/**
 	 * This method creates/adds a product to a seller
 	 * 
@@ -131,14 +131,14 @@ public class DataAccess  {
 	 * @param category of a product
 	 * @param publicationDate
 	 * @return Product
- 	 * @throws SaleAlreadyExistException if the same product already exists for the seller
+	 * @throws SaleAlreadyExistException if the same product already exists for the seller
 	 */
 	public Sale createSale(String title, String description, int status, float price,  Date pubDate, String sellerEmail, File file) throws  FileNotUploadedException, MustBeLaterThanTodayException, SaleAlreadyExistException {
-		
+
 
 		System.out.println(">> DataAccess: createProduct=> title= "+title+" seller="+sellerEmail);
 		try {
-		
+
 
 			if(pubDate.before(UtilDate.trim(new Date()))) {
 				throw new MustBeLaterThanTodayException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.ErrorSaleMustBeLaterThanToday"));
@@ -147,7 +147,7 @@ public class DataAccess  {
 				throw new FileNotUploadedException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.ErrorFileNotUploadedException"));
 
 			db.getTransaction().begin();
-			
+
 			Seller seller = db.find(Seller.class, sellerEmail);
 			if (seller.doesSaleExist(title)) {
 				db.getTransaction().commit();
@@ -159,23 +159,23 @@ public class DataAccess  {
 
 			db.persist(seller); 
 			db.getTransaction().commit();
-			 System.out.println("sale stored "+sale+ " "+seller);
+			System.out.println("sale stored "+sale+ " "+seller);
 
-			
 
-			   System.out.println("hasta aqui");
+
+			System.out.println("hasta aqui");
 
 			return sale;
 		} catch (NullPointerException e) {
-			   e.printStackTrace();
+			e.printStackTrace();
 			// TODO Auto-generated catch block
 			db.getTransaction().commit();
 			return null;
 		}
-		
-		
+
+
 	}
-	
+
 	/**
 	 * This method retrieves all the products that contain a desc text in a title
 	 * 
@@ -188,14 +188,14 @@ public class DataAccess  {
 		List<Sale> res = new ArrayList<Sale>();	
 		TypedQuery<Sale> query = db.createQuery("SELECT s FROM Sale s WHERE s.title LIKE ?1",Sale.class);   
 		query.setParameter(1, "%"+desc+"%");
-		
+
 		List<Sale> sales = query.getResultList();
-	 	 for (Sale sale:sales){
-		   res.add(sale);
-		  }
-	 	return res;
+		for (Sale sale:sales){
+			res.add(sale);
+		}
+		return res;
 	}
-	
+
 	/**
 	 * This method retrieves the products that contain a desc text in a title and the publicationDate today or before
 	 * 
@@ -209,63 +209,63 @@ public class DataAccess  {
 		TypedQuery<Sale> query = db.createQuery("SELECT s FROM Sale s WHERE s.title LIKE ?1 AND s.pubDate <=?2 AND s.bought=false",Sale.class);   
 		query.setParameter(1, "%"+desc+"%");
 		query.setParameter(2,pubDate);
-		
+
 		List<Sale> sales = query.getResultList();
-	 	 for (Sale sale:sales){
-	 		
-		   res.add(sale);
-		  }
-	 	return res;
+		for (Sale sale:sales){
+
+			res.add(sale);
+		}
+		return res;
 	}
 
-public void open(){
-		
+	public void open(){
+
 		String fileName=c.getDbFilename();
 		if (c.isDatabaseLocal()) {
 			emf = Persistence.createEntityManagerFactory("objectdb:"+fileName);
 			db = emf.createEntityManager();
 		} else {
 			Map<String, String> properties = new HashMap<String, String>();
-			  properties.put("javax.persistence.jdbc.user", c.getUser());
-			  properties.put("javax.persistence.jdbc.password", c.getPassword());
+			properties.put("javax.persistence.jdbc.user", c.getUser());
+			properties.put("javax.persistence.jdbc.password", c.getPassword());
 
-			  emf = Persistence.createEntityManagerFactory("objectdb://"+c.getDatabaseNode()+":"+c.getDatabasePort()+"/"+fileName, properties);
-			  db = emf.createEntityManager();
-    	   }
+			emf = Persistence.createEntityManagerFactory("objectdb://"+c.getDatabaseNode()+":"+c.getDatabasePort()+"/"+fileName, properties);
+			db = emf.createEntityManager();
+		}
 		System.out.println("DataAccess opened => isDatabaseLocal: "+c.isDatabaseLocal());
 
-		
+
 	}
 
 	public BufferedImage getFile(String fileName) {
 		File file=new File(basePath+fileName);
 		BufferedImage targetImg=null;
 		try {
-             targetImg = rescale(ImageIO.read(file));
-        } catch (IOException ex) {
-            //Logger.getLogger(MainAppFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+			targetImg = rescale(ImageIO.read(file));
+		} catch (IOException ex) {
+			//Logger.getLogger(MainAppFrame.class.getName()).log(Level.SEVERE, null, ex);
+		}
 		return targetImg;
 
 	}
-	
+
 	public BufferedImage rescale(BufferedImage originalImage)
-    {
+	{
 		System.out.println("rescale "+originalImage);
-        BufferedImage resizedImage = new BufferedImage(baseSize, baseSize, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = resizedImage.createGraphics();
-        g.drawImage(originalImage, 0, 0, baseSize, baseSize, null);
-        g.dispose();
-        return resizedImage;
-    }
-	
-	
-	
+		BufferedImage resizedImage = new BufferedImage(baseSize, baseSize, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g = resizedImage.createGraphics();
+		g.drawImage(originalImage, 0, 0, baseSize, baseSize, null);
+		g.dispose();
+		return resizedImage;
+	}
+
+
+
 	public void close(){
 		db.close();
 		System.out.println("DataAcess closed");
 	}
-	
+
 	public Seller isUserLogin(String username, String password) {
 		TypedQuery<Seller> query = db.createQuery("SELECT s FROM Seller s WHERE s.name=?1 AND s.password=?2",Seller.class);   
 		query.setParameter(1, username);
@@ -279,9 +279,9 @@ public void open(){
 	public Seller exist(String email) {//find EMAIL behar du
 		Seller u = db.find(Seller.class,email);
 		return u;
-		
+
 	}
-	
+
 	public void register(String username, String pass, String email) {
 		db.getTransaction().begin();
 		Seller u = new Seller(email,username, pass);
@@ -295,10 +295,14 @@ public void open(){
 		db.getTransaction().begin();
 		Seller buyer= db.find(Seller.class,buyermail);
 		Sale boughtsale=db.find(Sale.class,saleNumber);
-		
+		Seller seller= db.find(Seller.class,selleremail);
+
 		if(boughtsale!=null) {//gertatzen da ez dela sale-a kentzen saltzailearen Sales listatik
-			buyer.addBought(boughtsale);
-			System.out.println("sale aurkitu da");
+			if(boughtsale.getPrice() <= buyer.getDiruTotala() && !buyer.equals(seller)) {
+				buyer.addBought(boughtsale);
+				seller.removeSale(boughtsale.getPrice());
+				System.out.println("sale aurkitu da");
+			}
 		}else {
 			System.out.println("sale ez da aurkitu");
 		}
@@ -308,24 +312,24 @@ public void open(){
 		Seller u = db.find(Seller.class,mail);
 		return u.getDiruTotala();
 	}
-  public void diruaSartu(String mail, double dirua) {
-	  Seller u = db.find(Seller.class,mail);
-	  db.getTransaction().begin();
-	  Date today = UtilDate.trim(new Date());
-	  u.diruaSartu(dirua, today);
-	  db.getTransaction().commit();
-	  
-	  }
-  
-  
-  public void diruaAtera(String mail, double dirua) {
-	  Seller u= db.find(Seller.class,mail);
-	  db.getTransaction().begin();
-	  Date today = UtilDate.trim(new Date());
-	  u.diruaAtera(dirua, today);
-	  db.getTransaction().commit();
-	  
-	  
-  }
-	
+	public void diruaSartu(String mail, double dirua) {
+		Seller u = db.find(Seller.class,mail);
+		db.getTransaction().begin();
+		Date today = UtilDate.trim(new Date());
+		u.diruaSartu(dirua, today);
+		db.getTransaction().commit();
+
+	}
+
+
+	public void diruaAtera(String mail, double dirua) {
+		Seller u= db.find(Seller.class,mail);
+		db.getTransaction().begin();
+		Date today = UtilDate.trim(new Date());
+		u.diruaAtera(dirua, today);
+		db.getTransaction().commit();
+
+
+	}
+
 }
