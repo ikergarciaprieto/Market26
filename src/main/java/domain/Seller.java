@@ -111,10 +111,13 @@ public class Seller implements Serializable {
 	}
 	
 	
-public void addBought(Sale boughtsale) {
+public void addBought(Sale boughtsale, Date data) {
 	
 		boughtsale.setBought(true);
 		boughtsales.add(boughtsale);
+		diruTotala = diruTotala - boughtsale.getPrice();
+		double prezioa = boughtsale.getPrice();
+		addMugimendua(data, boughtsale.getTitle(), -prezioa);
 		
 	}
 
@@ -166,9 +169,12 @@ public void diruaSartu(double diruKop, Date data) {
         return mov;
 	}
 	
-	public void removeSale(float price) {
-		diruTotala = diruTotala + price;
-	}
+	public void removeSale(Sale boughtsale, Date data) {
+		diruTotala = diruTotala + boughtsale.getPrice();
+		double prezioa = boughtsale.getPrice();
+		addMugimendua(data, boughtsale.getTitle(), prezioa);
+		sales.remove(boughtsale);
+	}	
 	
 
 	

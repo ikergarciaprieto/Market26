@@ -297,12 +297,11 @@ public class DataAccess  {
 		Sale boughtsale=db.find(Sale.class,saleNumber);
 		Seller seller= db.find(Seller.class,selleremail);
 
-		if(boughtsale!=null) {//gertatzen da ez dela sale-a kentzen saltzailearen Sales listatik
-			if(boughtsale.getPrice() <= buyer.getDiruTotala() && !buyer.equals(seller)) {
-				buyer.addBought(boughtsale);
-				seller.removeSale(boughtsale.getPrice());
-				System.out.println("sale aurkitu da");
-			}
+		if(boughtsale!=null) {//gertatzen da ez dela sale-a kentzen saltzailearen Sales listatik 
+			Date today = UtilDate.trim(new Date());
+			buyer.addBought(boughtsale, today);
+			seller.removeSale(boughtsale,today);
+			System.out.println("Erosi da");
 		}else {
 			System.out.println("sale ez da aurkitu");
 		}

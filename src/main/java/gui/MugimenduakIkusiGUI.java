@@ -30,6 +30,7 @@ import domain.Mugimendua;
 import javax.swing.JLabel;
 
 import exceptions.MoneyIsNegativeException;
+import exceptions.NotEnoughMoneyException;
 
 public class MugimenduakIkusiGUI extends JFrame {
 
@@ -103,7 +104,7 @@ public class MugimenduakIkusiGUI extends JFrame {
 					}
 
 					if (ateraDirua > Double.parseDouble(diruTotala.getText())) {
-					    throw new IllegalStateException();
+					    throw new NotEnoughMoneyException();
 					}
 
 				}catch(NumberFormatException exception){
@@ -120,12 +121,12 @@ public class MugimenduakIkusiGUI extends JFrame {
 					errorText4.setVisible(true);
 					errorText4.setText(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.MoneyIsNegativeException"));
 				}
-				catch(IllegalStateException exception) {
-					System.out.println("IllegalStateException");
+				catch(NotEnoughMoneyException exception) {
+					System.out.println("NotEnoughMoneyException");
 					errorText1.setVisible(false);
 					errorText4.setVisible(false);
 					errorText5.setVisible(true);
-					errorText5.setText(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.IllegalStateException"));
+					errorText5.setText(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.NotEnoughMoneyException"));
 				}
 			}});
 

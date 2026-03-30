@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import businessLogic.BLFacade;
 import domain.Sale;
 import domain.Seller;
+import exceptions.NotEnoughMoneyException;
 
 
 public class ShowSaleGUI extends JFrame {
@@ -46,6 +47,9 @@ public class ShowSaleGUI extends JFrame {
 	private JLabel jLabelError = new JLabel();
 	private JLabel statusField=new JLabel();
 	private JFrame thisFrame;
+	private JLabel errorText;
+	private JLabel diruaString;
+	private JLabel diruTotala;
 	
 	public ShowSaleGUI(Sale sale,String zuremail) { 
 		thisFrame=this; 
@@ -135,10 +139,22 @@ public class ShowSaleGUI extends JFrame {
 		getContentPane().add(statusField);
 		jButtonBuy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
 				System.out.println("buy egingo da ,zure email,eta sale-a:"+zuremail+";"+sale.getTitle());
 				BLFacade facade = MainGUI.getBusinessLogic();
-				facade.buy(sale.getSeller().getEmail(),sale.getSaleNumber(),zuremail);
-				thisFrame.setVisible(false);//buy egin eta oraingo lehioa itxi
+				if(sale.getPrice() <= facade.getUser(zuremail).getDiruTotala()) {
+					facade.buy(sale.getSeller().getEmail(),sale.getSaleNumber(),zuremail);
+					thisFrame.setVisible(false);//buy egin eta oraingo lehioa itxi
+				}
+				else {
+					throw new NotEnoughMoneyException();
+				}
+				}
+				catch(NotEnoughMoneyException exception){
+					System.out.println("NotEnoughMoneyException");
+					errorText.setVisible(true);
+					errorText.setText(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.NotEnoughMoneyException"));
+				}
 				
 			}
 		});
@@ -147,7 +163,7 @@ public class ShowSaleGUI extends JFrame {
 		
 		jButtonBuy.setBounds(new Rectangle(16, 268, 114, 30));
 		jButtonBuy.setEnabled(zuremail!=null);
-		if(sale.isBougth()) {
+		if(sale.isBougth() || sale.getSeller().getEmail().equals(zuremail)) {
 			jButtonBuy.setEnabled(false);
 		}
 		jButtonBuy.setBounds(161, 268, 114, 30);
@@ -172,7 +188,21 @@ public class ShowSaleGUI extends JFrame {
 		});
 		jButtonAccount.setBounds(449, 12, 105, 27);
 		getContentPane().add(jButtonAccount);
-		setVisible(true);
+		
+		errorText = new JLabel();
+		errorText.setBounds(107, 309, 206, 14);
+		errorText.setForeground(Color.RED);
+		errorText.setVisible(false);
+		getContentPane().add(errorText);
+		
+		diruaString= new JLabel(ResourceBundle.getBundle("Etiquetas").getString("MugimenduakIkusiGUI.diruaString")); //$NON-NLS-1$ //$NON-NLS-2$
+		diruaString.setBounds(195, 18, 96, 14);
+		getContentPane().add(diruaString);
+		
+		diruTotala = new JLabel(Double.toString(facade.getDiruTotala(zuremail))); //$NON-NLS-1$ //$NON-NLS-2$
+		diruTotala.setBounds(301, 18, 69, 14);
+		getContentPane().add(diruTotala);
+		
 	}	 
 	public BufferedImage rescale(BufferedImage originalImage)
     {
