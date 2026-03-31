@@ -85,9 +85,9 @@ public class MugimenduakIkusiGUI extends JFrame {
 				try {
 					BLFacade facade = MainGUI.getBusinessLogic();
 					double ateraDirua = Double.parseDouble(AdiruKantitatea.getText());
+					facade.diruaAtera(sellerMail, ateraDirua);
+					Seller kontua = facade.getUser(sellerMail);
 					if(ateraDirua>0 && ateraDirua<=Double.parseDouble(diruTotala.getText())) {
-						facade.diruaAtera(sellerMail, ateraDirua);
-						Seller kontua = facade.getUser(sellerMail);
 						diruTotala.setText(""+ kontua.getDiruTotala());
 						List<Mugimendua> mugList= kontua.getMugimenduak();
 
@@ -99,11 +99,11 @@ public class MugimenduakIkusiGUI extends JFrame {
 						});
 
 					}
-					if (ateraDirua <= 0) {
+					else if (ateraDirua <= 0) {
 						throw new MoneyIsNegativeException();
 					}
 
-					if (ateraDirua > Double.parseDouble(diruTotala.getText())) {
+					else if (ateraDirua > kontua.getDiruTotala()) {
 					    throw new NotEnoughMoneyException();
 					}
 
