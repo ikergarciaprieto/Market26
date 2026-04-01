@@ -7,6 +7,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 
 import dataAccess.DataAccess;
+import domain.Admin;
 import domain.Mugimendua;
 import domain.Sale;
 import domain.Seller;
@@ -166,6 +167,12 @@ public class BLFacadeImplementation  implements BLFacade {
     	dbManager.diruaAtera(mail,dirua);
     	dbManager.close();
     	
+    }
+    @WebMethod public Admin isAdminLogin(String username, String password) {
+    	dbManager.open();
+		Admin  b=dbManager.isAdminLogin(username, password);
+		dbManager.close();
+		return b;
     }
     
 }

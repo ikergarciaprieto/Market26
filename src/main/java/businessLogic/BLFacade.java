@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import domain.Admin;
 import domain.Mugimendua;
 import domain.Sale;
 import domain.Seller;
@@ -84,6 +85,8 @@ public interface BLFacade  {
 	@WebMethod public void diruaSartu(String mail, double dirua);
 	
 	@WebMethod public void diruaAtera(String mail, double dirua);
+	
+	@WebMethod public Admin isAdminLogin(String nan, String password);
 	
 	
 	

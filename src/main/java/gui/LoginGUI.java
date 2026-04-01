@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import businessLogic.BLFacade;
+import domain.Admin;
 import domain.Seller;
 import exceptions.UserOrPasswordIsWrongException;
 
@@ -18,6 +19,9 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 import java.awt.event.ActionEvent;
+import javax.swing.JCheckBox;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class LoginGUI extends JFrame {
 
@@ -26,6 +30,7 @@ public class LoginGUI extends JFrame {
 	private JTextField loginText;
 	private JPasswordField passText;
 	private JLabel errorText;
+	private JCheckBox adminCheckBox;
 
 	/**
 	 * Launch the application.
@@ -80,18 +85,34 @@ public class LoginGUI extends JFrame {
 		JButton btnLogin = new JButton(ResourceBundle.getBundle("Etiquetas").getString("LoginGUI.LoginButton"));
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+
 				errorText.setVisible(false);
 				BLFacade facade = MainGUI.getBusinessLogic();
 				try {
 					if(loginText.getText().isEmpty()||passText.getPassword().toString().isEmpty()) {
 						throw new NullPointerException();//testu hutsak daude
 					}
-					Seller b = facade.isUserLogin(loginText.getText(), new String(passText.getPassword()));
-					if(b!=null) {
-						new MainGUIErregistratu(b.getEmail()).setVisible(true);
-					}else {
-						//ez da aurkitu databasean beraz zerbait gaizki dago
-						throw new UserOrPasswordIsWrongException();
+					
+					if(!adminCheckBox.isSelected()) {//USER MODUA
+						
+						Seller b = facade.isUserLogin(loginText.getText(), new String(passText.getPassword()));
+						if(b!=null) {
+							new MainGUIErregistratu(b.getEmail()).setVisible(true);
+						}else {
+							//ez da aurkitu databasean beraz zerbait gaizki dago
+							throw new UserOrPasswordIsWrongException();
+						}
+						
+					}else {//ADMIN MODUA
+						Admin b = facade.isAdminLogin(loginText.getText(), new String(passText.getPassword()));
+						if(b!=null) {
+							new MainGUIAdmin(b.getNAN()).setVisible(true);
+						}else {
+							//ez da aurkitu databasean beraz zerbait gaizki dago
+							throw new UserOrPasswordIsWrongException();
+						}
+						
+						
 					}
 				}
 				catch(NullPointerException e) {
@@ -107,6 +128,19 @@ public class LoginGUI extends JFrame {
 		});
 		btnLogin.setBounds(155, 146, 139, 23);
 		contentPane.add(btnLogin);
+		
+		adminCheckBox = new JCheckBox("Admin"); //$NON-NLS-1$ //$NON-NLS-2$
+		adminCheckBox.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				if(adminCheckBox.isEnabled()) {//ADMIN MIDUA
+					//JARRI USER ETA PASAHITZA
+				}else {//USER MODUA
+					//JARRI NAN ETA PASAHIYZA
+				}
+			}
+		});
+		adminCheckBox.setBounds(312, 231, 55, 23);
+		contentPane.add(adminCheckBox);
 
 	}
 }

@@ -21,6 +21,7 @@ import javax.persistence.TypedQuery;
 import configuration.ConfigXML;
 import configuration.UtilDate;
 import domain.Seller;
+import domain.Admin;
 import domain.Mugimendua;
 import domain.Sale;
 import exceptions.FileNotUploadedException;
@@ -110,7 +111,9 @@ public class DataAccess  {
 			db.persist(seller1);
 			db.persist(seller2);
 			db.persist(seller3);
-
+			
+			Admin admin1 = new Admin("123456789a","Pako","aurrera");
+			db.persist(admin1);
 
 			db.getTransaction().commit();
 			System.out.println("Db initialized");
@@ -329,6 +332,16 @@ public class DataAccess  {
 		db.getTransaction().commit();
 
 
+	}
+	public Admin isAdminLogin(String nan, String password) {
+		TypedQuery<Admin> query = db.createQuery("SELECT s FROM Admin s WHERE s.NAN=?1 AND s.pasahitza=?2",Admin.class);   
+		query.setParameter(1, nan);
+		query.setParameter(2, password);
+		if(!query.getResultList().isEmpty()) {
+			return query.getResultList().get(0);
+		}else {
+			return null;
+		}
 	}
 
 }
