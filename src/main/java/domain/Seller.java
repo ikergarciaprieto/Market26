@@ -35,6 +35,13 @@ public class Seller implements Serializable {
 	@XmlIDREF
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private List<Mugimendua> mugimenduList= new ArrayList<Mugimendua>();
+	
+	@XmlIDREF
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+	private List<Erreklamazioa> jarritakoErreklamazioak= new ArrayList<Erreklamazioa>();
+	@XmlIDREF
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+	private List<Erreklamazioa> jasotakoErreklamazioak= new ArrayList<Erreklamazioa>();
 
 
 	public Seller() {
@@ -83,6 +90,21 @@ public class Seller implements Serializable {
 	
 	public String toString(){
 		return email+";"+name+sales;
+	}
+	public List<Erreklamazioa> getJarritakoErreklamazioak() {
+		return jarritakoErreklamazioak;
+	}
+
+	public void setJarritakoErreklamazioak(List<Erreklamazioa> jarritakoErreklamazioak) {
+		this.jarritakoErreklamazioak = jarritakoErreklamazioak;
+	}
+
+	public List<Erreklamazioa> getJasotakoErreklamazioak() {
+		return jasotakoErreklamazioak;
+	}
+
+	public void setJasotakoErreklamazioak(List<Erreklamazioa> jasotakoErreklamazioak) {
+		this.jasotakoErreklamazioak = jasotakoErreklamazioak;
 	}
 	
 	/**

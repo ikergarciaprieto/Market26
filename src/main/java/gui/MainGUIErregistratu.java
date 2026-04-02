@@ -49,6 +49,7 @@ public class MainGUIErregistratu extends JFrame {
 	private JButton btnMov;
 	private JPanel panel;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JButton btnMugimenduak;
 	
 	/**
 	 * This is the default constructor
@@ -142,6 +143,17 @@ public class MainGUIErregistratu extends JFrame {
 			}
 		});
 		jContentPane.add(btnMov);
+		
+		btnMugimenduak = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Erreklamazioak")); //$NON-NLS-1$ //$NON-NLS-2$
+		btnMugimenduak.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame a = new ErreklamazioakKudeatuGUI(mail);
+				a.setVisible(true);
+			}
+		});
+		btnMugimenduak.setBounds(10, 23, 135, 21);
+		jContentPane.add(btnMugimenduak);
+		
 		setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.MainTitle") +": "+sellerMail);
 		
 		addWindowListener(new WindowAdapter() {
@@ -160,6 +172,8 @@ public class MainGUIErregistratu extends JFrame {
 		jButtonCreateQuery.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.CreateSale"));
 		btnMov.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Mov"));
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.MainTitle")+ ": "+sellerMail);
+		btnMugimenduak.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Erreklamazioak"));
+		btnMov.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Mov"));
 	}
 } // @jve:decl-index=0:visual-constraint="0,0"
 
