@@ -22,6 +22,7 @@ import configuration.ConfigXML;
 import configuration.UtilDate;
 import domain.Seller;
 import domain.Admin;
+import domain.Erreklamazioa;
 import domain.Mugimendua;
 import domain.Sale;
 import exceptions.FileNotUploadedException;
@@ -343,5 +344,21 @@ public class DataAccess  {
 			return null;
 		}
 	}
-
+	public List<Sale> getAllBought(String zuremail){
+		List<Sale> l = new ArrayList<Sale>();
+		//bought true diren sale guztiak hartu behar ditugu
+		Seller s = db.find(Seller.class, zuremail);
+		l = s.getBought();
+		return l;
+	}
+	public void erreklamazioaJarri(String zuremail,int saleNumber, String azalpena) {
+		Seller user = db.find(Seller.class, zuremail);
+		Sale sale = db.find(Sale.class, saleNumber);
+		db.getTransaction().begin();
+		Erreklamazioa errek = new Erreklamazioa(sale,UtilDate.trim(new Date()),azalpena);
+		user.addJarritakoErreklamazioak(errek);
+		sale.getSeller().addJasotakoErreklamazioak(errek);
+		db.getTransaction().commit();
+	}
+	
 }

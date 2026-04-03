@@ -80,7 +80,7 @@ public class Seller implements Serializable {
 	public List<Sale> getBought(){
 		List<Sale> sales2= new ArrayList<Sale>();
 		for(int i=0; i<boughtsales.size(); i++) {
-			sales2.add(sales.get(i));
+			sales2.add(boughtsales.get(i));
 		}
 		return sales2;
 	}
@@ -197,6 +197,12 @@ public void diruaSartu(double diruKop, Date data) {
 		addMugimendua(data, boughtsale.getTitle(), prezioa);
 		sales.remove(boughtsale);
 	}	
+	public void addJasotakoErreklamazioak(Erreklamazioa errek) {
+		this.jasotakoErreklamazioak.add(errek);
+	}
+	public void addJarritakoErreklamazioak(Erreklamazioa errek) {
+		this.jarritakoErreklamazioak.add(errek);
+	}
 	
 
 	

@@ -174,6 +174,16 @@ public class BLFacadeImplementation  implements BLFacade {
 		dbManager.close();
 		return b;
     }
-    
+    @WebMethod public List<Sale> getAllBought(String zuremail) {
+    	dbManager.open();
+		List<Sale> l= dbManager.getAllBought(zuremail);
+		dbManager.close();
+		return l;
+    }
+    @WebMethod public void erreklamazioaJarri(String zuremail,int saleNumber, String azalpena) {
+    	dbManager.open();
+    	dbManager.erreklamazioaJarri(zuremail, saleNumber, azalpena);
+    	dbManager.close();
+    }
 }
 

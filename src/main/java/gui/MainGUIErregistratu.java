@@ -81,6 +81,7 @@ public class MainGUIErregistratu extends JFrame {
 				paintAgain();				}
 		});
 		buttonGroup.add(rdbtnNewRadioButton_1);
+		rdbtnNewRadioButton_1.setSelected(true);
 		
 		rdbtnNewRadioButton_2 = new JRadioButton("Castellano");
 		rdbtnNewRadioButton_2.addActionListener(new ActionListener() {

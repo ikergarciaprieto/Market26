@@ -88,7 +88,9 @@ public interface BLFacade  {
 	
 	@WebMethod public Admin isAdminLogin(String nan, String password);
 	
+	@WebMethod public List<Sale> getAllBought(String zuremail);
 	
+	@WebMethod public void erreklamazioaJarri(String zuremail,int saleNumber, String azalpena);
 	
 	
 }
