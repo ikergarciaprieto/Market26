@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import domain.Admin;
+import domain.Erreklamazioa;
 import domain.Mugimendua;
 import domain.Sale;
 import domain.Seller;
@@ -27,7 +28,7 @@ public interface BLFacade  {
 
 	/**
 	 * This method creates/adds a product to a seller
-	 * 
+	 * import exceptions.NotAnyReclamations;
 	 * @param title of the product
 	 * @param description of the product
 	 * @param status 
@@ -91,6 +92,10 @@ public interface BLFacade  {
 	@WebMethod public List<Sale> getAllBought(String zuremail);
 	
 	@WebMethod public void erreklamazioaJarri(String zuremail,int saleNumber, String azalpena);
+	
+	@WebMethod public List<Erreklamazioa> getJrerreklamazioak(String mail);
+	
+	@WebMethod public List<Erreklamazioa> getJserreklamazioak(String mail);
 	
 	
 }

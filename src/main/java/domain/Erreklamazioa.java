@@ -55,4 +55,9 @@ public class Erreklamazioa {
 		this.deskripzioa = deskripzioa;
 	}
 	
+	public String toString() {
+		return sale.toString() + data.toString() +""+  deskripzioa; 
+	}
+	
+	
 }

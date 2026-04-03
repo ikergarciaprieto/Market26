@@ -361,4 +361,21 @@ public class DataAccess  {
 		db.getTransaction().commit();
 	}
 	
+	public List<Erreklamazioa> getJrerreklamazioak(String mail){
+		Seller user = db.find(Seller.class, mail);
+		List<Erreklamazioa> jErreList= user.getJarritakoErreklamazioak();
+		return jErreList;
+		
+	}
+	public List<Erreklamazioa> getJserreklamazioak(String mail){
+		Seller user = db.find(Seller.class, mail);
+		List<Erreklamazioa> jErreList= user.getJasotakoErreklamazioak();
+		return jErreList;
+		
+	}
+	
+	
+	
+	
+	
 }

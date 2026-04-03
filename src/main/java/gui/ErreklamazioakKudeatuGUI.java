@@ -12,17 +12,24 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import businessLogic.BLFacade;
+import domain.Erreklamazioa;
 import domain.Sale;
 
+
 import javax.swing.JScrollPane;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JList;
 
 public class ErreklamazioakKudeatuGUI extends JFrame {
 
 	private JPanel contentPane;
 	private JFrame thisFrame;
+	private JList erreList;
+	private DefaultListModel<Erreklamazioa> erreInfo = new DefaultListModel<Erreklamazioa>();
+	private JLabel errorLabel;
 
 
 	/**
@@ -42,10 +49,24 @@ public class ErreklamazioakKudeatuGUI extends JFrame {
 		scrollPane.setBounds(37, 75, 420, 234);
 		contentPane.add(scrollPane);
 		
+		erreList = new JList<Erreklamazioa>();
+		erreList.setModel(erreInfo);
+		scrollPane.setViewportView(erreList);
+		
+		
+		
 		JButton jarritakoakButton= new JButton(ResourceBundle.getBundle("Etiquetas").getString("ErreklamazioakKudeatuGUI.jarritakoak"));
 		jarritakoakButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {//JARRITAKO ERREKLAMAZIOAK
 				BLFacade facade = MainGUI.getBusinessLogic();
+				List<Erreklamazioa> jErreList=facade.getJrerreklamazioak(zuremail);
+		
+					erreInfo.removeAllElements();
+					for(int i=0; i< jErreList.size(); i++) {
+						erreInfo.addElement(jErreList.get(i));
+						
+					}
+				
 				
 			}
 		});
@@ -55,6 +76,16 @@ public class ErreklamazioakKudeatuGUI extends JFrame {
 		JButton jasotakoakButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ErreklamazioakKudeatuGUI.jasotakoak"));
 		jasotakoakButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {//JASOTAKO ERREKLAMAZIOAK
+				
+				BLFacade facade = MainGUI.getBusinessLogic();
+				List<Erreklamazioa> jErreList=facade.getJserreklamazioak(zuremail);
+					
+					erreInfo.removeAllElements();
+					for(int i=0; i< jErreList.size(); i++) {
+						erreInfo.addElement(jErreList.get(i));
+						
+					}
+					
 				
 			}
 		});
@@ -85,5 +116,6 @@ public class ErreklamazioakKudeatuGUI extends JFrame {
 		});
 		erreklamazioJarriButton.setBounds(479, 86, 167, 37);
 		contentPane.add(erreklamazioJarriButton);
+	
 	}
 }

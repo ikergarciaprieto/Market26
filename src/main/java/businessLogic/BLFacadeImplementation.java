@@ -8,6 +8,7 @@ import javax.jws.WebService;
 
 import dataAccess.DataAccess;
 import domain.Admin;
+import domain.Erreklamazioa;
 import domain.Mugimendua;
 import domain.Sale;
 import domain.Seller;
@@ -185,5 +186,22 @@ public class BLFacadeImplementation  implements BLFacade {
     	dbManager.erreklamazioaJarri(zuremail, saleNumber, azalpena);
     	dbManager.close();
     }
+    @WebMethod public List<Erreklamazioa> getJrerreklamazioak(String mail){
+    	dbManager.open();
+    	List<Erreklamazioa> jErreList=dbManager.getJrerreklamazioak(mail);
+    	dbManager.close();
+    	return jErreList;
+    	
+    }
+    @WebMethod public List<Erreklamazioa> getJserreklamazioak(String mail){
+    	dbManager.open();
+    	List<Erreklamazioa> jErreList=dbManager.getJserreklamazioak(mail);
+    	dbManager.close();
+    	return jErreList;
+    	
+    }
+    
+    
+    
 }
 
