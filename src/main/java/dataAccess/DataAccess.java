@@ -356,6 +356,7 @@ public class DataAccess  {
 		Sale sale = db.find(Sale.class, saleNumber);
 		db.getTransaction().begin();
 		Erreklamazioa errek = new Erreklamazioa(sale,UtilDate.trim(new Date()),azalpena);
+		
 		user.addJarritakoErreklamazioak(errek);
 		sale.getSeller().addJasotakoErreklamazioak(errek);
 		db.getTransaction().commit();
@@ -374,7 +375,12 @@ public class DataAccess  {
 		
 	}
 	
-	
+	public List<Seller> getAllUsers(){
+		TypedQuery<Seller>query= db.createQuery("SELECT s FROM Seller s", Seller.class);
+		List<Seller>users=query.getResultList();
+		return users;
+		
+	}
 	
 	
 	

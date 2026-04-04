@@ -25,6 +25,7 @@ public class Admin {
 	@XmlIDREF
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private List<Erreklamazioa> ebatziGabekoErreklamazioak;
+	
 
 	public Admin(String NAN, String izena, String pasahitza) {
 		this.NAN = NAN;

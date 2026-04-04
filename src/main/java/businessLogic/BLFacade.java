@@ -97,5 +97,7 @@ public interface BLFacade  {
 	
 	@WebMethod public List<Erreklamazioa> getJserreklamazioak(String mail);
 	
+	@WebMethod public List<Seller> getAllUsers();
+	
 	
 }

@@ -201,6 +201,15 @@ public class BLFacadeImplementation  implements BLFacade {
     	
     }
     
+    @WebMethod public List<Seller> getAllUsers(){
+    	dbManager.open();
+    	List<Seller>userList=dbManager.getAllUsers();
+    	dbManager.close();
+    	return userList;
+    	
+    	
+    }
+    
     
     
 }
