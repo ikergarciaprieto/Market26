@@ -355,7 +355,7 @@ public class DataAccess  {
 		Seller user = db.find(Seller.class, zuremail);
 		Sale sale = db.find(Sale.class, saleNumber);
 		db.getTransaction().begin();
-		Erreklamazioa errek = new Erreklamazioa(sale,UtilDate.trim(new Date()),azalpena);
+		Erreklamazioa errek = new Erreklamazioa(sale,UtilDate.trim(new Date()),azalpena,user);
 		
 		user.addJarritakoErreklamazioak(errek);
 		sale.getSeller().addJasotakoErreklamazioak(errek);
@@ -381,7 +381,25 @@ public class DataAccess  {
 		return users;
 		
 	}
-	
-	
+	public void acceptReclamation(boolean b,long errekId) {
+		Erreklamazioa errek=db.find(Erreklamazioa.class, errekId);
+		db.getTransaction().begin();
+		if(b) {
+			errek.setOnartua("onartua");
+			//erosleari dirua itzuli
+			Double diru = (double) errek.getSale().getPrice();
+			errek.getErreklamatzenDuena().setDiruTotala(errek.getErreklamatzenDuena().getDiruTotala()+diru);
+			String desk = errek.getSale().getTitle();
+			errek.getErreklamatzenDuena().addMugimendua(UtilDate.trim(new Date()), desk, diru);
+			
+			//seller-ari dirua kendu
+			
+		}else {
+			errek.setOnartua("ez onartua");
+			//dirua ez itzuli
+		}
+		
+		db.getTransaction().commit();
+	}
 	
 }

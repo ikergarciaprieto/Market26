@@ -99,5 +99,6 @@ public interface BLFacade  {
 	
 	@WebMethod public List<Seller> getAllUsers();
 	
+	@WebMethod public void acceptReclamation(boolean b,long errekId);
 	
 }

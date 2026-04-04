@@ -107,6 +107,11 @@ public class Seller implements Serializable {
 		this.jasotakoErreklamazioak = jasotakoErreklamazioak;
 	}
 	
+	
+	public void setDiruTotala(double diruTotala) {
+		this.diruTotala = diruTotala;
+	}
+
 	/**
 	 * This method creates/adds a sale to a seller
 	 * 

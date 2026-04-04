@@ -209,6 +209,11 @@ public class BLFacadeImplementation  implements BLFacade {
     	
     	
     }
+    @WebMethod public void acceptReclamation(boolean b,long errekId) {
+    	dbManager.open();
+    	dbManager.acceptReclamation(b,errekId);
+    	dbManager.close();
+    }
     
     
     

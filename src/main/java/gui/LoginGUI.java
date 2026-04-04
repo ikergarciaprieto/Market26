@@ -139,7 +139,7 @@ public class LoginGUI extends JFrame {
 				}
 			}
 		});
-		adminCheckBox.setBounds(312, 231, 55, 23);
+		adminCheckBox.setBounds(312, 231, 118, 23);
 		contentPane.add(adminCheckBox);
 
 	}

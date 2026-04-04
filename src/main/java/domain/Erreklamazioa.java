@@ -19,21 +19,35 @@ public class Erreklamazioa {
 	@Id 
 	@GeneratedValue
     private Long id;
+	public long getId() {
+		return id;
+	}
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date data;
 	private String deskripzioa;
 	private Sale sale;
+	private String onartua;
+	private Seller erreklamatzenDuena;
+	// -onartua- String bat da hiru posizio edo daudelako, -ez begiratuta-, -onartua- eta -ez onartua-
+	
 	
 	public Erreklamazioa() {
 		super();
 	}
-	
-	public Erreklamazioa(Sale sale, Date data, String deskripzioa) {
+
+	public Erreklamazioa(Sale sale, Date data, String deskripzioa, Seller AerreklamatzenDuena) {
 		this.data = data;
 		this.deskripzioa = deskripzioa;
 		this.sale = sale;
+		this.erreklamatzenDuena = AerreklamatzenDuena;
+		this.onartua="ez begiratuta";
 	}
 	
+	public Seller getErreklamatzenDuena() {
+		return erreklamatzenDuena;
+	}
+
 	public Sale getSale() {
 		return sale;
 	}
@@ -59,5 +73,12 @@ public class Erreklamazioa {
 		return sale.toString() + data.toString() +""+  deskripzioa; 
 	}
 	
+	public String getOnartua() {
+		return onartua;
+	}
+	
+	public void setOnartua(String onartua) {
+		this.onartua = onartua;
+	}
 	
 }
