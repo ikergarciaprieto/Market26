@@ -388,7 +388,9 @@ public class DataAccess  {
 			errek.setOnartua("onartua");
 			//erosleari dirua itzuli
 			Double diru = (double) errek.getSale().getPrice();
+			
 			errek.getErreklamatzenDuena().setDiruTotala(errek.getErreklamatzenDuena().getDiruTotala()+diru);
+			errek.getErreklamatzenDuena().removeBought(errek.getSale());
 			String desk = errek.getSale().getTitle();
 			errek.getErreklamatzenDuena().addMugimendua(UtilDate.trim(new Date()), desk, diru);
 			

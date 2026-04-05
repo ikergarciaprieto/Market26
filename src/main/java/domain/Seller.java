@@ -148,6 +148,19 @@ public void addBought(Sale boughtsale, Date data) {
 		
 	}
 
+public void removeBought(Sale sale) {
+	int i =0;
+	boolean found=false;
+	while(i<boughtsales.size() &&!found) {
+		if(sale.getSaleNumber()== boughtsales.get(i).getSaleNumber()) {
+			found=true;
+			boughtsales.remove(i);
+		}else {
+			i++;
+		}
+	}
+}
+
 public void diruaSartu(double diruKop, Date data) {
 	diruTotala = diruTotala + diruKop;
 	addMugimendua(data, "Dirua sartu da kontuan", diruKop);
