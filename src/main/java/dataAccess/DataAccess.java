@@ -355,8 +355,8 @@ public class DataAccess  {
 		Seller user = db.find(Seller.class, zuremail);
 		Sale sale = db.find(Sale.class, saleNumber);
 		db.getTransaction().begin();
+		sale.setErreklamatuta(true);
 		Erreklamazioa errek = new Erreklamazioa(sale,UtilDate.trim(new Date()),azalpena,user);
-		
 		user.addJarritakoErreklamazioak(errek);
 		sale.getSeller().addJasotakoErreklamazioak(errek);
 		db.getTransaction().commit();
@@ -398,6 +398,7 @@ public class DataAccess  {
 			
 		}else {
 			errek.setOnartua("ez onartua");
+			errek.getSale().setErreklamatuta(false);
 			//dirua ez itzuli
 		}
 		

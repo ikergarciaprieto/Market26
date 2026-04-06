@@ -27,7 +27,7 @@ public class ErreklamazioaJarriGUI extends JFrame {
 	private JPanel contentPane;
 	private JFrame frame;
 	private JTextField azalpenaText;
-	private DefaultComboBoxModel comboList= new DefaultComboBoxModel();
+	private DefaultComboBoxModel<Sale> comboList= new DefaultComboBoxModel<Sale>();
 	private Sale selectedSale = null;
 	JLabel errorLabel = new JLabel();
 
@@ -59,11 +59,12 @@ public class ErreklamazioaJarriGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {//EREREKLAMAZIO JARRI
 				try {
 					errorLabel.setVisible(false);
-					if(azalpenaText.getText()=="") {
+					if(azalpenaText.getText().isEmpty()) {
 						throw new StringIsEmptyException();
 					}else {
 						BLFacade facade = MainGUI.getBusinessLogic();
 						facade.erreklamazioaJarri(usermail,selectedSale.getSaleNumber(),azalpenaText.getText());
+						comboList.removeElement(selectedSale);
 						frame.setVisible(false);//Uneko leihoa itxi
 					}
 				}catch(StringIsEmptyException exception) {
@@ -74,7 +75,7 @@ public class ErreklamazioaJarriGUI extends JFrame {
 		});
 		contentPane.add(errekJarriButton);
 		
-		JComboBox comboBox = new JComboBox();
+		JComboBox<Sale> comboBox = new JComboBox<Sale>();
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				selectedSale= (Sale) comboBox.getSelectedItem();
@@ -88,8 +89,11 @@ public class ErreklamazioaJarriGUI extends JFrame {
 		comboBox.setBounds(217, 66, 216, 51);
 		contentPane.add(comboBox);
 		comboBox.setModel(comboList);
+		comboList.removeAllElements();
 		for (Sale s : boughtList) {
-		    comboList.addElement(s);
+			if (s.isErreklamatuta() == false) {
+				comboList.addElement(s);
+			}
 		}
 		
 		JLabel produkAukeratuLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ErreklamazioaJarriGUI.produktuaAukeratu")); //$NON-NLS-1$ //$NON-NLS-2$

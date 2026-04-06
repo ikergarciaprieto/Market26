@@ -28,6 +28,7 @@ public class Sale implements Serializable {
 	private Date pubDate;
 	private String fileName;
 	private Boolean bought=false;
+	private Boolean erreklamatuta=false;
 	
 	private Seller seller;  
 	
@@ -221,9 +222,25 @@ public class Sale implements Serializable {
 		this.bought= status;
 	}
 	
+	public boolean isErreklamatuta() {
+		return erreklamatuta;
+	}
+	public void setErreklamatuta(boolean status) {
+		this.erreklamatuta= status;
+	}
+	
 	
 	public String toString(){
 		return saleNumber+";"+title+";"+price;  
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj) return true;
+	    if (obj == null || getClass() != obj.getClass()) return false;
+
+	    Sale other = (Sale) obj;
+	    return this.getSaleNumber() == other.getSaleNumber(); // o el ID único
 	}
 
 
