@@ -385,7 +385,7 @@ public class DataAccess  {
 		Erreklamazioa errek=db.find(Erreklamazioa.class, errekId);
 		db.getTransaction().begin();
 		if(b) {
-			errek.setOnartua("onartua");
+			errek.setOnartua(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.Onartua"));
 			//erosleari dirua itzuli
 			Double diru = (double) errek.getSale().getPrice();
 			
@@ -397,7 +397,7 @@ public class DataAccess  {
 			//seller-ari dirua kendu
 			
 		}else {
-			errek.setOnartua("ez onartua");
+			errek.setOnartua(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.EzOnartua"));
 			errek.getSale().setErreklamatuta(false);
 			//dirua ez itzuli
 		}

@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.Date;
+import java.util.ResourceBundle;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,7 +42,7 @@ public class Erreklamazioa {
 		this.deskripzioa = deskripzioa;
 		this.sale = sale;
 		this.erreklamatzenDuena = AerreklamatzenDuena;
-		this.onartua="ez begiratuta";
+		this.onartua= "ez begiratuta";
 	}
 	
 	public Seller getErreklamatzenDuena() {
