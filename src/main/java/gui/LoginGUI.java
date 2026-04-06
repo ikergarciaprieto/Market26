@@ -30,6 +30,7 @@ public class LoginGUI extends JFrame {
 	private JTextField loginText;
 	private JPasswordField passText;
 	private JLabel errorText;
+	private JLabel LabelLogin;
 	private JCheckBox adminCheckBox;
 
 	/**
@@ -59,7 +60,7 @@ public class LoginGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel LabelLogin = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("LoginGUI.name"));
+		LabelLogin = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("LoginGUI.name"));
 		LabelLogin.setBounds(75, 34, 147, 14);
 		contentPane.add(LabelLogin);
 		
@@ -132,10 +133,10 @@ public class LoginGUI extends JFrame {
 		adminCheckBox = new JCheckBox("Admin"); //$NON-NLS-1$ //$NON-NLS-2$
 		adminCheckBox.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
-				if(adminCheckBox.isEnabled()) {//ADMIN MIDUA
-					//JARRI USER ETA PASAHITZA
+				if(adminCheckBox.isSelected()) {//ADMIN MIDUA
+					LabelLogin.setText(ResourceBundle.getBundle("Etiquetas").getString("LoginGUI.nan"));
 				}else {//USER MODUA
-					//JARRI NAN ETA PASAHIYZA
+					LabelLogin.setText(ResourceBundle.getBundle("Etiquetas").getString("LoginGUI.name"));
 				}
 			}
 		});

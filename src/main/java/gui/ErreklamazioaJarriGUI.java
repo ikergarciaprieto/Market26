@@ -88,7 +88,9 @@ public class ErreklamazioaJarriGUI extends JFrame {
 		comboBox.setBounds(217, 66, 216, 51);
 		contentPane.add(comboBox);
 		comboBox.setModel(comboList);
-		comboList.addAll(boughtList);
+		for (Sale s : boughtList) {
+		    comboList.addElement(s);
+		}
 		
 		JLabel produkAukeratuLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ErreklamazioaJarriGUI.produktuaAukeratu")); //$NON-NLS-1$ //$NON-NLS-2$
 		produkAukeratuLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
