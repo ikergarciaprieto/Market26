@@ -26,6 +26,7 @@ public class Seller implements Serializable {
 	private String name; 
 	private String password;
 	private double diruTotala = 0;
+	private ErosketaAnitza karrito;
 	@XmlIDREF
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private List<Sale> sales=new ArrayList<Sale>();
@@ -42,6 +43,17 @@ public class Seller implements Serializable {
 	@XmlIDREF
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private List<Erreklamazioa> jasotakoErreklamazioak= new ArrayList<Erreklamazioa>();
+	@XmlIDREF
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+	private List<Eskaera> eskaerak= new ArrayList<Eskaera>();
+	@XmlIDREF
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+	private List<Chat> chats= new ArrayList<Chat>();
+	@XmlIDREF
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+	private List<Mezua> bidalimezuak= new ArrayList<Mezua>();
+	
+
 
 
 	public Seller() {

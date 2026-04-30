@@ -1,0 +1,70 @@
+package domain;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlID;
+import javax.xml.bind.annotation.XmlIDREF;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+@SuppressWarnings("serial")
+@XmlAccessorType(XmlAccessType.FIELD)
+@Entity
+public class ErosketaAnitza {
+	@XmlID
+	@Id 
+	@XmlJavaTypeAdapter(IntegerAdapter.class)
+	@GeneratedValue
+	private String Id;
+	private double prezioa;
+	@XmlIDREF
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+	private List<Sale> sales;
+	private Seller seller;
+	private Seller user;
+	
+	public ErosketaAnitza(Seller user, Seller seller) {
+		this.prezioa=0;
+		this.sales=new ArrayList<Sale>();
+		this.user=user;
+		this.seller=seller;
+	
+	}
+	
+	public double getPrezioa() {
+		return prezioa;
+	}
+	public void setPrezioa(double prezioa) {
+		this.prezioa = prezioa;
+	}
+	public List<Sale> getSales() {
+		return sales;
+	}
+	public void setSales(List<Sale> sales) {
+		this.sales = sales;
+	}
+	public Seller getUser() {
+		return user;
+	}
+	public void setUser(Seller user) {
+		this.user = user;
+	}
+	
+	public void DESTROY() {
+		this.sales=null;;
+		this.prezioa=0.0;
+		this.seller= null;
+	}
+	
+	
+	
+
+}
