@@ -30,6 +30,7 @@ import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.SaleAlreadyExistException;
 import exceptions.StringIsEmptyException;
+import exceptions.UserAlreadyExistException;
 import exceptions.EmailIsNotCorrectException;
 
 
@@ -417,18 +418,28 @@ public class DataAccess  {
 		return karritosales;
 		
 	}
-	public void karrituraEraman(String mail,int salenum) {
+	public boolean karrituraEraman(String mail,int salenum) {
 		Seller user = db.find(Seller.class, mail);
 		Sale sale = db.find(Sale.class, salenum);
+		boolean b = true;
 		db.getTransaction().begin();
-		ErosketaAnitza ea = user.getKarrito();
-		if(ea==null) {
-			ea = user.createErosketaAnitza(sale);
-			
-		}
-		ea.addSales(sale);
-		ea.gehituPrezioa(sale.getPrice());
+			try {
+				ErosketaAnitza ea = user.getKarrito();
+				if(ea==null) {
+					ea = user.createErosketaAnitza(sale);	
+				}else {//komprobatu pertsona berdinaren produktuak direla
+					if(sale.getSeller()!=ea.getSeller()) {
+						throw new UserAlreadyExistException();//Ez dut beste bat egingo bakarrik honetarako
+					}
+				}
+				db.persist(ea);
+				ea.addSales(sale);
+				ea.gehituPrezioa(sale.getPrice());
+			}catch(UserAlreadyExistException e) {
+				b = false;
+			}
 		db.getTransaction().commit();
+		return b;
 	}
 	
 	

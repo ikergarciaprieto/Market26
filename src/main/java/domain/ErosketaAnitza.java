@@ -21,14 +21,20 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class ErosketaAnitza {
 	@XmlID
 	@Id 
-	@XmlJavaTypeAdapter(IntegerAdapter.class)
 	@GeneratedValue
-	private String Id;
+    private Long id;
 	private double prezioa;
 	@XmlIDREF
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private List<Sale> sales;
 	private Seller seller;
+	public Seller getSeller() {
+		return seller;
+	}
+
+	public void setSeller(Seller seller) {
+		this.seller = seller;
+	}
 	private Seller user;
 	
 	public ErosketaAnitza(Seller user, Seller seller) {

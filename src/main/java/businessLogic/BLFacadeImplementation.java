@@ -221,10 +221,11 @@ public class BLFacadeImplementation  implements BLFacade {
     	dbManager.close();
     	return karritoList;
     }
-    @WebMethod public void karrituraEraman(String mail,int salenum) {
+    @WebMethod public boolean karrituraEraman(String mail,int salenum) {
     	dbManager.open();
-    	dbManager.karrituraEraman(mail,salenum);
+    	boolean b = dbManager.karrituraEraman(mail,salenum);
     	dbManager.close();
+    	return b;
     	
     }
     

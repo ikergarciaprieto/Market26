@@ -190,7 +190,7 @@ public class ShowSaleGUI extends JFrame {
 		getContentPane().add(jButtonAccount);
 		
 		errorText = new JLabel();
-		errorText.setBounds(107, 309, 206, 14);
+		errorText.setBounds(10, 312, 206, 14);
 		errorText.setForeground(Color.RED);
 		errorText.setVisible(false);
 		getContentPane().add(errorText);
@@ -209,7 +209,11 @@ public class ShowSaleGUI extends JFrame {
 				jButtonBuy.setEnabled(false);
 				jButtonKarritoa.setEnabled(false);
 				BLFacade facade = MainGUI.getBusinessLogic();
-				facade.karrituraEraman(zuremail,sale.getSaleNumber());
+				boolean b = facade.karrituraEraman(zuremail,sale.getSaleNumber());
+				if(!b) {//ondo ez da joan
+					errorText.setVisible(true);
+					errorText.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.erroreEzinBesteSeller"));
+				}
 			}
 		});
 		jButtonKarritoa.setEnabled(true);

@@ -103,5 +103,5 @@ public interface BLFacade  {
 	
 	@WebMethod public List<Sale> obtainList(String usermail);
 	
-	@WebMethod public void karrituraEraman(String mail,int salenum);	
+	@WebMethod public boolean karrituraEraman(String mail,int salenum);	
 }
