@@ -29,6 +29,7 @@ public class KarritoaIkusiGUI extends JFrame {
     private JList anitzalist ;
     private DefaultListModel<Sale> saleInfo = new DefaultListModel<Sale>();
     private JFrame thisFrame;
+    private JButton ikusKarritoa;
     
 	/**
 	 * Launch the application.
@@ -76,6 +77,11 @@ public class KarritoaIkusiGUI extends JFrame {
 				thisFrame.setVisible(false);			}
 		});
 		contentPane.add(itxiBt);
+		
+		
+				
+			
+		
 		
 
 	}

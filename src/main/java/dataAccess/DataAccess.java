@@ -424,6 +424,7 @@ public class DataAccess  {
 		ErosketaAnitza ea = user.getKarrito();
 		if(ea==null) {
 			ea = user.createErosketaAnitza(sale);
+			
 		}
 		ea.addSales(sale);
 		ea.gehituPrezioa(sale.getPrice());

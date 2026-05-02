@@ -26,7 +26,7 @@ public class Seller implements Serializable {
 	private String name; 
 	private String password;
 	private double diruTotala = 0;
-	private ErosketaAnitza karrito;
+	private ErosketaAnitza karrito= null;
 	@XmlIDREF
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private List<Sale> sales=new ArrayList<Sale>();
@@ -131,6 +131,9 @@ public class Seller implements Serializable {
 	}
 	public ErosketaAnitza getErosketaAnitza() {
 		return karrito;
+	}
+	public void setErosketaAnitza(ErosketaAnitza ea) {
+		this.karrito = ea;
 	}
 
 	/**
@@ -245,6 +248,7 @@ public void diruaSartu(double diruKop, Date data) {
 	
 	public ErosketaAnitza createErosketaAnitza(Sale sale) {
 		ErosketaAnitza ea = new ErosketaAnitza(this,sale.getSeller());
+		this.karrito= ea;
 		return ea;
 	}
 	
