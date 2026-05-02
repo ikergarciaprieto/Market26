@@ -215,6 +215,13 @@ public class BLFacadeImplementation  implements BLFacade {
     	dbManager.close();
     }
     
+    @WebMethod public List<Sale> obtainList(String usermail){
+    	dbManager.open();
+    	List<Sale> karritoList =dbManager.obtainList(usermail);
+    	dbManager.close();
+    	return karritoList;
+    }
+    
     
     
 }

@@ -123,6 +123,9 @@ public class Seller implements Serializable {
 	public void setDiruTotala(double diruTotala) {
 		this.diruTotala = diruTotala;
 	}
+	public ErosketaAnitza getErosketaAnitza() {
+		return karrito;
+	}
 
 	/**
 	 * This method creates/adds a sale to a seller

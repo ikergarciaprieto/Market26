@@ -22,6 +22,7 @@ import configuration.ConfigXML;
 import configuration.UtilDate;
 import domain.Seller;
 import domain.Admin;
+import domain.ErosketaAnitza;
 import domain.Erreklamazioa;
 import domain.Mugimendua;
 import domain.Sale;
@@ -386,7 +387,7 @@ public class DataAccess  {
 		db.getTransaction().begin();
 		if(b) {
 			errek.setOnartua(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.Onartua"));
-			//erosleari dirua itzuli
+			//erosleari dirua itzuli@WebMethod public List<Sale> obtainList(String usermail)
 			Double diru = (double) errek.getSale().getPrice();
 			
 			errek.getErreklamatzenDuena().setDiruTotala(errek.getErreklamatzenDuena().getDiruTotala()+diru);
@@ -404,5 +405,19 @@ public class DataAccess  {
 		
 		db.getTransaction().commit();
 	}
+	
+	public List<Sale> obtainList(String usermail){
+		
+		Seller user= db.find(Seller.class, usermail);
+		List<Sale> karritosales= null;
+		ErosketaAnitza karrito= user.getErosketaAnitza();
+		if(karrito!=null) {
+		karritosales=karrito.getSales();
+		}
+		return karritosales;
+		
+	}
+	
+	
 	
 }

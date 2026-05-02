@@ -101,4 +101,6 @@ public interface BLFacade  {
 	
 	@WebMethod public void acceptReclamation(boolean b,long errekId);
 	
+	@WebMethod public List<Sale> obtainList(String usermail);
+	
 }

@@ -120,6 +120,16 @@ public class QuerySalesGUI extends JFrame {
 		jButtonSearch.setBounds(427, 56, 117, 29);
 		getContentPane().add(jButtonSearch);
 		
+		JButton karritoButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.karritoaikusi")); //$NON-NLS-1$ //$NON-NLS-2$
+		karritoButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFrame a= new KarritoaIkusiGUI(email);
+				a.setVisible(true);
+			}
+		});
+		karritoButton.setBounds(519, 381, 105, 27);
+		getContentPane().add(karritoButton);
+		
 	    
 		tableProducts.addMouseListener(new MouseAdapter() {
 		        @Override
