@@ -417,6 +417,18 @@ public class DataAccess  {
 		return karritosales;
 		
 	}
+	public void karrituraEraman(String mail,int salenum) {
+		Seller user = db.find(Seller.class, mail);
+		Sale sale = db.find(Sale.class, salenum);
+		db.getTransaction().begin();
+		ErosketaAnitza ea = user.getKarrito();
+		if(ea==null) {
+			ea = user.createErosketaAnitza(sale);
+		}
+		ea.addSales(sale);
+		ea.gehituPrezioa(sale.getPrice());
+		db.getTransaction().commit();
+	}
 	
 	
 	

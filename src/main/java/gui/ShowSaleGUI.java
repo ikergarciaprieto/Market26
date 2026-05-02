@@ -73,7 +73,7 @@ public class ShowSaleGUI extends JFrame {
 
 		
 		scrollPaneEvents.setBounds(new Rectangle(25, 44, 346, 116));
-		jButtonClose.setBounds(new Rectangle(16, 268, 114, 30));
+		jButtonClose.setBounds(new Rectangle(6, 261, 114, 30));
 		jButtonClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				thisFrame.setVisible(false);
@@ -166,7 +166,7 @@ public class ShowSaleGUI extends JFrame {
 		if(sale.isBougth() || sale.getSeller().getEmail().equals(zuremail)) {
 			jButtonBuy.setEnabled(false);
 		}
-		jButtonBuy.setBounds(161, 268, 114, 30);
+		jButtonBuy.setBounds(130, 261, 114, 30);
 		getContentPane().add(jButtonBuy);
 		
 		JButton jButtonAccount = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Account")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -202,6 +202,20 @@ public class ShowSaleGUI extends JFrame {
 		diruTotala = new JLabel(Double.toString(facade.getDiruTotala(zuremail))); //$NON-NLS-1$ //$NON-NLS-2$
 		diruTotala.setBounds(301, 18, 69, 14);
 		getContentPane().add(diruTotala);
+		
+		JButton jButtonKarritoa = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.karrituraEraman"));
+		jButtonKarritoa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jButtonBuy.setEnabled(false);
+				jButtonKarritoa.setEnabled(false);
+				BLFacade facade = MainGUI.getBusinessLogic();
+				facade.karrituraEraman(zuremail,sale.getSaleNumber());
+			}
+		});
+		jButtonKarritoa.setEnabled(true);
+		jButtonKarritoa.setBounds(new Rectangle(16, 268, 114, 30));
+		jButtonKarritoa.setBounds(128, 296, 114, 30);
+		getContentPane().add(jButtonKarritoa);
 		
 	}	 
 	public BufferedImage rescale(BufferedImage originalImage)

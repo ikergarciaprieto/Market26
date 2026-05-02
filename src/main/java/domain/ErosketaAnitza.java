@@ -64,6 +64,13 @@ public class ErosketaAnitza {
 		this.seller= null;
 	}
 	
+	public void addSales(Sale s) {
+		this.sales.add(s);
+	}
+	public void gehituPrezioa(double p) {
+		this.prezioa=this.prezioa + p;
+	}
+	
 	
 	
 

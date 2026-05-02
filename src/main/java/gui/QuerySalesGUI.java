@@ -7,6 +7,7 @@ import domain.Sale;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
@@ -25,6 +26,8 @@ public class QuerySalesGUI extends JFrame {
 	private JScrollPane scrollPanelProducts = new JScrollPane();
 	private JTable tableProducts= new JTable();
 
+	private JButton karritoButton;
+	private ImageIcon errekIcon;
 	private DefaultTableModel tableModelProducts;
 
 	private JFrame thisFrame; 
@@ -120,14 +123,15 @@ public class QuerySalesGUI extends JFrame {
 		jButtonSearch.setBounds(427, 56, 117, 29);
 		getContentPane().add(jButtonSearch);
 		
-		JButton karritoButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.karritoaikusi")); //$NON-NLS-1$ //$NON-NLS-2$
+		
+		karritoButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.karritoaikusi")); //$NON-NLS-1$ //$NON-NLS-2$
 		karritoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JFrame a= new KarritoaIkusiGUI(email);
 				a.setVisible(true);
 			}
 		});
-		karritoButton.setBounds(519, 381, 105, 27);
+		karritoButton.setBounds(494, 381, 130, 27);
 		getContentPane().add(karritoButton);
 		
 	    

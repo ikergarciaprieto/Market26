@@ -1,10 +1,13 @@
 package gui;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -15,6 +18,8 @@ import domain.Sale;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JLabel;
+import java.awt.Font;
+
 
 public class KarritoaIkusiGUI extends JFrame {
 
@@ -23,7 +28,7 @@ public class KarritoaIkusiGUI extends JFrame {
 	private JScrollPane scrollPane;
     private JList anitzalist ;
     private DefaultListModel<Sale> saleInfo = new DefaultListModel<Sale>();
-    
+    private JFrame thisFrame;
     
 	/**
 	 * Launch the application.
@@ -34,15 +39,16 @@ public class KarritoaIkusiGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public KarritoaIkusiGUI(String usermail) {
+		thisFrame= this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 670, 359);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(32, 36, 271, 175);
+		scrollPane.setBounds(36, 88, 421, 175);
 		contentPane.add(scrollPane);
 		
 		anitzalist = new JList();
@@ -50,19 +56,26 @@ public class KarritoaIkusiGUI extends JFrame {
 		scrollPane.setViewportView(anitzalist);
 		
 		JLabel karritoLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("KarritoaIkusiGUI.karritoa"));
-		karritoLabel.setBounds(107, 7, 131, 17);
+		karritoLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		karritoLabel.setBounds(156, 29, 272, 31);
 		contentPane.add(karritoLabel);
 		BLFacade facade = MainGUI.getBusinessLogic();
 		List<Sale> karrito=facade.obtainList(usermail);
 		if(karrito!=null) {
-		saleInfo.removeAllElements();
-		for(int i=0; i< karrito.size(); i++) {
-			saleInfo.addElement(karrito.get(i));
+			saleInfo.removeAllElements();
+			for(int i=0; i< karrito.size(); i++) {
+				saleInfo.addElement(karrito.get(i));
+			}
 		}
-		}
 		
 		
-		
+		JButton itxiBt = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close")); //$NON-NLS-1$ //$NON-NLS-2$
+		itxiBt.setBounds(467, 275, 143, 37);
+		itxiBt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				thisFrame.setVisible(false);			}
+		});
+		contentPane.add(itxiBt);
 		
 
 	}

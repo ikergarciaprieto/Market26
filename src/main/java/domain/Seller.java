@@ -54,7 +54,13 @@ public class Seller implements Serializable {
 	private List<Mezua> bidalimezuak= new ArrayList<Mezua>();
 	
 
+	public ErosketaAnitza getKarrito() {
+		return karrito;
+	}
 
+	public void setKarrito(ErosketaAnitza karrito) {
+		this.karrito = karrito;
+	}
 
 	public Seller() {
 		super();
@@ -237,6 +243,9 @@ public void diruaSartu(double diruKop, Date data) {
 		this.jarritakoErreklamazioak.add(errek);
 	}
 	
-
+	public ErosketaAnitza createErosketaAnitza(Sale sale) {
+		ErosketaAnitza ea = new ErosketaAnitza(this,sale.getSeller());
+		return ea;
+	}
 	
 }
