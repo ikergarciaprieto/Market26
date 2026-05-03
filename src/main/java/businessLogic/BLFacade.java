@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import domain.Admin;
+import domain.Chat;
 import domain.Erreklamazioa;
 import domain.Mugimendua;
 import domain.Sale;
@@ -106,4 +107,8 @@ public interface BLFacade  {
 	@WebMethod public boolean karrituraEraman(String mail,int salenum);	
 	
 	@WebMethod public void karrituaErosi(String mail);
+	
+	@WebMethod public List<Chat> chatakLortu(String mail);
+	
+	@WebMethod public Boolean chatIreki(String mail,String mail2);
 }

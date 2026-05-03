@@ -50,6 +50,7 @@ public class MainGUIErregistratu extends JFrame {
 	private JPanel panel;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JButton btnMugimenduak;
+	private JButton btnMezua;
 	
 	/**
 	 * This is the default constructor
@@ -93,7 +94,7 @@ public class MainGUIErregistratu extends JFrame {
 		buttonGroup.add(rdbtnNewRadioButton_2);
 	
 		panel = new JPanel();
-		panel.setBounds(0, 192, 485, 64);
+		panel.setBounds(0, 192, 485, 27);
 		panel.add(rdbtnNewRadioButton_1);
 		panel.add(rdbtnNewRadioButton_2);
 		panel.add(rdbtnNewRadioButton);
@@ -154,6 +155,17 @@ public class MainGUIErregistratu extends JFrame {
 		});
 		btnMugimenduak.setBounds(10, 23, 135, 21);
 		jContentPane.add(btnMugimenduak);
+		
+		btnMezua = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Mezuak"));
+		btnMezua.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame a = new MezuakKudeatuGUI(mail);
+				a.setVisible(true);
+			}
+		});
+		btnMezua.setText((String) null);
+		btnMezua.setBounds(10, 222, 135, 21);
+		jContentPane.add(btnMezua);
 		
 		setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.MainTitle") +": "+sellerMail);
 		

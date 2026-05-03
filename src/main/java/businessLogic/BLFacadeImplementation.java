@@ -8,6 +8,7 @@ import javax.jws.WebService;
 
 import dataAccess.DataAccess;
 import domain.Admin;
+import domain.Chat;
 import domain.Erreklamazioa;
 import domain.Mugimendua;
 import domain.Sale;
@@ -234,8 +235,18 @@ public class BLFacadeImplementation  implements BLFacade {
     	dbManager.karrituaErosi(mail);
     	dbManager.close();
     }
-    
-    
+    @WebMethod public List<Chat> chatakLortu(String mail) {
+    	dbManager.open();
+    	List<Chat> a = dbManager.chatakLortu(mail);
+    	dbManager.close();
+    	return a;
+    }
+    @WebMethod public Boolean chatIreki(String mail,String mail2){
+    	dbManager.open();
+    	boolean b =dbManager.chatIreki(mail,mail2);
+    	dbManager.close();
+    	return b;
+    }
     
 }
 

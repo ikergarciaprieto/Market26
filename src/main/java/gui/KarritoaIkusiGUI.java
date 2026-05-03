@@ -93,7 +93,7 @@ public class KarritoaIkusiGUI extends JFrame {
 					}
 					
 				}catch(CartDoesntExistException e) {
-				abisuKarrito.setText(ResourceBundle.getBundle("Etiquetas").getString("KarritoaIkusiGUI.abisua"))	;
+					abisuKarrito.setText(ResourceBundle.getBundle("Etiquetas").getString("KarritoaIkusiGUI.abisua"))	;
 				}
 			}
 		});

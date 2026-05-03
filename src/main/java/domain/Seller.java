@@ -52,7 +52,22 @@ public class Seller implements Serializable {
 	@XmlIDREF
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private List<Mezua> bidalimezuak= new ArrayList<Mezua>();
-	
+
+	public List<Chat> getChats() {
+		return chats;
+	}
+
+	public void setChats(List<Chat> chats) {
+		this.chats = chats;
+	}
+
+	public List<Mezua> getBidalimezuak() {
+		return bidalimezuak;
+	}
+
+	public void setBidalimezuak(List<Mezua> bidalimezuak) {
+		this.bidalimezuak = bidalimezuak;
+	}
 
 	public ErosketaAnitza getKarrito() {
 		return karrito;
@@ -255,5 +270,11 @@ public void diruaSartu(double diruKop, Date data) {
 		si.setBought(true);
 		boughtsales.add(si);
 		diruTotala = diruTotala - si.getPrice();
+	}
+	public Chat createChat(Seller nori) {
+		Chat a =new Chat(this,nori);
+		this.chats.add(a);
+		nori.chats.add(a);
+		return a;
 	}
 }

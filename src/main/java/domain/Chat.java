@@ -21,9 +21,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class Chat {
 	@XmlID
 	@Id 
-	@XmlJavaTypeAdapter(IntegerAdapter.class)
 	@GeneratedValue
-	private String Id;
+    private Long id;
 	private Seller user1;
 	private Seller user2;
 	@XmlIDREF

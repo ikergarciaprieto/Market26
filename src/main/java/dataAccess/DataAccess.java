@@ -22,6 +22,7 @@ import configuration.ConfigXML;
 import configuration.UtilDate;
 import domain.Seller;
 import domain.Admin;
+import domain.Chat;
 import domain.ErosketaAnitza;
 import domain.Erreklamazioa;
 import domain.Mugimendua;
@@ -452,6 +453,32 @@ public class DataAccess  {
 			db.getTransaction().commit();
 		}
 		
+	}
+	public List<Chat> chatakLortu(String mail) {
+		List<Chat> a = new ArrayList<Chat>();
+		Seller user = db.find(Seller.class, mail);
+		a.addAll(user.getChats());
+		return a;
+	}
+	public boolean chatIreki(String mail,String mail2) {
+		//true ondo joan bada
+		boolean b=true;
+		
+		Seller nor = db.find(Seller.class, mail);
+		Seller nori = db.find(Seller.class, mail2);
+		TypedQuery<Chat>query= db.createQuery("SELECT s FROM Chat s WHERE (user1=?1 AND user2=?2) OR (user1=?2 AND user2=?1)", Chat.class);
+		query.setParameter(1, nor);
+		query.setParameter(2, nori);
+		List<Chat>list=query.getResultList();//begiratu hasieratu ez dela dagoeneko
+		db.getTransaction().begin();
+		if(!list.isEmpty()) {
+			b=false;
+		}else {
+			Chat c = nor.createChat(nori);
+			db.persist(c);
+		}
+		db.getTransaction().commit();
+		return b;
 	}
 	
 	
