@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,6 +15,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import configuration.UtilDate;
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -77,6 +80,21 @@ public class ErosketaAnitza {
 		this.prezioa=this.prezioa + p;
 	}
 	
+	public void denaBought() {
+		Sale si= null;
+		String azalpena="";
+		for(int i=0; i<sales.size(); i++) {
+			si= sales.get(i);
+			user.addBoughtWithoutMugi(si);
+			azalpena+=si.getTitle()+ "";
+		}
+		Double dt=seller.getDiruTotala();
+		seller.setDiruTotala(dt+prezioa);
+		Date date = UtilDate.trim(new Date());
+		seller.addMugimendua(date, azalpena, prezioa);
+		user.addMugimendua(date,azalpena,-prezioa);
+		DESTROY();
+	}
 	
 	
 

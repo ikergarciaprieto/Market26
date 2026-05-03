@@ -229,6 +229,12 @@ public class BLFacadeImplementation  implements BLFacade {
     	
     }
     
+    @WebMethod public void karrituaErosi(String mail) {
+    	dbManager.open();
+    	dbManager.karrituaErosi(mail);
+    	dbManager.close();
+    }
+    
     
     
 }

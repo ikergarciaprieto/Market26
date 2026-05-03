@@ -14,6 +14,7 @@ import javax.swing.border.EmptyBorder;
 
 import businessLogic.BLFacade;
 import domain.Sale;
+import exceptions.CartDoesntExistException;
 
 import javax.swing.JScrollPane;
 import javax.swing.JList;
@@ -30,6 +31,7 @@ public class KarritoaIkusiGUI extends JFrame {
     private DefaultListModel<Sale> saleInfo = new DefaultListModel<Sale>();
     private JFrame thisFrame;
     private JButton ikusKarritoa;
+    private JLabel abisuKarrito;
     
 	/**
 	 * Launch the application.
@@ -77,6 +79,30 @@ public class KarritoaIkusiGUI extends JFrame {
 				thisFrame.setVisible(false);			}
 		});
 		contentPane.add(itxiBt);
+		
+		JButton erosiKarBut = new JButton(ResourceBundle.getBundle("Etiquetas").getString("KarritoaIkusiGUI.erosi")); //$NON-NLS-1$ //$NON-NLS-2$
+		erosiKarBut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					BLFacade facade = MainGUI.getBusinessLogic();
+					List<Sale> karrito=facade.obtainList(usermail);
+					if(karrito!= null) {
+						facade.karrituaErosi(usermail);
+					}else {
+						throw new CartDoesntExistException(); 
+					}
+					
+				}catch(CartDoesntExistException e) {
+				abisuKarrito.setText(ResourceBundle.getBundle("Etiquetas").getString("KarritoaIkusiGUI.abisua"))	;
+				}
+			}
+		});
+		erosiKarBut.setBounds(499, 122, 105, 27);
+		contentPane.add(erosiKarBut);
+		
+		abisuKarrito = new JLabel(); //$NON-NLS-1$ //$NON-NLS-2$
+		abisuKarrito.setBounds(460, 185, 188, 17);
+		contentPane.add(abisuKarrito);
 		
 		
 				

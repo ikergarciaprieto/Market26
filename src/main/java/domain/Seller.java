@@ -251,5 +251,9 @@ public void diruaSartu(double diruKop, Date data) {
 		this.karrito= ea;
 		return ea;
 	}
-	
+	public void addBoughtWithoutMugi(Sale si) {
+		si.setBought(true);
+		boughtsales.add(si);
+		diruTotala = diruTotala - si.getPrice();
+	}
 }

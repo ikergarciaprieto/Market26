@@ -441,7 +441,18 @@ public class DataAccess  {
 		db.getTransaction().commit();
 		return b;
 	}
-	
+	public void karrituaErosi(String mail) {
+		Seller user=db.find(Seller.class, mail);
+		ErosketaAnitza ea = user.getKarrito();
+		Double dt=user.getDiruTotala();
+		Double p = ea.getPrezioa();
+		if(dt>=p) {
+			db.getTransaction().begin();
+			ea.denaBought();
+			db.getTransaction().commit();
+		}
+		
+	}
 	
 	
 }
