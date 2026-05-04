@@ -28,7 +28,7 @@ public class Chat {
 	private Seller user2;
 	@XmlIDREF
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
-	private List<Mezua> mezuak;
+	private List<Mezua> mezuak = new ArrayList<Mezua>();
 	
 	public Seller getUser1() {
 		return user1;
@@ -63,7 +63,7 @@ public class Chat {
 	public Chat(Seller user1 , Seller user2) {
 		this.user1=user1;
 		this.user2=user2;
-		this.mezuak= new ArrayList<Mezua>();
+		
 	}
 
 
@@ -71,10 +71,12 @@ public class Chat {
 	public String toString() {
 		return ("Chat: "+user1.getEmail()+"; "+user2.getEmail());
 	}
+	public void addMezuak(Mezua m) {
+		this.mezuak.add(m);
+	}
 	public Mezua createMezua(String mezu,Date date,Seller bidaltze) {
-		Mezua a =new Mezua(mezu, date, bidaltze, this);
-		this.mezuak.add(a);
-		return a;
+		Mezua m = new Mezua(mezu, date, bidaltze, this);
+		return m;
 	}
 
 }

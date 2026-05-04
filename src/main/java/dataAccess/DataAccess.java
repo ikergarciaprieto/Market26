@@ -481,12 +481,13 @@ public class DataAccess  {
 		db.getTransaction().commit();
 		return b;
 	}
-	public void mezuaBidali(String mail,Chat chat,String t) {
+	public void mezuaBidali(String mail,Chat chat,String text) {
 		Seller bidaltze = db.find(Seller.class, mail);
 		db.getTransaction().begin();
-		Mezua m = chat.createMezua(t,UtilDate.trim(new Date()),bidaltze);
-		bidaltze.getBidalimezuak().add(m);
+		Mezua m = chat.createMezua(text,UtilDate.trim(new Date()),bidaltze);
 		db.persist(m);
+		bidaltze.addBidalimezuak(m);
+		chat.addMezuak(m);
 		db.getTransaction().commit();
 	}
 	

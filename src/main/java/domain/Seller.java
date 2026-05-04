@@ -64,6 +64,9 @@ public class Seller implements Serializable {
 	public List<Mezua> getBidalimezuak() {
 		return bidalimezuak;
 	}
+	public void addBidalimezuak(Mezua m) {
+		this.bidalimezuak.add(m);
+	}
 
 	public void setBidalimezuak(List<Mezua> bidalimezuak) {
 		this.bidalimezuak = bidalimezuak;
@@ -272,7 +275,7 @@ public void diruaSartu(double diruKop, Date data) {
 		diruTotala = diruTotala - si.getPrice();
 	}
 	public Chat createChat(Seller nori) {
-		Chat a =new Chat(this,nori);
+		Chat a = new Chat(this,nori);
 		this.chats.add(a);
 		nori.chats.add(a);
 		return a;

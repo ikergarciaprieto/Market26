@@ -32,7 +32,6 @@ public class MezuakIkusiGUI extends JFrame {
     private JList anitzalist ;
     private DefaultListModel<Mezua> mezuList = new DefaultListModel<Mezua>();
     private JButton MezuakBilatuBtn;
-    private JLabel errortext;
     private JTextField textField;
     private JLabel lblNewLabel;
 
@@ -49,7 +48,7 @@ public class MezuakIkusiGUI extends JFrame {
 		thisFrame=this;
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(189, 10, 258, 299);
+		scrollPane.setBounds(10, 57, 411, 252);
 		contentPane.add(scrollPane);
 		
 		anitzalist = new JList();
@@ -77,26 +76,21 @@ public class MezuakIkusiGUI extends JFrame {
 				
 			}
 		});
-		MezuakBilatuBtn.setBounds(27, 128, 143, 37);
+		MezuakBilatuBtn.setBounds(10, 10, 177, 37);
 		contentPane.add(MezuakBilatuBtn);
-		
-		errortext = new JLabel();//$NON-NLS-1$ //$NON-NLS-2$
-		errortext.setBounds(270, 84, 270, 17);
-		contentPane.add(errortext);
 		
 		textField = new JTextField();
 		textField.setText(""); //$NON-NLS-1$ //$NON-NLS-2$
-		textField.setBounds(468, 64, 158, 198);
+		textField.setBounds(449, 103, 177, 45);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
 		lblNewLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.StringIsEmptyException")); //$NON-NLS-1$ //$NON-NLS-2$
 		lblNewLabel.setForeground(Color.RED);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel.setBounds(27, 206, 143, 56);
+		lblNewLabel.setBounds(449, 158, 177, 58);
 		contentPane.add(lblNewLabel);
 		lblNewLabel.setVisible(false);
-		errortext.setVisible(false);
 		
 		JButton MezuaBidaliBtn = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MezuakIkusiGUI.MezuaBidali"));
 		MezuaBidaliBtn.addActionListener(new ActionListener() {
@@ -111,7 +105,7 @@ public class MezuakIkusiGUI extends JFrame {
 				}
 			}
 		});
-		MezuaBidaliBtn.setBounds(483, 27, 143, 27);
+		MezuaBidaliBtn.setBounds(449, 66, 177, 27);
 		contentPane.add(MezuaBidaliBtn);
 		
 		

@@ -82,10 +82,13 @@ public class MezuakKudeatuGUI extends JFrame {
 		ChatIkusi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Mezuak ikusi gui
-				Chat c = Chatlist.get(anitzalist.getSelectedIndex());
-				System.out.println(c.toString()+"IKUSIKO DA");
-				JFrame a = new MezuakIkusiGUI(mail,c);
-				a.setVisible(true);
+				if(anitzalist.getSelectedIndex()!=-1) {
+					Chat c = Chatlist.get(anitzalist.getSelectedIndex());
+					System.out.println(c.toString()+"IKUSIKO DA");
+					
+					JFrame a = new MezuakIkusiGUI(mail,c);
+					a.setVisible(true);
+				}
 			}
 		});
 		ChatIkusi.setBounds(483, 128, 143, 37);
