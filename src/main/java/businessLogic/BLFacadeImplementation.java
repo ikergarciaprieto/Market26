@@ -10,6 +10,7 @@ import dataAccess.DataAccess;
 import domain.Admin;
 import domain.Chat;
 import domain.Erreklamazioa;
+import domain.Mezua;
 import domain.Mugimendua;
 import domain.Sale;
 import domain.Seller;
@@ -246,6 +247,14 @@ public class BLFacadeImplementation  implements BLFacade {
     	boolean b =dbManager.chatIreki(mail,mail2);
     	dbManager.close();
     	return b;
+    }
+    @WebMethod public List<Mezua> mezuakLortu(Chat c){
+    	return c.getMezuak();
+    }
+    @WebMethod public void mezuaBidali(String mail,Chat chat,String t) {
+    	dbManager.open();
+    	dbManager.mezuaBidali(mail,chat,t);
+    	dbManager.close();
     }
     
 }

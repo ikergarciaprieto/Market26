@@ -16,16 +16,56 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class Mezua {
 	@XmlID
 	@Id 
-	@XmlJavaTypeAdapter(IntegerAdapter.class)
 	@GeneratedValue
-	private String Id;
+    private Long id;
 	private String mezua;
 	private Date date;
 	private Seller bidaliDuena;
 	private Chat chat;
 	
-	public Mezua(String mezua, Date data) {
+	public Mezua(String mezua, Date data,Seller bidali,Chat ch) {
 		this.mezua=mezua;
 		this.date=data;
+		this.bidaliDuena=bidali;
+		this.chat=ch;
 	}
+
+	public String getMezua() {
+		return mezua;
+	}
+
+	public void setMezua(String mezua) {
+		this.mezua = mezua;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public Seller getBidaliDuena() {
+		return bidaliDuena;
+	}
+
+	public void setBidaliDuena(Seller bidaliDuena) {
+		this.bidaliDuena = bidaliDuena;
+	}
+
+	public Chat getChat() {
+		return chat;
+	}
+
+	public void setChat(Chat chat) {
+		this.chat = chat;
+	}
+
+	@Override
+	public String toString() {
+		String a = (mezua+" ["+bidaliDuena.getEmail()+"; "+date+"]");
+		return a;
+	}
+	
 }

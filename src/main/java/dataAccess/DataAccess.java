@@ -25,6 +25,7 @@ import domain.Admin;
 import domain.Chat;
 import domain.ErosketaAnitza;
 import domain.Erreklamazioa;
+import domain.Mezua;
 import domain.Mugimendua;
 import domain.Sale;
 import exceptions.FileNotUploadedException;
@@ -479,6 +480,14 @@ public class DataAccess  {
 		}
 		db.getTransaction().commit();
 		return b;
+	}
+	public void mezuaBidali(String mail,Chat chat,String t) {
+		Seller bidaltze = db.find(Seller.class, mail);
+		db.getTransaction().begin();
+		Mezua m = chat.createMezua(t,UtilDate.trim(new Date()),bidaltze);
+		bidaltze.getBidalimezuak().add(m);
+		db.persist(m);
+		db.getTransaction().commit();
 	}
 	
 	

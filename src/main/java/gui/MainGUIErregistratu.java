@@ -157,6 +157,7 @@ public class MainGUIErregistratu extends JFrame {
 		jContentPane.add(btnMugimenduak);
 		
 		btnMezua = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Mezuak"));
+		btnMezua.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Mezuak"));
 		btnMezua.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFrame a = new MezuakKudeatuGUI(mail);

@@ -7,6 +7,7 @@ import java.util.List;
 import domain.Admin;
 import domain.Chat;
 import domain.Erreklamazioa;
+import domain.Mezua;
 import domain.Mugimendua;
 import domain.Sale;
 import domain.Seller;
@@ -111,4 +112,8 @@ public interface BLFacade  {
 	@WebMethod public List<Chat> chatakLortu(String mail);
 	
 	@WebMethod public Boolean chatIreki(String mail,String mail2);
+	
+	@WebMethod public List<Mezua> mezuakLortu(Chat c);
+	
+	@WebMethod public void mezuaBidali(String mail,Chat chat,String t);
 }
