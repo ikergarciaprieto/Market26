@@ -436,6 +436,7 @@ public class DataAccess  {
 				}
 				db.persist(ea);
 				ea.addSales(sale);
+				sale.setAnitza(ea);
 				ea.gehituPrezioa(sale.getPrice());
 			}catch(UserAlreadyExistException e) {
 				b = false;
@@ -495,6 +496,22 @@ public class DataAccess  {
 		Chat c = db.find(Chat.class, idChat);
 		return c.getMezuak();
 	}
-	
+	public Double getKarritoPrezio(String username) {
+		double a = db.find(Seller.class, username).getKarrito().getPrezioa();
+		return a;
+	}
+	public void DESTROY(String usermail) {
+		Seller user = db.find(Seller.class, usermail);
+		ErosketaAnitza karrito = user.getErosketaAnitza();
+		db.getTransaction().begin();
+		
+		for(Sale s: karrito.getSales()) {
+			s.setAnitza(null);
+		}
+		user.setKarrito(null);
+		
+		db.remove(karrito);
+		db.getTransaction().commit();
+	}
 	
 }

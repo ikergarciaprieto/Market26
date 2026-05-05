@@ -262,6 +262,17 @@ public class BLFacadeImplementation  implements BLFacade {
     	dbManager.close();
     	return a;
     }
+    @WebMethod public Double getKarritoPrezio(String username) {
+    	dbManager.open();
+    	Double a = dbManager.getKarritoPrezio(username);
+    	dbManager.close();
+    	return a;
+    }
+    @WebMethod public void DESTROY(String username) {
+    	dbManager.open();
+    	dbManager.DESTROY(username);
+    	dbManager.close();
+    }
     
 }
 

@@ -203,6 +203,7 @@ public class ShowSaleGUI extends JFrame {
 		diruTotala.setBounds(301, 18, 69, 14);
 		getContentPane().add(diruTotala);
 		
+		
 		JButton jButtonKarritoa = new JButton(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.karrituraEraman"));
 		jButtonKarritoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -220,6 +221,11 @@ public class ShowSaleGUI extends JFrame {
 		jButtonKarritoa.setBounds(new Rectangle(16, 268, 114, 30));
 		jButtonKarritoa.setBounds(128, 296, 114, 30);
 		getContentPane().add(jButtonKarritoa);
+		
+		if(sale.getAnitza()!=null) {
+			jButtonBuy.setEnabled(false);
+			jButtonKarritoa.setEnabled(false);
+		}
 		
 	}	 
 	public BufferedImage rescale(BufferedImage originalImage)

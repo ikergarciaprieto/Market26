@@ -51,7 +51,7 @@ public class KarritoaIkusiGUI extends JFrame {
 		contentPane.setLayout(null);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(36, 88, 421, 175);
+		scrollPane.setBounds(36, 76, 421, 191);
 		contentPane.add(scrollPane);
 		
 		anitzalist = new JList();
@@ -60,7 +60,7 @@ public class KarritoaIkusiGUI extends JFrame {
 		
 		JLabel karritoLabel = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("KarritoaIkusiGUI.karritoa"));
 		karritoLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		karritoLabel.setBounds(156, 29, 272, 31);
+		karritoLabel.setBounds(36, 25, 272, 31);
 		contentPane.add(karritoLabel);
 		BLFacade facade = MainGUI.getBusinessLogic();
 		List<Sale> karrito=facade.obtainList(usermail);
@@ -91,18 +91,36 @@ public class KarritoaIkusiGUI extends JFrame {
 					}else {
 						throw new CartDoesntExistException(); 
 					}
+					facade.DESTROY(usermail);
 					
 				}catch(CartDoesntExistException e) {
 					abisuKarrito.setText(ResourceBundle.getBundle("Etiquetas").getString("KarritoaIkusiGUI.abisua"))	;
 				}
 			}
 		});
-		erosiKarBut.setBounds(499, 122, 105, 27);
+		erosiKarBut.setBounds(467, 148, 105, 27);
 		contentPane.add(erosiKarBut);
 		
 		abisuKarrito = new JLabel(); //$NON-NLS-1$ //$NON-NLS-2$
 		abisuKarrito.setBounds(460, 185, 188, 17);
 		contentPane.add(abisuKarrito);
+		
+		Double prez = facade.getKarritoPrezio(usermail);
+		
+
+		JLabel PrezioLabel = new JLabel(""+prez); //$NON-NLS-1$ //$NON-NLS-2$
+		PrezioLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		PrezioLabel.setBounds(467, 114, 105, 24);
+		contentPane.add(PrezioLabel);
+		
+		JButton DestroyBtn = new JButton((String) null);
+		DestroyBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				facade.DESTROY(usermail);
+			}
+		});
+		DestroyBtn.setBounds(36, 277, 143, 37);
+		contentPane.add(DestroyBtn);
 		
 		
 				

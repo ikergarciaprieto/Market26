@@ -29,7 +29,16 @@ public class Sale implements Serializable {
 	private String fileName;
 	private Boolean bought=false;
 	private Boolean erreklamatuta=false;
+	private ErosketaAnitza anitza = null;
 	
+	public ErosketaAnitza getAnitza() {
+		return anitza;
+	}
+
+	public void setAnitza(ErosketaAnitza anitza) {
+		this.anitza = anitza;
+	}
+
 	private Seller seller;  
 	
 	public Sale(){

@@ -41,7 +41,7 @@ public class ErosketaAnitza {
 	private Seller user;
 	
 	public ErosketaAnitza(Seller user, Seller seller) {
-		this.prezioa=0;
+		this.prezioa=0.0;
 		this.sales=new ArrayList<Sale>();
 		this.user=user;
 		this.seller=seller;

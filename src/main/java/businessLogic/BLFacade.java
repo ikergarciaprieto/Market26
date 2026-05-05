@@ -118,4 +118,8 @@ public interface BLFacade  {
 	@WebMethod public void mezuaBidali(String mail,Long idchat,String t);
 	
 	@WebMethod public List<Mezua> mezuakLortu(Long idChat);
+	
+	@WebMethod public Double getKarritoPrezio(String username);
+	
+	@WebMethod public void DESTROY(String username);
 }
