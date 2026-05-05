@@ -24,6 +24,8 @@ import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.JLabel;
 
+
+
 public class MezuakIkusiGUI extends JFrame {
 
 	private JPanel contentPane;
@@ -34,7 +36,17 @@ public class MezuakIkusiGUI extends JFrame {
     private JButton MezuakBilatuBtn;
     private JTextField textField;
     private JLabel lblNewLabel;
-
+    
+    public void updateList(Long idChat) {
+    	
+    	mezuList.removeAllElements();
+    	BLFacade facade = MainGUI.getBusinessLogic();
+    	List<Mezua> chat = facade.mezuakLortu(idChat);
+    	for(Mezua m: chat) {
+    		mezuList.addElement(m);
+    	}
+    	
+    }
 	/**
 	 * Create the frame.
 	 */
@@ -64,21 +76,7 @@ public class MezuakIkusiGUI extends JFrame {
 		});
 		contentPane.add(itxiBt);
 		
-		MezuakBilatuBtn = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MezuakIkusiGUI.MezuakBilatu"));
-		MezuakBilatuBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				mezuList.removeAllElements();
-				BLFacade facade = MainGUI.getBusinessLogic();
-				List<Mezua> chat = facade.mezuakLortu(idChat);
-				for(Mezua m: chat) {
-					mezuList.addElement(m);
-				}
-				
-			}
-		});
-		MezuakBilatuBtn.setBounds(10, 10, 177, 37);
-		contentPane.add(MezuakBilatuBtn);
+		updateList(idChat);
 		
 		textField = new JTextField();
 		textField.setText(""); //$NON-NLS-1$ //$NON-NLS-2$
@@ -98,11 +96,13 @@ public class MezuakIkusiGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String t = textField.getText();
 				lblNewLabel.setVisible(false);
+				
 				if(t.isEmpty()) {
 					lblNewLabel.setVisible(true);
 				}else {
 					BLFacade facade = MainGUI.getBusinessLogic();
 					facade.mezuaBidali(mail,idChat,t);
+					updateList(idChat);
 				}
 			}
 		});

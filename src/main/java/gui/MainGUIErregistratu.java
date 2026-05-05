@@ -164,7 +164,6 @@ public class MainGUIErregistratu extends JFrame {
 				a.setVisible(true);
 			}
 		});
-		btnMezua.setText((String) null);
 		btnMezua.setBounds(10, 222, 135, 21);
 		jContentPane.add(btnMezua);
 		
