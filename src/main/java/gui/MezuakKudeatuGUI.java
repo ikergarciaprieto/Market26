@@ -86,7 +86,7 @@ public class MezuakKudeatuGUI extends JFrame {
 					Chat c = Chatlist.get(anitzalist.getSelectedIndex());
 					System.out.println(c.toString()+"IKUSIKO DA");
 					
-					JFrame a = new MezuakIkusiGUI(mail,c);
+					JFrame a = new MezuakIkusiGUI(mail,c.getId());
 					a.setVisible(true);
 				}
 			}

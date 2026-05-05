@@ -38,7 +38,7 @@ public class MezuakIkusiGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MezuakIkusiGUI(String mail,Chat chat) {
+	public MezuakIkusiGUI(String mail,Long idChat) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 670, 359);
 		contentPane = new JPanel();
@@ -69,8 +69,9 @@ public class MezuakIkusiGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				mezuList.removeAllElements();
-				
-				for(Mezua m: chat.getMezuak()) {
+				BLFacade facade = MainGUI.getBusinessLogic();
+				List<Mezua> chat = facade.mezuakLortu(idChat);
+				for(Mezua m: chat) {
 					mezuList.addElement(m);
 				}
 				
@@ -101,7 +102,7 @@ public class MezuakIkusiGUI extends JFrame {
 					lblNewLabel.setVisible(true);
 				}else {
 					BLFacade facade = MainGUI.getBusinessLogic();
-					facade.mezuaBidali(mail,chat,t);
+					facade.mezuaBidali(mail,idChat,t);
 				}
 			}
 		});

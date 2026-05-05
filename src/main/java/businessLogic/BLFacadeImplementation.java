@@ -251,10 +251,16 @@ public class BLFacadeImplementation  implements BLFacade {
     @WebMethod public List<Mezua> mezuakLortu(Chat c){
     	return c.getMezuak();
     }
-    @WebMethod public void mezuaBidali(String mail,Chat chat,String t) {
+    @WebMethod public void mezuaBidali(String mail,Long idchat,String t) {
     	dbManager.open();
-    	dbManager.mezuaBidali(mail,chat,t);
+    	dbManager.mezuaBidali(mail,idchat,t);
     	dbManager.close();
+    }
+    @WebMethod public List<Mezua> mezuakLortu(Long idChat){
+    	dbManager.open();
+    	List<Mezua> a = dbManager.mezuakLortu(idChat);
+    	dbManager.close();
+    	return a;
     }
     
 }

@@ -115,5 +115,7 @@ public interface BLFacade  {
 	
 	@WebMethod public List<Mezua> mezuakLortu(Chat c);
 	
-	@WebMethod public void mezuaBidali(String mail,Chat chat,String t);
+	@WebMethod public void mezuaBidali(String mail,Long idchat,String t);
+	
+	@WebMethod public List<Mezua> mezuakLortu(Long idChat);
 }
