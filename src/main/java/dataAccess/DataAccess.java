@@ -423,10 +423,10 @@ public class DataAccess  {
 	public boolean karrituraEraman(String mail,int salenum) {
 		Seller user = db.find(Seller.class, mail);
 		Sale sale = db.find(Sale.class, salenum);
+		ErosketaAnitza ea = user.getKarrito();
 		boolean b = true;
 		db.getTransaction().begin();
 			try {
-				ErosketaAnitza ea = user.getKarrito();
 				if(ea==null) {
 					ea = user.createErosketaAnitza(sale);	
 				}else {//komprobatu pertsona berdinaren produktuak direla
@@ -444,16 +444,21 @@ public class DataAccess  {
 		db.getTransaction().commit();
 		return b;
 	}
-	public void karrituaErosi(String mail) {
+	public boolean karrituaErosi(String mail) {
+		boolean b;
 		Seller user=db.find(Seller.class, mail);
 		ErosketaAnitza ea = user.getKarrito();
 		Double dt=user.getDiruTotala();
 		Double p = ea.getPrezioa();
 		if(dt>=p) {
+			b=true;
 			db.getTransaction().begin();
 			ea.denaBought();
 			db.getTransaction().commit();
+		}else {
+			b=false;
 		}
+		return b;
 		
 	}
 	public List<Chat> chatakLortu(String mail) {
@@ -497,7 +502,11 @@ public class DataAccess  {
 		return c.getMezuak();
 	}
 	public Double getKarritoPrezio(String username) {
-		double a = db.find(Seller.class, username).getKarrito().getPrezioa();
+		ErosketaAnitza ea = db.find(Seller.class, username).getKarrito();
+		double a =0.0;
+		if(ea!=null) {
+			a = ea.getPrezioa();
+		}
 		return a;
 	}
 	public void DESTROY(String usermail) {
@@ -513,5 +522,12 @@ public class DataAccess  {
 		db.remove(karrito);
 		db.getTransaction().commit();
 	}
-	
+	public void kenduKarritotik(int idprod){
+		Sale s = db.find(Sale.class, idprod);
+		ErosketaAnitza ea = s.getAnitza();
+		db.getTransaction().begin();
+		ea.removeSale(s);
+		s.setAnitza(null);
+		db.getTransaction().commit();
+	}
 }

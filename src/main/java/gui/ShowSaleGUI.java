@@ -73,7 +73,7 @@ public class ShowSaleGUI extends JFrame {
 
 		
 		scrollPaneEvents.setBounds(new Rectangle(25, 44, 346, 116));
-		jButtonClose.setBounds(new Rectangle(6, 261, 114, 30));
+		jButtonClose.setBounds(new Rectangle(16, 257, 114, 20));
 		jButtonClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				thisFrame.setVisible(false);
@@ -166,7 +166,7 @@ public class ShowSaleGUI extends JFrame {
 		if(sale.isBougth() || sale.getSeller().getEmail().equals(zuremail)) {
 			jButtonBuy.setEnabled(false);
 		}
-		jButtonBuy.setBounds(130, 261, 114, 30);
+		jButtonBuy.setBounds(140, 257, 114, 20);
 		getContentPane().add(jButtonBuy);
 		
 		JButton jButtonAccount = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Account")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -219,7 +219,7 @@ public class ShowSaleGUI extends JFrame {
 		});
 		jButtonKarritoa.setEnabled(true);
 		jButtonKarritoa.setBounds(new Rectangle(16, 268, 114, 30));
-		jButtonKarritoa.setBounds(128, 296, 114, 30);
+		jButtonKarritoa.setBounds(49, 282, 172, 20);
 		getContentPane().add(jButtonKarritoa);
 		
 		if(sale.getAnitza()!=null) {

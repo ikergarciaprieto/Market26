@@ -67,11 +67,6 @@ public class ErosketaAnitza {
 		this.user = user;
 	}
 	
-	public void DESTROY() {
-		this.sales=null;;
-		this.prezioa=0.0;
-		this.seller= null;
-	}
 	
 	public void addSales(Sale s) {
 		this.sales.add(s);
@@ -93,7 +88,10 @@ public class ErosketaAnitza {
 		Date date = UtilDate.trim(new Date());
 		seller.addMugimendua(date, azalpena, prezioa);
 		user.addMugimendua(date,azalpena,-prezioa);
-		DESTROY();
+		
+	}
+	public void removeSale(Sale sale) {
+		this.sales.remove(sale);
 	}
 	
 }

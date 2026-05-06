@@ -231,10 +231,11 @@ public class BLFacadeImplementation  implements BLFacade {
     	
     }
     
-    @WebMethod public void karrituaErosi(String mail) {
+    @WebMethod public boolean karrituaErosi(String mail) {
     	dbManager.open();
-    	dbManager.karrituaErosi(mail);
+    	boolean b =dbManager.karrituaErosi(mail);
     	dbManager.close();
+    	return b;
     }
     @WebMethod public List<Chat> chatakLortu(String mail) {
     	dbManager.open();
@@ -271,6 +272,11 @@ public class BLFacadeImplementation  implements BLFacade {
     @WebMethod public void DESTROY(String username) {
     	dbManager.open();
     	dbManager.DESTROY(username);
+    	dbManager.close();
+    }
+    @WebMethod public void kenduKarritotik(int idprod) {
+    	dbManager.open();
+    	dbManager.kenduKarritotik(idprod);
     	dbManager.close();
     }
     

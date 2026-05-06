@@ -107,7 +107,7 @@ public interface BLFacade  {
 	
 	@WebMethod public boolean karrituraEraman(String mail,int salenum);	
 	
-	@WebMethod public void karrituaErosi(String mail);
+	@WebMethod public boolean karrituaErosi(String mail);
 	
 	@WebMethod public List<Chat> chatakLortu(String mail);
 	
@@ -122,4 +122,6 @@ public interface BLFacade  {
 	@WebMethod public Double getKarritoPrezio(String username);
 	
 	@WebMethod public void DESTROY(String username);
+	
+	@WebMethod public void kenduKarritotik(int idprod);
 }
