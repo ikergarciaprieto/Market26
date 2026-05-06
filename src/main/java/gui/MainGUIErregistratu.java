@@ -51,6 +51,7 @@ public class MainGUIErregistratu extends JFrame {
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JButton btnMugimenduak;
 	private JButton btnMezua;
+	private JButton btnEskaerak;
 	
 	/**
 	 * This is the default constructor
@@ -167,6 +168,16 @@ public class MainGUIErregistratu extends JFrame {
 		btnMezua.setBounds(10, 222, 135, 21);
 		jContentPane.add(btnMezua);
 		
+		btnEskaerak = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Eskaerak"));
+		btnEskaerak.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame a = new EskaerakKudeatuGUI(mail);
+				a.setVisible(true);
+			}
+		});
+		btnEskaerak.setBounds(336, 222, 135, 21);
+		jContentPane.add(btnEskaerak);
+		
 		setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.MainTitle") +": "+sellerMail);
 		
 		addWindowListener(new WindowAdapter() {
@@ -187,6 +198,7 @@ public class MainGUIErregistratu extends JFrame {
 		this.setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.MainTitle")+ ": "+sellerMail);
 		btnMugimenduak.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Erreklamazioak"));
 		btnMov.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Mov"));
+		btnEskaerak.setText(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Eskaerak"));
 	}
 } // @jve:decl-index=0:visual-constraint="0,0"
 

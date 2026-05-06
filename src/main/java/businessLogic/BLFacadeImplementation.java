@@ -279,6 +279,11 @@ public class BLFacadeImplementation  implements BLFacade {
     	dbManager.kenduKarritotik(idprod);
     	dbManager.close();
     }
+    @WebMethod public void eskaeraSortu(String title,String desk,String zuremail) {
+    	dbManager.open();
+    	dbManager.eskaeraSortu(title,desk,zuremail);
+    	dbManager.close();
+    }
     
 }
 

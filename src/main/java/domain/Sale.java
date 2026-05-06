@@ -30,7 +30,16 @@ public class Sale implements Serializable {
 	private Boolean bought=false;
 	private Boolean erreklamatuta=false;
 	private ErosketaAnitza anitza = null;
+	private Eskaera eskaeran = null;
 	
+	public Eskaera getEskaeran() {
+		return eskaeran;
+	}
+
+	public void setEskaeran(Eskaera eskaeran) {
+		this.eskaeran = eskaeran;
+	}
+
 	public ErosketaAnitza getAnitza() {
 		return anitza;
 	}

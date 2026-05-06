@@ -20,9 +20,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class Eskaera {
 	@XmlID
 	@Id 
-	@XmlJavaTypeAdapter(IntegerAdapter.class)
 	@GeneratedValue
-	private String eskaeraNumber;
+    private Long eskaeraNumber;
 	private String title;
 	private String desk;
 	@XmlIDREF
@@ -37,6 +36,60 @@ public class Eskaera {
 		this.user=user;
 	}
 	
+	public Long getEskaeraNumber() {
+		return eskaeraNumber;
+	}
+
+
+	public void setEskaeraNumber(Long eskaeraNumber) {
+		this.eskaeraNumber = eskaeraNumber;
+	}
+
+
+	public String getTitle() {
+		return title;
+	}
+
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+
+	public String getDesk() {
+		return desk;
+	}
+
+
+	public void setDesk(String desk) {
+		this.desk = desk;
+	}
+
+
+	public List<Sale> getSales() {
+		return sales;
+	}
+
+
+	public void setSales(List<Sale> sales) {
+		this.sales = sales;
+	}
+
+
+	public Seller getUser() {
+		return user;
+	}
+
+
+	public void setUser(Seller user) {
+		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		return (this.title+" ["+this.desk+"]");
+	}
+
 	
 
 }

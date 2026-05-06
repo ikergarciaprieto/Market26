@@ -124,4 +124,6 @@ public interface BLFacade  {
 	@WebMethod public void DESTROY(String username);
 	
 	@WebMethod public void kenduKarritotik(int idprod);
+	
+	@WebMethod public void eskaeraSortu(String title,String desk,String zuremail);
 }

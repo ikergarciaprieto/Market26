@@ -25,6 +25,7 @@ import domain.Admin;
 import domain.Chat;
 import domain.ErosketaAnitza;
 import domain.Erreklamazioa;
+import domain.Eskaera;
 import domain.Mezua;
 import domain.Mugimendua;
 import domain.Sale;
@@ -528,6 +529,13 @@ public class DataAccess  {
 		db.getTransaction().begin();
 		ea.removeSale(s);
 		s.setAnitza(null);
+		db.getTransaction().commit();
+	}
+	public void eskaeraSortu(String title,String desk,String zuremail) {
+		Seller user = db.find(Seller.class, zuremail);
+		db.getTransaction().begin();
+		Eskaera e = user.createEskaera(title, desk);
+		db.persist(e);
 		db.getTransaction().commit();
 	}
 }

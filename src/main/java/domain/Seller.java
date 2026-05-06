@@ -46,6 +46,7 @@ public class Seller implements Serializable {
 	@XmlIDREF
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private List<Eskaera> eskaerak= new ArrayList<Eskaera>();
+	
 	@XmlIDREF
 	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
 	private List<Chat> chats= new ArrayList<Chat>();
@@ -90,6 +91,16 @@ public class Seller implements Serializable {
 		this.name = name;
 	}
 	
+	public List<Eskaera> getEskaerak() {
+		return eskaerak;
+	}
+
+	public void setEskaerak(List<Eskaera> eskaerak) {
+		this.eskaerak = eskaerak;
+	}
+	public void addEskaera(Eskaera eskaera) {
+		this.eskaerak.add(eskaera);
+	}
 	
 	public String getEmail() {
 		return email;
@@ -279,5 +290,11 @@ public void diruaSartu(double diruKop, Date data) {
 		this.chats.add(a);
 		nori.chats.add(a);
 		return a;
+	}
+	public Eskaera createEskaera(String title, String desk) {
+		Eskaera e = new Eskaera(title,desk,this);
+		this.eskaerak.add(e);
+		return e;
+		
 	}
 }
