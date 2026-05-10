@@ -51,7 +51,7 @@ public class ShowSaleGUI extends JFrame {
 	private JLabel diruaString;
 	private JLabel diruTotala;
 	
-	public ShowSaleGUI(Sale sale,String zuremail) { 
+	public ShowSaleGUI(Sale sale,String zuremail,QuerySalesGUI parentGUI) { 
 		thisFrame=this; 
 		this.setVisible(true);
 		this.getContentPane().setLayout(null);
@@ -211,6 +211,11 @@ public class ShowSaleGUI extends JFrame {
 				jButtonKarritoa.setEnabled(false);
 				BLFacade facade = MainGUI.getBusinessLogic();
 				boolean b = facade.karrituraEraman(zuremail,sale.getSaleNumber());
+				if(b) {
+					if(parentGUI != null) {
+						parentGUI.igoKarritoNum();
+					}
+				}
 				if(!b) {//ondo ez da joan
 					errorText.setVisible(true);
 					errorText.setText(ResourceBundle.getBundle("Etiquetas").getString("ShowSaleGUI.erroreEzinBesteSeller"));

@@ -106,7 +106,7 @@ public class ShowAccount extends JFrame {
 		btnShowSale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(selectedSale!=null) {
-					JFrame a=new ShowSaleGUI(selectedSale,zuremail);
+					JFrame a=new ShowSaleGUI(selectedSale,zuremail,null);
 					a.setVisible(true);
 				}else {
 					lblWarn.setText(ResourceBundle.getBundle("Etiquetas").getString("Warning"));

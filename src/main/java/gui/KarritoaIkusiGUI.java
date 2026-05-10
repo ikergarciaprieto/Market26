@@ -69,7 +69,7 @@ public class KarritoaIkusiGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public KarritoaIkusiGUI(String usermail) {
+	public KarritoaIkusiGUI(String usermail, QuerySalesGUI parentGUI) {
 		thisFrame= this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 670, 359);
@@ -151,6 +151,7 @@ public class KarritoaIkusiGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				BLFacade facade = MainGUI.getBusinessLogic();
 				facade.DESTROY(usermail);
+				parentGUI.updateNum();
 				updateKarrito(usermail);
 			}
 		});
@@ -164,6 +165,9 @@ public class KarritoaIkusiGUI extends JFrame {
 					BLFacade facade = MainGUI.getBusinessLogic();
 					Sale s = saleInfo.get(anitzalist.getSelectedIndex());
 					facade.kenduKarritotik(s.getSaleNumber());
+					if(parentGUI != null) {
+					    parentGUI.jaitsiKarritoNum();
+					}
 				}
 				updateKarrito(usermail);
 			}

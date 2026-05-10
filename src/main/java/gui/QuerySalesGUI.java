@@ -3,6 +3,7 @@ package gui;
 import businessLogic.BLFacade;
 import configuration.UtilDate;
 import domain.Sale;
+import domain.Seller;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,6 +40,29 @@ public class QuerySalesGUI extends JFrame {
 
 	};
 	private JTextField jTextFieldSearch;
+	private JLabel badgeLabel;
+	
+	public void igoKarritoNum() {
+	    int update = Integer.parseInt(badgeLabel.getText());
+	    badgeLabel.setText(String.valueOf(update + 1));
+	    badgeLabel.setVisible(true);
+	}
+	
+	public void jaitsiKarritoNum() {
+	    int update = Integer.parseInt(badgeLabel.getText());
+
+	    if(update > 0) {
+	        badgeLabel.setText(String.valueOf(update - 1));
+	    }
+	    if (update == 1) {
+	    	badgeLabel.setVisible(false);
+	    }
+	}
+	
+	public void updateNum() {
+		badgeLabel.setText(String.valueOf(0));
+		badgeLabel.setVisible(false);
+	}
 	
 
 	public QuerySalesGUI(String email) {
@@ -123,26 +147,58 @@ public class QuerySalesGUI extends JFrame {
 		jButtonSearch.setBounds(427, 56, 117, 29);
 		getContentPane().add(jButtonSearch);
 		
+		URL iconURL = getClass().getResource("/images/carro-de-la-compra.png");
 		
-		karritoButton = new JButton(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.karritoaikusi")); //$NON-NLS-1$ //$NON-NLS-2$
-		karritoButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				JFrame a= new KarritoaIkusiGUI(email);
-				a.setVisible(true);
-			}
-		});
-		karritoButton.setBounds(494, 381, 130, 27);
+		ImageIcon originalIcon = new ImageIcon(iconURL);
+		Image img = originalIcon.getImage();
+		Image scaledImg = img.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+		errekIcon = new ImageIcon(scaledImg);
+		karritoButton = new JButton(errekIcon);
+		karritoButton.setToolTipText(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.karritoaikusi"));
+		karritoButton.setBounds(561, 381, 56, 49);
 		getContentPane().add(karritoButton);
 		
-		JButton eskaeraButton = new JButton(""); //$NON-NLS-1$ //$NON-NLS-2$
-		eskaeraButton.addActionListener(new ActionListener() {
+		//Zenbaki gorria
+		int n = 0;
+		BLFacade facade = MainGUI.getBusinessLogic();
+		Seller user = facade.getUser(email);
+		if (user.getKarrito() != null) {
+			for(Sale s : user.getKarrito().getSales()) {
+				n = n + 1;
+				System.out.println(s);
+			}
+		}
+				
+		
+		karritoButton.setLayout(null);
+		
+		badgeLabel = new JLabel(String.valueOf(n));
+		badgeLabel.setBounds(47, 0, 10,16);
+		badgeLabel.setFont(new Font("Arial", Font.BOLD, 10));
+		badgeLabel.setForeground(Color.WHITE);
+		badgeLabel.setBackground(Color.RED);
+		badgeLabel.setOpaque(true);
+		badgeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		badgeLabel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+		
+		
+		if(n==0) {
+			badgeLabel.setVisible(false);
+		}
+		else {
+			badgeLabel.setVisible(true); 
+		}
+		
+		karritoButton.add(badgeLabel);
+		karritoButton.setComponentZOrder(badgeLabel, 0);
+
+		karritoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JFrame a= new EskaerakIkusiGUI(email);
+				JFrame a= new KarritoaIkusiGUI(email, QuerySalesGUI.this);
 				a.setVisible(true);
 			}
 		});
-		eskaeraButton.setBounds(34, 381, 105, 27);
-		getContentPane().add(eskaeraButton);
+		
 		
 	    
 		tableProducts.addMouseListener(new MouseAdapter() {
@@ -155,7 +211,7 @@ public class QuerySalesGUI extends JFrame {
 		            	Point point = mouseEvent.getPoint();
 				        int row = table.rowAtPoint(point);
 		            	Sale s=(Sale) tableModelProducts.getValueAt(row, 3);
-			            new ShowSaleGUI(s,email);
+			            new ShowSaleGUI(s,email, QuerySalesGUI.this);
 		            }
 		        }
 		 });
