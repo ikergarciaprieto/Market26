@@ -191,6 +191,16 @@ public class QuerySalesGUI extends JFrame {
 		
 		karritoButton.add(badgeLabel);
 		karritoButton.setComponentZOrder(badgeLabel, 0);
+		
+		JButton eskariButt = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Eskaerak")); //$NON-NLS-1$ //$NON-NLS-2$
+		eskariButt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFrame a= new EskaerakIkusiGUI(email);
+				a.setVisible(true);
+			}
+		});
+		eskariButt.setBounds(30, 381, 105, 27);
+		getContentPane().add(eskariButt);
 
 		karritoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -198,6 +208,8 @@ public class QuerySalesGUI extends JFrame {
 				a.setVisible(true);
 			}
 		});
+		
+		
 		
 		
 	    

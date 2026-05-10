@@ -41,6 +41,7 @@ public class KarritoaIkusiGUI extends JFrame {
     private JButton KenduProdBtn;
     private JButton erosiKarBut;
     private JButton DestroyBtn;
+    private JLabel erositeLabel;
     
 	/**
 	 * Launch the application.
@@ -55,8 +56,11 @@ public class KarritoaIkusiGUI extends JFrame {
 			KenduProdBtn.setEnabled(true);
 			saleInfo.removeAllElements();
 			for(int i=0; i< karrito.size(); i++) {
+				
 				saleInfo.addElement(karrito.get(i));
+			
 			}
+			
 		}else {//karrito == null
 			KenduProdBtn.setEnabled(false);
 			erosiKarBut.setEnabled(false);
@@ -174,6 +178,10 @@ public class KarritoaIkusiGUI extends JFrame {
 		});
 		KenduProdBtn.setBounds(467, 172, 143, 31);
 		contentPane.add(KenduProdBtn);
+		
+		erositeLabel = new JLabel(""); //$NON-NLS-1$ //$NON-NLS-2$
+		erositeLabel.setBounds(449, 32, 60, 17);
+		contentPane.add(erositeLabel);
 		
 		updateKarrito(usermail);
 				

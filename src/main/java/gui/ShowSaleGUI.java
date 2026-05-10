@@ -227,10 +227,11 @@ public class ShowSaleGUI extends JFrame {
 		jButtonKarritoa.setBounds(49, 282, 172, 20);
 		getContentPane().add(jButtonKarritoa);
 		
-		if(sale.getAnitza()!=null) {
+		if(sale.getAnitza()!=null || sale.getEskaeran()!=null) {
 			jButtonBuy.setEnabled(false);
 			jButtonKarritoa.setEnabled(false);
 		}
+		
 		
 	}	 
 	public BufferedImage rescale(BufferedImage originalImage)

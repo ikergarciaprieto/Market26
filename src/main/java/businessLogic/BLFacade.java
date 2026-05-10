@@ -129,4 +129,7 @@ public interface BLFacade  {
 	@WebMethod public void eskaeraSortu(String title,String desk,String zuremail);
 	
 	@WebMethod public List<Eskaera> getEskaerak();
+
+
+	@WebMethod public void addSaletoEsk(Integer saleNumber, Long eskaeraNumber);
 }

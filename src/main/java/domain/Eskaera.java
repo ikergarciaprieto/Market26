@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -34,6 +35,7 @@ public class Eskaera {
 		this.title=title;
 		this.desk=desk;
 		this.user=user;
+		this.sales= new ArrayList<Sale>();
 	}
 	
 	public Long getEskaeraNumber() {
@@ -83,6 +85,11 @@ public class Eskaera {
 
 	public void setUser(Seller user) {
 		this.user = user;
+	}
+	
+	public void addSale(Sale s) {
+		sales.add(s);
+		s.setEskaeran(this);
 	}
 
 	@Override

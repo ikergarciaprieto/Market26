@@ -80,6 +80,7 @@ public class ErosketaAnitza {
 		String azalpena="";
 		for(int i=0; i<sales.size(); i++) {
 			si= sales.get(i);
+			
 			user.addBoughtWithoutMugi(si);
 			azalpena+=si.getTitle()+ "";
 		}

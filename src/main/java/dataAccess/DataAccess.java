@@ -546,4 +546,18 @@ public class DataAccess  {
 		
 		
 	}
+	public void addSaletoEsk(Integer saleNumber, Long eskaeraNumber) {
+		Sale s= db.find(Sale.class, saleNumber);
+		Eskaera e = db.find(Eskaera.class, eskaeraNumber);
+		db.getTransaction().begin();
+		e.addSale(s);
+		db.getTransaction().commit();
+		
+	}
+	
+	
+	
+	
+	
+	
 }

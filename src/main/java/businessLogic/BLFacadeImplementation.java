@@ -292,6 +292,11 @@ public class BLFacadeImplementation  implements BLFacade {
     	dbManager.close();
     	return a;
     }
+    public void addSaletoEsk(Integer saleNumber, Long eskaeraNumber) {
+    	dbManager.open();
+    	dbManager.addSaletoEsk(saleNumber, eskaeraNumber);
+    	dbManager.close();
+    }
     
 }
 

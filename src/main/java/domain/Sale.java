@@ -35,6 +35,7 @@ public class Sale implements Serializable {
 	public Eskaera getEskaeran() {
 		return eskaeran;
 	}
+	
 
 	public void setEskaeran(Eskaera eskaeran) {
 		this.eskaeran = eskaeran;
@@ -251,6 +252,7 @@ public class Sale implements Serializable {
 	public String toString(){
 		return saleNumber+";"+title+";"+price;  
 	}
+	
 	
 	@Override
 	public boolean equals(Object obj) {
