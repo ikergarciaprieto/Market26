@@ -10,6 +10,7 @@ import dataAccess.DataAccess;
 import domain.Admin;
 import domain.Chat;
 import domain.Erreklamazioa;
+import domain.Eskaera;
 import domain.Mezua;
 import domain.Mugimendua;
 import domain.Sale;
@@ -283,6 +284,13 @@ public class BLFacadeImplementation  implements BLFacade {
     	dbManager.open();
     	dbManager.eskaeraSortu(title,desk,zuremail);
     	dbManager.close();
+    }
+    
+    public List<Eskaera> getEskaerak(){
+    	dbManager.open();
+    	List <Eskaera>a=dbManager.getEskaerak();
+    	dbManager.close();
+    	return a;
     }
     
 }

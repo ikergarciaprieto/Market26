@@ -134,6 +134,16 @@ public class QuerySalesGUI extends JFrame {
 		karritoButton.setBounds(494, 381, 130, 27);
 		getContentPane().add(karritoButton);
 		
+		JButton eskaeraButton = new JButton(""); //$NON-NLS-1$ //$NON-NLS-2$
+		eskaeraButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFrame a= new EskaerakIkusiGUI(email);
+				a.setVisible(true);
+			}
+		});
+		eskaeraButton.setBounds(34, 381, 105, 27);
+		getContentPane().add(eskaeraButton);
+		
 	    
 		tableProducts.addMouseListener(new MouseAdapter() {
 		        @Override

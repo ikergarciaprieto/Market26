@@ -7,6 +7,7 @@ import java.util.List;
 import domain.Admin;
 import domain.Chat;
 import domain.Erreklamazioa;
+import domain.Eskaera;
 import domain.Mezua;
 import domain.Mugimendua;
 import domain.Sale;
@@ -126,4 +127,6 @@ public interface BLFacade  {
 	@WebMethod public void kenduKarritotik(int idprod);
 	
 	@WebMethod public void eskaeraSortu(String title,String desk,String zuremail);
+	
+	@WebMethod public List<Eskaera> getEskaerak();
 }

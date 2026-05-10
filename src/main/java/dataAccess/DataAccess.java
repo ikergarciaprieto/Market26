@@ -16,6 +16,7 @@ import javax.jws.WebMethod;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import configuration.ConfigXML;
@@ -537,5 +538,12 @@ public class DataAccess  {
 		Eskaera e = user.createEskaera(title, desk);
 		db.persist(e);
 		db.getTransaction().commit();
+	}
+	public List<Eskaera> getEskaerak(){
+		TypedQuery<Eskaera> query= db.createQuery("SELECT e FROM Eskaera e", Eskaera.class);
+		List<Eskaera> eskaList=query.getResultList();
+		return eskaList;
+		
+		
 	}
 }
