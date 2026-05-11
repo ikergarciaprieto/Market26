@@ -20,9 +20,17 @@ import businessLogic.BLFacade;
 import domain.Chat;
 import domain.Mezua;
 import domain.Sale;
+import domain.Seller;
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.JLabel;
+
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.FlowLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.ListCellRenderer;
 
 
 
@@ -31,11 +39,13 @@ public class MezuakIkusiGUI extends JFrame {
 	private JPanel contentPane;
 	private JFrame thisFrame;
 	private JScrollPane scrollPane;
-    private JList anitzalist ;
+    private JList<Mezua> anitzalist ;
     private DefaultListModel<Mezua> mezuList = new DefaultListModel<Mezua>();
     private JButton MezuakBilatuBtn;
     private JTextField textField;
     private JLabel lblNewLabel;
+    private String userMail;
+    private JLabel chatNameLabel;
     
     public void updateList(Long idChat) {
     	
@@ -50,7 +60,8 @@ public class MezuakIkusiGUI extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MezuakIkusiGUI(String mail,Long idChat) {
+	public MezuakIkusiGUI(String mail,Long idChat, String besteUser) {
+		this.userMail = mail;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 670, 359);
 		contentPane = new JPanel();
@@ -59,11 +70,17 @@ public class MezuakIkusiGUI extends JFrame {
 		contentPane.setLayout(null);
 		thisFrame=this;
 		
+		chatNameLabel = new JLabel(besteUser);
+		chatNameLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+		chatNameLabel.setBounds(10, 10, 300, 30);
+		contentPane.add(chatNameLabel);
+		
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 57, 411, 252);
 		contentPane.add(scrollPane);
 		
-		anitzalist = new JList();
+		anitzalist = new JList<>();
+		anitzalist.setCellRenderer(new MessageRenderer());
 		anitzalist.setModel(mezuList);
 		scrollPane.setViewportView(anitzalist);
 		
@@ -111,5 +128,55 @@ public class MezuakIkusiGUI extends JFrame {
 		
 		
 		
+	}
+	class MessageRenderer extends JPanel implements ListCellRenderer<Mezua> {
+
+	    private JLabel messageLabel = new JLabel();
+
+	    public MessageRenderer() {
+
+	        setLayout(new BorderLayout());
+
+	        messageLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+
+	        add(messageLabel, BorderLayout.CENTER);
+	    }
+
+	    @Override
+	    public Component getListCellRendererComponent(
+	            JList<? extends Mezua> list,
+	            Mezua value,
+	            int index,
+	            boolean isSelected,
+	            boolean cellHasFocus) {
+
+	        removeAll();
+
+	        messageLabel = new JLabel(value.getMezua());
+
+	        // Bidalitako mezua
+	        if(value.getBidaliDuena().getEmail().equals(userMail)) {
+
+	            setLayout(new FlowLayout(FlowLayout.RIGHT));
+
+	            messageLabel.setOpaque(true);
+	            messageLabel.setBackground(new Color(180, 255, 180));
+
+	        } else {
+
+	            // Jasotako mezua
+	            setLayout(new FlowLayout(FlowLayout.LEFT));
+
+	            messageLabel.setOpaque(true);
+	            messageLabel.setBackground(new Color(220, 220, 220));
+	        }
+
+	        messageLabel.setBorder(
+	                BorderFactory.createEmptyBorder(10,10,10,10));
+
+	        add(messageLabel);
+
+	        return this;
+	    }
 	}
 }

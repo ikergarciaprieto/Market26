@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +19,7 @@ import javax.swing.border.EmptyBorder;
 import businessLogic.BLFacade;
 import domain.Chat;
 import domain.Sale;
+import domain.Seller;
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.JLabel;
@@ -85,8 +87,16 @@ public class MezuakKudeatuGUI extends JFrame {
 				if(anitzalist.getSelectedIndex()!=-1) {
 					Chat c = Chatlist.get(anitzalist.getSelectedIndex());
 					System.out.println(c.toString()+"IKUSIKO DA");
+					String othermail;
+					System.out.println(c.getUser2().getEmail() + " eta " + c.getUser1().getEmail());
+					if(c.getUser1().getEmail().equals(mail)) {
+						othermail = c.getUser2().getEmail();
+					}
+					else {
+						othermail = c.getUser1().getEmail();
+					}
 					
-					JFrame a = new MezuakIkusiGUI(mail,c.getId());
+					JFrame a = new MezuakIkusiGUI(mail,c.getId(), othermail);
 					a.setVisible(true);
 				}
 			}
@@ -125,6 +135,7 @@ public class MezuakKudeatuGUI extends JFrame {
 		textField.setColumns(10);
 		
 		errortext = new JLabel();//$NON-NLS-1$ //$NON-NLS-2$
+		errortext.setForeground(Color.RED);
 		errortext.setBounds(270, 84, 328, 17);
 		contentPane.add(errortext);
 		
