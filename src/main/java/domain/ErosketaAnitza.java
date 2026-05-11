@@ -82,7 +82,10 @@ public class ErosketaAnitza {
 			si= sales.get(i);
 			
 			user.addBoughtWithoutMugi(si);
-			azalpena+=si.getTitle()+ "";
+			azalpena+=si.getTitle();
+			if (i + 1 < sales.size()) {
+				azalpena+="/";
+			}
 		}
 		Double dt=seller.getDiruTotala();
 		seller.setDiruTotala(dt+prezioa);

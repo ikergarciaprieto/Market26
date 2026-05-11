@@ -450,7 +450,7 @@ public class DataAccess  {
 		boolean b;
 		Seller user=db.find(Seller.class, mail);
 		ErosketaAnitza ea = user.getKarrito();
-		Double dt=user.getDiruTotala();
+		Double dt= user.getDiruTotala();
 		Double p = ea.getPrezioa();
 		if(dt>=p) {
 			b=true;
@@ -528,6 +528,7 @@ public class DataAccess  {
 		Sale s = db.find(Sale.class, idprod);
 		ErosketaAnitza ea = s.getAnitza();
 		db.getTransaction().begin();
+		ea.setPrezioa(ea.getPrezioa() - s.getPrice());
 		ea.removeSale(s);
 		s.setAnitza(null);
 		db.getTransaction().commit();

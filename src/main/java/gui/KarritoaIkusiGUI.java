@@ -3,6 +3,8 @@ package gui;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -12,6 +14,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.ListCellRenderer;
+import javax.swing.BorderFactory;
 
 import businessLogic.BLFacade;
 import domain.Chat;
@@ -26,19 +30,19 @@ import java.awt.Font;
 import java.awt.Color;
 
 
+
 public class KarritoaIkusiGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JScrollPane scrollPane;
-    private JList anitzalist ;
+    private JList<Sale> anitzalist ;
     private DefaultListModel<Sale> saleInfo = new DefaultListModel<Sale>();
     private JFrame thisFrame;
     private JButton ikusKarritoa;
     private JLabel abisuKarrito;
     private Double prez;
     private JLabel PrezioLabel;
-    private JButton KenduProdBtn;
     private JButton erosiKarBut;
     private JButton DestroyBtn;
     private JLabel erositeLabel;
@@ -53,7 +57,6 @@ public class KarritoaIkusiGUI extends JFrame {
 		prez = facade.getKarritoPrezio(usermail);
 		PrezioLabel.setText(""+prez);
 		if(karrito!=null) {
-			KenduProdBtn.setEnabled(true);
 			saleInfo.removeAllElements();
 			for(int i=0; i< karrito.size(); i++) {
 				
@@ -62,7 +65,6 @@ public class KarritoaIkusiGUI extends JFrame {
 			}
 			
 		}else {//karrito == null
-			KenduProdBtn.setEnabled(false);
 			erosiKarBut.setEnabled(false);
 			DestroyBtn.setEnabled(false);
 			saleInfo.removeAllElements();
@@ -86,7 +88,40 @@ public class KarritoaIkusiGUI extends JFrame {
 		scrollPane.setBounds(36, 76, 421, 191);
 		contentPane.add(scrollPane);
 		
-		anitzalist = new JList();
+		anitzalist = new JList<>();
+		anitzalist.setCellRenderer(new SaleRenderer());
+		anitzalist.addMouseListener(new java.awt.event.MouseAdapter() {
+
+		    @Override
+		    public void mouseClicked(java.awt.event.MouseEvent e) {
+
+		        int index = anitzalist.locationToIndex(e.getPoint());
+
+		        if (index != -1) {
+		            java.awt.Rectangle cellBounds = anitzalist.getCellBounds(index, index);
+		            int xLimit = cellBounds.x + cellBounds.width - 30;
+
+		            // X-n klikatzean
+		            if (e.getX() >= xLimit) {
+
+		                BLFacade facade = MainGUI.getBusinessLogic();
+
+		                Sale s = saleInfo.get(index);
+		                prez = prez - s.getPrice();
+		                PrezioLabel.setText("" + prez);
+		           
+		                facade.kenduKarritotik(s.getSaleNumber());
+
+		                if(parentGUI != null) {
+		                    parentGUI.jaitsiKarritoNum();
+		                }
+		                updateKarrito(usermail);
+
+		                
+		            }
+		        }
+		    }
+		});
 		anitzalist.setModel(saleInfo);
 		scrollPane.setViewportView(anitzalist);
 		
@@ -130,6 +165,7 @@ public class KarritoaIkusiGUI extends JFrame {
 					abisuKarrito.setVisible(true);
 					abisuKarrito.setText(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.NotEnoughMoneyException"))	;
 				}
+				parentGUI.updateNum();
 				updateKarrito(usermail);
 			}
 		});
@@ -162,23 +198,6 @@ public class KarritoaIkusiGUI extends JFrame {
 		DestroyBtn.setBounds(467, 210, 143, 31);
 		contentPane.add(DestroyBtn);
 		
-		 KenduProdBtn = new JButton(ResourceBundle.getBundle("Etiquetas").getString("KarritoaIkusiGUI.Kendu"));
-		KenduProdBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(anitzalist.getSelectedIndex()!=-1) {
-					BLFacade facade = MainGUI.getBusinessLogic();
-					Sale s = saleInfo.get(anitzalist.getSelectedIndex());
-					facade.kenduKarritotik(s.getSaleNumber());
-					if(parentGUI != null) {
-					    parentGUI.jaitsiKarritoNum();
-					}
-				}
-				updateKarrito(usermail);
-			}
-		});
-		KenduProdBtn.setBounds(467, 172, 143, 31);
-		contentPane.add(KenduProdBtn);
-		
 		erositeLabel = new JLabel(""); //$NON-NLS-1$ //$NON-NLS-2$
 		erositeLabel.setBounds(449, 32, 60, 17);
 		contentPane.add(erositeLabel);
@@ -189,5 +208,44 @@ public class KarritoaIkusiGUI extends JFrame {
 		
 		
 
+	}
+	public class SaleRenderer extends JPanel implements ListCellRenderer<Sale> {
+
+	    private JLabel textLabel = new JLabel();
+	    private JLabel removeLabel = new JLabel("X");
+
+	    public SaleRenderer() {
+	        setLayout(new BorderLayout());
+
+	        removeLabel.setForeground(Color.RED);
+
+	        add(textLabel, BorderLayout.CENTER);
+	        add(removeLabel, BorderLayout.EAST);
+
+	        setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 10));
+	    }
+
+	    @Override
+	    public Component getListCellRendererComponent(
+	            JList<? extends Sale> list,
+	            Sale value,
+	            int index,
+	            boolean isSelected,
+	            boolean cellHasFocus) {
+
+	        textLabel.setText(value.toString());
+
+	        if (isSelected) {
+	            setBackground(list.getSelectionBackground());
+	            setForeground(list.getSelectionForeground());
+	        } else {
+	            setBackground(list.getBackground());
+	            setForeground(list.getForeground());
+	        }
+
+	        setOpaque(true);
+
+	        return this;
+	    }
 	}
 }
