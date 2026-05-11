@@ -115,6 +115,10 @@ public class BLFacadeImplementation  implements BLFacade {
         return null;
     }
     
+    public List<String> getUserEmails() {
+        return dbManager.getUserEmails();
+    }
+    
     @WebMethod public Seller isUserLogin(String username, String password) {
     	dbManager.open();
 		Seller  b=dbManager.isUserLogin(username, password);

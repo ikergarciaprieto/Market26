@@ -275,6 +275,21 @@ public class DataAccess  {
 		db.close();
 		System.out.println("DataAcess closed");
 	}
+	
+	public List<String> getUserEmails() {
+	    System.out.println(">> DataAccess: getUserEmails");
+	    if (!db.isOpen()) {
+	        db = emf.createEntityManager();
+	    }
+	    List<String> res = new ArrayList<String>();
+	    TypedQuery<String> query =
+	            db.createQuery("SELECT u.email FROM Seller u", String.class);
+	    List<String> emails = query.getResultList();
+	    for(String e : emails) {
+	        res.add(e);
+	    }
+	    return res;
+	}
 
 	public Seller isUserLogin(String username, String password) {
 		TypedQuery<Seller> query = db.createQuery("SELECT s FROM Seller s WHERE s.name=?1 AND s.password=?2",Seller.class);   

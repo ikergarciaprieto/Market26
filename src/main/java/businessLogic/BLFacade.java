@@ -81,6 +81,8 @@ public interface BLFacade  {
 	
 	@WebMethod public Seller getUser(String umail);
 	
+	@WebMethod public List<String> getUserEmails();
+	
 	@WebMethod public void buy(String selleremail, int sale,String buyermail);
 
 

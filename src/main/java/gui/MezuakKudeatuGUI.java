@@ -23,6 +23,7 @@ import domain.Seller;
 import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.JLabel;
+import javax.swing.JComboBox;
 
 public class MezuakKudeatuGUI extends JFrame {
 
@@ -34,9 +35,9 @@ public class MezuakKudeatuGUI extends JFrame {
     private JButton ChatBilatuBtn;
     private JButton ChatIkusi;
     private JButton ChatIreki;
-    private JTextField textField;
     private JLabel errortext;
-    private JLabel lblNewLabel;
+    private JLabel emailLabel;
+    private JComboBox<String> userComboBox;
 
 	/**
 	 * Create the frame.
@@ -110,7 +111,7 @@ public class MezuakKudeatuGUI extends JFrame {
 				//Chat bat ireki norbaitekin
 				errortext.setVisible(false);
 				BLFacade facade = MainGUI.getBusinessLogic();
-				String t = textField.getText();
+				String t = (String) userComboBox.getSelectedItem();
 				boolean b = facade.isCorrectEmail(t);
 				if(b) {
 					boolean b2 =facade.chatIreki(mail,t);
@@ -127,22 +128,28 @@ public class MezuakKudeatuGUI extends JFrame {
 		ChatIreki.setBounds(260, 41, 143, 37);
 		contentPane.add(ChatIreki);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		 //$NON-NLS-1$ //$NON-NLS-2$
-		textField.setBounds(413, 45, 127, 29);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		userComboBox = new JComboBox<>();
+		userComboBox.setBounds(420, 45, 143, 29);
 		
+		BLFacade facade = MainGUI.getBusinessLogic();
+		List<String> users = facade.getUserEmails();
+
+		for(String u : users) {
+		    if(!u.equals(mail)) {
+		        userComboBox.addItem(u);
+		    }
+		}
+
+		contentPane.add(userComboBox);
 		errortext = new JLabel();//$NON-NLS-1$ //$NON-NLS-2$
 		errortext.setForeground(Color.RED);
 		errortext.setBounds(270, 84, 328, 17);
 		contentPane.add(errortext);
 		
-		lblNewLabel = new JLabel("Email:"); //$NON-NLS-1$ //$NON-NLS-2$
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel.setBounds(455, 27, 45, 13);
-		contentPane.add(lblNewLabel);
+		emailLabel = new JLabel("Email:"); //$NON-NLS-1$ //$NON-NLS-2$
+		emailLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		emailLabel.setBounds(455, 27, 45, 13);
+		contentPane.add(emailLabel);
 		errortext.setVisible(false);
 	}
 }
