@@ -312,6 +312,8 @@ public class DataAccess  {
 			buyer.addBought(boughtsale, today);
 			seller.removeSale(boughtsale,today);
 			System.out.println("Erosi da");
+			boughtsale.getEskaeran().removeSale(boughtsale);
+			boughtsale.getAnitza().removeSale(boughtsale);
 		}else {
 			System.out.println("sale ez da aurkitu");
 		}
@@ -482,9 +484,14 @@ public class DataAccess  {
 		db.getTransaction().begin();
 		if(!list.isEmpty()) {
 			b=false;
-		}else {
-			Chat c = nor.createChat(nori);
-			db.persist(c);
+		}else {//listan ez dago, hau da, dagoeneko ez da ireki
+			if(nor==null||nori==null) {
+				//mail-a gaizki dago
+				b=false;
+			}else {
+				Chat c = nor.createChat(nori);
+				db.persist(c);
+			}
 		}
 		db.getTransaction().commit();
 		return b;

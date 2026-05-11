@@ -21,6 +21,8 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import java.awt.Font;
 
 public class EskaerakIkusiGUI extends JFrame {
 
@@ -44,17 +46,17 @@ public class EskaerakIkusiGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public EskaerakIkusiGUI(String usermail) {
-	thisFrame=this;
 	
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+	thisFrame= this;
+	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	setBounds(100, 100, 670, 359);
+	contentPane = new JPanel();
+	contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+	setContentPane(contentPane);
+	contentPane.setLayout(null);
 		
 		saleBox = new JComboBox();
-		saleBox.setBounds(29, 27, 237, 26);
+		saleBox.setBounds(327, 177, 303, 76);
 		contentPane.add(saleBox);
 		saleBox.setModel(sInfo);
 		BLFacade facade = MainGUI.getBusinessLogic();
@@ -83,11 +85,11 @@ public class EskaerakIkusiGUI extends JFrame {
 				
 			}
 		});
-		eskaerakIkusi.setBounds(276, 27, 137, 27);
+		eskaerakIkusi.setBounds(29, 10, 137, 27);
 		contentPane.add(eskaerakIkusi);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(29, 65, 237, 188);
+		scrollPane.setBounds(29, 89, 278, 164);
 		contentPane.add(scrollPane);
 		
 		JList eskaeraList = new JList();
@@ -110,7 +112,7 @@ public class EskaerakIkusiGUI extends JFrame {
 				}
 			}
 		});
-		eskaeraSartu.setBounds(276, 64, 137, 27);
+		eskaeraSartu.setBounds(368, 285, 237, 27);
 		contentPane.add(eskaeraSartu);
 		
 		JButton itxiButto = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
@@ -119,8 +121,18 @@ public class EskaerakIkusiGUI extends JFrame {
 				thisFrame.setVisible(false);
 			}
 		});
-		itxiButto.setBounds(308, 226, 105, 27);
+		itxiButto.setBounds(29, 285, 105, 27);
 		contentPane.add(itxiButto);
+		
+		JLabel labelEskaeraraSartu = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("EskaerakIkusiGUI.eskaeraraSartuLabel")); //$NON-NLS-1$ //$NON-NLS-2$
+		labelEskaeraraSartu.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		labelEskaeraraSartu.setBounds(327, 129, 303, 38);
+		contentPane.add(labelEskaeraraSartu);
+		
+		JLabel labelEskaerak = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("EskaerakIkusiGUI.labelEskaerak")); //$NON-NLS-1$ //$NON-NLS-2$
+		labelEskaerak.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		labelEskaerak.setBounds(29, 51, 278, 28);
+		contentPane.add(labelEskaerak);
 		
 		
 }

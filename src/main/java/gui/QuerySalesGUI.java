@@ -41,6 +41,7 @@ public class QuerySalesGUI extends JFrame {
 	};
 	private JTextField jTextFieldSearch;
 	private JLabel badgeLabel;
+	private final JLabel labelEsk = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("QuerySalesGUI.labeleskaera")); //$NON-NLS-1$ //$NON-NLS-2$
 	
 	public void igoKarritoNum() {
 	    int update = Integer.parseInt(badgeLabel.getText());
@@ -74,7 +75,7 @@ public class QuerySalesGUI extends JFrame {
 		jLabelProducts.setBounds(52, 108, 427, 16);
 		this.getContentPane().add(jLabelProducts);
 
-		jButtonClose.setBounds(new Rectangle(220, 379, 130, 30));
+		jButtonClose.setBounds(new Rectangle(279, 400, 130, 30));
 
 		jButtonClose.addActionListener(new ActionListener()
 		{
@@ -192,15 +193,19 @@ public class QuerySalesGUI extends JFrame {
 		karritoButton.add(badgeLabel);
 		karritoButton.setComponentZOrder(badgeLabel, 0);
 		
-		JButton eskariButt = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Eskaerak")); //$NON-NLS-1$ //$NON-NLS-2$
+		JButton eskariButt = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.2Eskaerak")); //$NON-NLS-1$ //$NON-NLS-2$
 		eskariButt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JFrame a= new EskaerakIkusiGUI(email);
 				a.setVisible(true);
 			}
 		});
-		eskariButt.setBounds(30, 381, 105, 27);
+		eskariButt.setBounds(52, 333, 195, 27);
 		getContentPane().add(eskariButt);
+		labelEsk.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		labelEsk.setBounds(52, 297, 318, 26);
+		
+		getContentPane().add(labelEsk);
 
 		karritoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

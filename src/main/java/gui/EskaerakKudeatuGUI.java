@@ -36,7 +36,6 @@ public class EskaerakKudeatuGUI extends JFrame {
     private JList anitzalist ;
     private DefaultListModel<Eskaera> eskaeraInfo = new DefaultListModel<Eskaera>();
     private JFrame thisFrame;
-    private JButton eskaeraIkusi;
     private JButton eskaeraBukatuBtn;
     private JLabel error;
     private JButton eskaeraEginBtn;
@@ -90,26 +89,6 @@ public class EskaerakKudeatuGUI extends JFrame {
 		});
 		contentPane.add(itxiBt);
 		
-		eskaeraIkusi = new JButton(ResourceBundle.getBundle("Etiquetas").getString("EskaerakKudeatuGUI.eskaerakIkusi"));
-		eskaeraIkusi.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(anitzalist.getSelectedIndex()!=-1) {
-					error.setVisible(false);
-					Eskaera s = eskaeraInfo.get(anitzalist.getSelectedIndex());
-					//beti eskaeraNum bidali beste kapetara, ez eskaera bera
-					
-					
-					
-					
-					
-				}else {
-					error.setVisible(true);
-				}
-			}
-		});
-		eskaeraIkusi.setBounds(467, 76, 143, 37);
-		contentPane.add(eskaeraIkusi);
-		
 		eskaeraBukatuBtn = new JButton(ResourceBundle.getBundle("Etiquetas").getString("EskaerakKudeatuGUI.eskaerakBukatu"));
 		eskaeraBukatuBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -126,7 +105,7 @@ public class EskaerakKudeatuGUI extends JFrame {
 				eguneratu(usermail);
 			}
 		});
-		eskaeraBukatuBtn.setBounds(467, 123, 143, 37);
+		eskaeraBukatuBtn.setBounds(467, 92, 143, 37);
 		contentPane.add(eskaeraBukatuBtn);
 		
 		error = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("EskaerakKudeatuGUI.errorNotSelected")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -142,7 +121,7 @@ public class EskaerakKudeatuGUI extends JFrame {
 				a.setVisible(true);
 			}
 		});
-		eskaeraEginBtn.setBounds(467, 170, 143, 37);
+		eskaeraEginBtn.setBounds(467, 139, 143, 37);
 		contentPane.add(eskaeraEginBtn);
 		
 		eskaeraEguneratu = new JButton(ResourceBundle.getBundle("Etiquetas").getString("EskaerakKudeatuGUI.eskaerakEguneratu"));

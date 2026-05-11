@@ -125,7 +125,7 @@ public class MezuakKudeatuGUI extends JFrame {
 		textField.setColumns(10);
 		
 		errortext = new JLabel();//$NON-NLS-1$ //$NON-NLS-2$
-		errortext.setBounds(270, 84, 270, 17);
+		errortext.setBounds(270, 84, 328, 17);
 		contentPane.add(errortext);
 		
 		lblNewLabel = new JLabel("Email:"); //$NON-NLS-1$ //$NON-NLS-2$

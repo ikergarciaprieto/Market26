@@ -165,7 +165,7 @@ public class MainGUIErregistratu extends JFrame {
 				a.setVisible(true);
 			}
 		});
-		btnMezua.setBounds(10, 222, 135, 21);
+		btnMezua.setBounds(10, 222, 160, 21);
 		jContentPane.add(btnMezua);
 		
 		btnEskaerak = new JButton(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.Eskaerak"));
@@ -175,7 +175,7 @@ public class MainGUIErregistratu extends JFrame {
 				a.setVisible(true);
 			}
 		});
-		btnEskaerak.setBounds(336, 222, 135, 21);
+		btnEskaerak.setBounds(287, 222, 184, 21);
 		jContentPane.add(btnEskaerak);
 		
 		setTitle(ResourceBundle.getBundle("Etiquetas").getString("MainGUI.MainTitle") +": "+sellerMail);

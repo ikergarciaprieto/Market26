@@ -91,6 +91,9 @@ public class Eskaera {
 		sales.add(s);
 		s.setEskaeran(this);
 	}
+	public void removeSale(Sale s) {
+		sales.remove(s);
+	}
 
 	@Override
 	public String toString() {
