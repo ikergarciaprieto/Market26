@@ -297,6 +297,18 @@ public class BLFacadeImplementation  implements BLFacade {
     	dbManager.addSaletoEsk(saleNumber, eskaeraNumber);
     	dbManager.close();
     }
+    @WebMethod public Eskaera getEskaera(Long eskaeraNumber) {
+    	dbManager.open();
+    	Eskaera e =dbManager.getEskaera(eskaeraNumber);
+    	dbManager.close();
+    	return e;
+    }
+    @WebMethod public void DESTROYEskaera(Long eskaeraNumber) {
+    	dbManager.open();
+    	dbManager.DESTROYEskaera(eskaeraNumber);
+    	dbManager.close();
+    	
+    }
     
 }
 

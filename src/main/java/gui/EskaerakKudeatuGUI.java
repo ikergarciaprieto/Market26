@@ -117,11 +117,9 @@ public class EskaerakKudeatuGUI extends JFrame {
 		    		error.setVisible(false);
 					Eskaera s = eskaeraInfo.get(anitzalist.getSelectedIndex());
 					//beti eskaeraNum bidali beste kapetara, ez eskaera bera
-					
-					
-					
-					
-					
+					JFrame a = new EskaeraBukatuGUI(usermail, s.getEskaeraNumber());
+					a.setVisible(true);
+					thisFrame.setVisible(false);
 				}else {
 					error.setVisible(true);
 				}

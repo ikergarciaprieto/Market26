@@ -132,4 +132,8 @@ public interface BLFacade  {
 
 
 	@WebMethod public void addSaletoEsk(Integer saleNumber, Long eskaeraNumber);
+	
+	@WebMethod public Eskaera getEskaera(Long eskaeraNumber);
+	
+	@WebMethod public void DESTROYEskaera(Long eskaeraNumber);
 }

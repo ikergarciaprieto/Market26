@@ -54,7 +54,7 @@ public class EskaerakIkusiGUI extends JFrame {
 		contentPane.setLayout(null);
 		
 		saleBox = new JComboBox();
-		saleBox.setBounds(77, 27, 158, 26);
+		saleBox.setBounds(29, 27, 237, 26);
 		contentPane.add(saleBox);
 		saleBox.setModel(sInfo);
 		BLFacade facade = MainGUI.getBusinessLogic();
@@ -63,8 +63,8 @@ public class EskaerakIkusiGUI extends JFrame {
 		sInfo.removeAllElements();
 		for(int i=0; i<salist.size(); i++) {
 			if(!(salist.get(i).getEskaeran()!= null)) {
-			sInfo.addElement(salist.get(i));
-		}
+				sInfo.addElement(salist.get(i));
+			}
 		}
 		JButton eskaerakIkusi = new JButton(ResourceBundle.getBundle("Etiquetas").getString("EskaerakIkusiGUI.EskaerakIkusi"));
 		eskaerakIkusi.addActionListener(new ActionListener() {
@@ -87,7 +87,7 @@ public class EskaerakIkusiGUI extends JFrame {
 		contentPane.add(eskaerakIkusi);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(61, 65, 174, 164);
+		scrollPane.setBounds(29, 65, 237, 188);
 		contentPane.add(scrollPane);
 		
 		JList eskaeraList = new JList();
@@ -110,7 +110,7 @@ public class EskaerakIkusiGUI extends JFrame {
 				}
 			}
 		});
-		eskaeraSartu.setBounds(278, 111, 105, 27);
+		eskaeraSartu.setBounds(276, 64, 137, 27);
 		contentPane.add(eskaeraSartu);
 		
 		JButton itxiButto = new JButton(ResourceBundle.getBundle("Etiquetas").getString("Close"));
@@ -119,7 +119,7 @@ public class EskaerakIkusiGUI extends JFrame {
 				thisFrame.setVisible(false);
 			}
 		});
-		itxiButto.setBounds(12, 227, 105, 27);
+		itxiButto.setBounds(308, 226, 105, 27);
 		contentPane.add(itxiButto);
 		
 		

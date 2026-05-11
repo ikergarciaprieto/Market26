@@ -554,8 +554,22 @@ public class DataAccess  {
 		db.getTransaction().commit();
 		
 	}
-	
-	
+	public Eskaera getEskaera(Long eskaeraNumber) {
+    	Eskaera e= db.find(Eskaera.class, eskaeraNumber);
+    	return e;
+	}
+	public void DESTROYEskaera(Long eskaeraNum) {
+		Eskaera eskaera= db.find(Eskaera.class, eskaeraNum);
+		db.getTransaction().begin();
+		
+		eskaera.getUser().removeEskaera(eskaera);
+		for(Sale s: eskaera.getSales()) {
+			s.setEskaeran(null);
+		}
+		
+		db.remove(eskaera);
+		db.getTransaction().commit();
+	}
 	
 	
 	

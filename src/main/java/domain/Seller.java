@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
+import domain.Eskaera;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
@@ -296,5 +297,10 @@ public void diruaSartu(double diruKop, Date data) {
 		this.eskaerak.add(e);
 		return e;
 		
+	}
+	public void removeEskaera(Eskaera eskaeraNum){
+
+		this.eskaerak.remove(eskaeraNum);
+
 	}
 }
