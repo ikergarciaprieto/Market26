@@ -161,6 +161,8 @@ public class QuerySalesGUI extends JFrame {
 		
 		//Zenbaki gorria
 		int n = 0;
+		karritoButton.setEnabled(false);
+		if(email!=null) {
 		BLFacade facade = MainGUI.getBusinessLogic();
 		Seller user = facade.getUser(email);
 		if (user.getKarrito() != null) {
@@ -168,6 +170,8 @@ public class QuerySalesGUI extends JFrame {
 				n = n + 1;
 				System.out.println(s);
 			}
+		}
+		karritoButton.setEnabled(true);
 		}
 				
 		
