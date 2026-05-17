@@ -327,8 +327,8 @@ public class DataAccess  {
 			buyer.addBought(boughtsale, today);
 			seller.removeSale(boughtsale,today);
 			System.out.println("Erosi da");
-			boughtsale.getEskaeran().removeSale(boughtsale);
-			boughtsale.getAnitza().removeSale(boughtsale);
+			//boughtsale.getEskaeran().removeSale(boughtsale);
+			//boughtsale.getAnitza().removeSale(boughtsale);
 		}else {
 			System.out.println("sale ez da aurkitu");
 		}
