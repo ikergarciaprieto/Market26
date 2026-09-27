@@ -434,7 +434,6 @@ public class DataAccess  {
 			if (db.getTransaction() != null && db.getTransaction().isActive()) {
 				db.getTransaction().rollback(); // Aldaketak desegiten ditu errek null bada
 			}
-			e.printStackTrace();
 		}
 	}
 	
