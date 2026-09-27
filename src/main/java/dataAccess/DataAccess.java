@@ -405,27 +405,37 @@ public class DataAccess  {
 		
 	}
 	public void acceptReclamation(boolean b,long errekId) {
-		Erreklamazioa errek=db.find(Erreklamazioa.class, errekId);
-		db.getTransaction().begin();
-		if(b) {
-			errek.setOnartua(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.Onartua"));
-			//erosleari dirua itzuli@WebMethod public List<Sale> obtainList(String usermail)
-			Double diru = (double) errek.getSale().getPrice();
-			
-			errek.getErreklamatzenDuena().setDiruTotala(errek.getErreklamatzenDuena().getDiruTotala()+diru);
-			errek.getErreklamatzenDuena().removeBought(errek.getSale());
-			String desk = errek.getSale().getTitle();
-			errek.getErreklamatzenDuena().addMugimendua(UtilDate.trim(new Date()), desk, diru);
-			
-			//seller-ari dirua kendu
-			
-		}else {
-			errek.setOnartua(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.EzOnartua"));
-			errek.getSale().setErreklamatuta(false);
-			//dirua ez itzuli
+		try {
+			db.getTransaction().begin();
+			Erreklamazioa errek=db.find(Erreklamazioa.class, errekId);
+			if (errek != null) {
+				if(b) {
+					errek.setOnartua(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.Onartua"));
+					//erosleari dirua itzuli@WebMethod public List<Sale> obtainList(String usermail)
+					Double diru = (double) errek.getSale().getPrice();
+
+					errek.getErreklamatzenDuena().setDiruTotala(errek.getErreklamatzenDuena().getDiruTotala()+diru);
+					errek.getErreklamatzenDuena().removeBought(errek.getSale());
+					String desk = errek.getSale().getTitle();
+					errek.getErreklamatzenDuena().addMugimendua(UtilDate.trim(new Date()), desk, diru);
+
+					//seller-ari dirua kendu
+
+				}else {
+					errek.setOnartua(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.EzOnartua"));
+					errek.getSale().setErreklamatuta(false);
+					//dirua ez itzuli
+				}
+
+				db.getTransaction().commit();
+			} else {
+				db.getTransaction().rollback();			}
+		} catch (Exception e) {
+			if (db.getTransaction() != null && db.getTransaction().isActive()) {
+				db.getTransaction().rollback(); // Aldaketak desegiten ditu errek null bada
+			}
+			e.printStackTrace();
 		}
-		
-		db.getTransaction().commit();
 	}
 	
 	public List<Sale> obtainList(String usermail){
@@ -448,7 +458,7 @@ public class DataAccess  {
 			try {
 				if(ea==null) {
 					ea = user.createErosketaAnitza(sale);	
-				}else {//komprobatu pertsona berdinaren produktuak direla
+				}else {//konprobatu pertsona berdinaren produktuak direla
 					if(sale.getSeller()!=ea.getSeller()) {
 						throw new UserAlreadyExistException();//Ez dut beste bat egingo bakarrik honetarako
 					}
@@ -457,9 +467,7 @@ public class DataAccess  {
 				ea.addSales(sale);
 				sale.setAnitza(ea);
 				ea.gehituPrezioa(sale.getPrice());
-			}catch(UserAlreadyExistException e) {
-				b = false;
-			}
+			}catch(UserAlreadyExistException e) {b = false;}
 		db.getTransaction().commit();
 		return b;
 	}
