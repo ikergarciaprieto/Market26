@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 import javax.swing.event.ChangeListener;
@@ -90,10 +90,10 @@ public class LoginGUI extends JFrame {
 				errorText.setVisible(false);
 				BLFacade facade = MainGUI.getBusinessLogic();
 				try {
-					if(loginText.getText().isEmpty()||passText.getPassword().toString().isEmpty()) {
+					if(loginText.getText().isEmpty()|| Arrays.toString(passText.getPassword()).isEmpty()) {
 						throw new NullPointerException();//testu hutsak daude
 					}
-					
+
 					if(!adminCheckBox.isSelected()) {//USER MODUA
 						
 						Seller b = facade.isUserLogin(loginText.getText(), new String(passText.getPassword()));
