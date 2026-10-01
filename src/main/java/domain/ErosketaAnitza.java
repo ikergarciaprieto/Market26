@@ -1,27 +1,18 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlID;
-import javax.xml.bind.annotation.XmlIDREF;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import javax.persistence.*;
+import javax.xml.bind.annotation.*;
 
 import configuration.UtilDate;
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-public class ErosketaAnitza {
+public class ErosketaAnitza implements Serializable {
+	private static final long serialVersionUID = 1L;
 	@XmlID
 	@Id 
 	@GeneratedValue
