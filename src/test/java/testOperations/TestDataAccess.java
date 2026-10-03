@@ -3,6 +3,7 @@ package testOperations;
 import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
@@ -128,21 +129,20 @@ public class TestDataAccess {
 	        
 	        Sale saleToRemove = null;
 	        
-	        // 1. Recorremos las ventas para coger la primera
-	        for (Sale sale : s.getSales()) {
-	            saleToRemove = sale;
-	            break; // Tomamos el primer elemento y salimos
+	        
+	        List<Sale> sales = s.getSales();
+	        if (sales != null && !sales.isEmpty()) {
+	            saleToRemove = sales.get(0);
 	        }
 	        
-	        // 2. Validamos que realmente exista una venta antes de llamar al método
 	        if (saleToRemove != null) {
-	            s.removeSale(saleToRemove, date); // Llama al método void que actualiza diruTotala y la lista
-	            db.remove(saleToRemove);          // Elimina la entidad de la base de datos (JPA / ObjectDB)
+	            s.removeSale(saleToRemove, date); 
+	            db.remove(saleToRemove);          
 	        }
 	        
 	        db.getTransaction().commit();
 	        
-	        // 3. Devolvemos el objeto que eliminamos (o null si no había ventas)
+	        
 	        return saleToRemove;
 
 	    } else {
