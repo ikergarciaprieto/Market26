@@ -14,6 +14,7 @@ import domain.Sale;
 import domain.Seller;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
+import exceptions.ParamNullException;
 import exceptions.SaleAlreadyExistException;
 
 import javax.jws.WebMethod;
@@ -41,7 +42,7 @@ public interface BLFacade  {
 	 * @return Sale
 	 */
    @WebMethod
-	public Sale createSale(String title, String description, int status, float price, Date pubDate, String sellerEmail, File file) throws  FileNotUploadedException, MustBeLaterThanTodayException, SaleAlreadyExistException;
+	public Sale createSale(String title, String description, int status, float price, Date pubDate, String sellerEmail, File file) throws  FileNotUploadedException, MustBeLaterThanTodayException, SaleAlreadyExistException, ParamNullException;
 	
 	
 	/**

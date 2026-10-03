@@ -32,6 +32,7 @@ import domain.Mugimendua;
 import domain.Sale;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
+import exceptions.ParamNullException;
 import exceptions.SaleAlreadyExistException;
 import exceptions.StringIsEmptyException;
 import exceptions.UserAlreadyExistException;
@@ -143,7 +144,7 @@ public class DataAccess  {
 	 * @return Product
 	 * @throws SaleAlreadyExistException if the same product already exists for the seller
 	 */
-	public Sale createSale(String title, String description, int status, float price,  Date pubDate, String sellerEmail, File file) throws  FileNotUploadedException, MustBeLaterThanTodayException, SaleAlreadyExistException {
+	public Sale createSale(String title, String description, int status, float price,  Date pubDate, String sellerEmail, File file) throws  FileNotUploadedException, MustBeLaterThanTodayException, SaleAlreadyExistException, ParamNullException {
 
 
 		System.out.println(">> DataAccess: createProduct=> title= "+title+" seller="+sellerEmail);

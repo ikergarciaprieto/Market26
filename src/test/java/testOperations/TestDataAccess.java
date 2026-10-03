@@ -114,7 +114,7 @@ public class TestDataAccess {
 			System.out.println(">> TestDataAccess: existSale");
 			Seller s = db.find(Seller.class, sellerEmail);
 			if (s!=null) {
-				return s.doesSaleExists(title);
+				return s.doesSaleExist(title);
 			} else 
 			return false;
 		}
