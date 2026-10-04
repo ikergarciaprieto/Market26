@@ -37,11 +37,11 @@ public class Erreklamazioa {
 		super();
 	}
 
-	public Erreklamazioa(Sale sale, Date data, String deskripzioa, Seller AerreklamatzenDuena) {
+	public Erreklamazioa(Sale sale, Date data, String deskripzioa, Seller erreklamatzenDuena) {
 		this.data = data;
 		this.deskripzioa = deskripzioa;
 		this.sale = sale;
-		this.erreklamatzenDuena = AerreklamatzenDuena;
+		this.erreklamatzenDuena = erreklamatzenDuena;
 		this.onartua= "ez begiratuta";
 	}
 	

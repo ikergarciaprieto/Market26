@@ -11,6 +11,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import configuration.ConfigXML;
+import domain.Erreklamazioa;
 import domain.Sale;
 import domain.Seller;
 
@@ -149,6 +150,59 @@ public class TestDataAccess {
 	        return null;
 	    }
 	}
+	
+	public long addErreklamazioa(String buyerEmail, String sellerEmail, double salePrice, double hasierakoDirua) {
+		
+		db.getTransaction().begin();
+		
+		Seller seller = this.createSeller(sellerEmail, "Iker");
+		
+		Sale sale = seller.addSale("Ordenagailua", "6Gb-ko memoria", 1, (float) salePrice, new Date(), null);
+		sale.setErreklamatuta(true);
+		
+		Seller erreklamatzenDuena = this.createSeller(buyerEmail, "Aitzol");
+		erreklamatzenDuena.setDiruTotala(hasierakoDirua);
+		
+		Erreklamazioa errek = new Erreklamazioa(sale, new Date(), "Oso ondo dago", erreklamatzenDuena);
+		
+		db.persist(erreklamatzenDuena);
+	    db.persist(seller);
+	    db.persist(errek);
+	    
+	    db.getTransaction().commit();
+	    
+	    return errek.getId();
+	}
+	
+	public boolean removeErreklamazioa(long errekId, String buyerEmail, String sellerEmail) {
+        db.getTransaction().begin();
+
+        Erreklamazioa errek = db.find(Erreklamazioa.class, errekId);
+        if (errek != null) {
+            db.remove(errek);
+        }
+
+        Seller buyer = db.find(Seller.class, buyerEmail);
+        if (buyer != null) {
+            db.remove(buyer);
+        }
+
+        Seller seller = db.find(Seller.class, sellerEmail);
+        if (seller != null) {
+            db.remove(seller);
+        }
+
+        db.getTransaction().commit();
+        return true;
+    }
+	
+	public Erreklamazioa getErreklamazioa(long errekId) {
+        return db.find(Erreklamazioa.class, errekId);
+    }
+	
+	public Seller getSeller(String mail) {
+        return db.find(Seller.class, mail);
+    }
 
 		
 }
