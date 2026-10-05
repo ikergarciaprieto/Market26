@@ -66,7 +66,7 @@ public class AcceptReclamationBDBlackTest {
 			Erreklamazioa errek = testDA.getErreklamazioa(errekId);
 			assertNotNull(errek);
 
-			assertEquals("Onartua", errek.getOnartua());
+			assertEquals("Aceptada", errek.getOnartua());
 
 			Seller buyer = testDA.getSeller(buyerEmail);
 			assertEquals(hasierakoDirua + salePrice, buyer.getDiruTotala(), 0.01);
@@ -86,7 +86,7 @@ public class AcceptReclamationBDBlackTest {
 		boolean b = false;
 
 		testDA.open();
-		errekId = testDA.addErreklamazioa(buyerEmail, sellerEmail, hasierakoDirua, salePrice);
+		errekId = testDA.addErreklamazioa(buyerEmail, sellerEmail, salePrice, hasierakoDirua);
 		testDA.close();
 
 		try {
@@ -98,7 +98,7 @@ public class AcceptReclamationBDBlackTest {
 			Erreklamazioa errek = testDA.getErreklamazioa(errekId);
 			assertNotNull(errek);
 
-			assertEquals("EzOnartua", errek.getOnartua());
+			assertEquals("Denegada", errek.getOnartua());
 			assertFalse(errek.getSale().isErreklamatuta());
 
 			Seller buyer = testDA.getSeller(buyerEmail);

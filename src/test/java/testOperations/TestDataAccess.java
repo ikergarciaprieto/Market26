@@ -155,12 +155,12 @@ public class TestDataAccess {
 		
 		db.getTransaction().begin();
 		
-		Seller seller = this.createSeller(sellerEmail, "Iker");
+		Seller seller = new Seller(sellerEmail, "Iker", "aurrera");
 		
 		Sale sale = seller.addSale("Ordenagailua", "6Gb-ko memoria", 1, (float) salePrice, new Date(), null);
 		sale.setErreklamatuta(true);
 		
-		Seller erreklamatzenDuena = this.createSeller(buyerEmail, "Aitzol");
+		Seller erreklamatzenDuena = new Seller(buyerEmail, "Aitzol", "aurrera");
 		erreklamatzenDuena.setDiruTotala(hasierakoDirua);
 		
 		Erreklamazioa errek = new Erreklamazioa(sale, new Date(), "Oso ondo dago", erreklamatzenDuena);
@@ -174,6 +174,30 @@ public class TestDataAccess {
 	    return errek.getId();
 	}
 	
+
+	public long addErreklamazioaWithoutSale(String buyerEmail, String sellerEmail, double salePrice, double hasierakoDirua) {
+		
+		db.getTransaction().begin();
+		
+		Seller seller = new Seller(sellerEmail, "Iker", "aurrera");
+		
+		Sale sale = seller.addSale("Ordenagailua", "6Gb-ko memoria", 1, (float) salePrice, new Date(), null);
+		sale.setErreklamatuta(true);
+		
+		Seller erreklamatzenDuena = new Seller(buyerEmail, "Aitzol", "aurrera");
+		erreklamatzenDuena.setDiruTotala(hasierakoDirua);
+		
+		Erreklamazioa errek = new Erreklamazioa(null, new Date(), "Oso ondo dago", erreklamatzenDuena);
+		
+		db.persist(erreklamatzenDuena);
+	    db.persist(seller);
+	    db.persist(errek);
+	    
+	    db.getTransaction().commit();
+	    
+	    return errek.getId();
+	
+	}
 	public boolean removeErreklamazioa(long errekId, String buyerEmail, String sellerEmail) {
         db.getTransaction().begin();
 

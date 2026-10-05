@@ -68,7 +68,7 @@ public class AcceptReclamationBDWhiteTest {
 			Erreklamazioa errek = testDA.getErreklamazioa(errekId);
 			assertNotNull(errek);
 
-			assertEquals("Onartua", errek.getOnartua());
+			assertEquals("Aceptada", errek.getOnartua());
 
 			Seller buyer = testDA.getSeller(buyerEmail);
 			assertEquals(hasierakoDirua + salePrice, buyer.getDiruTotala(), 0.01);
@@ -90,7 +90,7 @@ public class AcceptReclamationBDWhiteTest {
 		boolean b = false;
 
 		testDA.open();
-		errekId = testDA.addErreklamazioa(buyerEmail, sellerEmail, hasierakoDirua, salePrice);
+		errekId = testDA.addErreklamazioa(buyerEmail, sellerEmail, salePrice, hasierakoDirua);
 		testDA.close();
 
 		try {
@@ -102,7 +102,7 @@ public class AcceptReclamationBDWhiteTest {
 			Erreklamazioa errek = testDA.getErreklamazioa(errekId);
 			assertNotNull(errek);
 
-			assertEquals("EzOnartua", errek.getOnartua());
+			assertEquals("Denegada", errek.getOnartua());
 			assertFalse(errek.getSale().isErreklamatuta());
 
 			Seller buyer = testDA.getSeller(buyerEmail);
@@ -120,22 +120,30 @@ public class AcceptReclamationBDWhiteTest {
 
 	@Test
 	//Jarraitutako bidea: try1(T) - EXC - END
-	//Gertatzen da errekID negatiboa edo positiboa ez den zenbaki bat ez izatea
+	//Gertatzen da errekID negatiboa edo positiboa ez den zenbaki bat ez izatea eta b null izatea
 	//Helburua da exzepzio hori hartzen duenean test-a bete dela argitzea
 	public void test3() {
 		boolean b = true;
-		long existituGabekoId = 999;
-
+		
+		testDA.open();
+	    errekId = testDA.addErreklamazioaWithoutSale(buyerEmail, sellerEmail, salePrice, hasierakoDirua);
+	    testDA.close();
+	    
 		try {
 			sut.open();
-			sut.acceptReclamation(b, existituGabekoId);
+			sut.acceptReclamation(b,errekId);
 			sut.close();
 			
 			fail();
 
 		} catch (Exception e) {
 			assertTrue(true);
-		}
+		}finally {
+	        
+	        testDA.open();
+	        testDA.removeErreklamazioa(errekId, buyerEmail, sellerEmail);
+	        testDA.close();
+	    }
 	}
 
 	@Test

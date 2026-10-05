@@ -69,15 +69,15 @@ public class AcceptReclamationMockBlackTest {
 		hasierakoDirua = 1000;
 		errekId = 1;
 		
-		Seller seller = new Seller(sellerEmail, "Iker", "aurrera");
+		seller = new Seller(sellerEmail, "Iker", "aurrera");
 		
-		Sale sale = seller.addSale("Ordenagailua", "6Gb-ko memoria", 1, (float) salePrice, new Date(), null);
+		sale = seller.addSale("Ordenagailua", "6Gb-ko memoria", 1, (float) salePrice, new Date(), null);
 		sale.setErreklamatuta(true);
 		
-		Seller erreklamatzenDuena = new Seller(buyerEmail, "Aitzol", "aurrera");
-		erreklamatzenDuena.setDiruTotala(hasierakoDirua);
+		buyer = new Seller(buyerEmail, "Aitzol", "aurrera");
+		buyer.setDiruTotala(hasierakoDirua);
 		
-		Erreklamazioa errek = new Erreklamazioa(sale, new Date(), "Oso ondo dago", erreklamatzenDuena);
+		errek = new Erreklamazioa(sale, new Date(), "Oso ondo dago", buyer);
 		
 		Mockito.when(db.find(Erreklamazioa.class, errekId)).thenReturn(errek);
 
@@ -98,11 +98,12 @@ public class AcceptReclamationMockBlackTest {
             sut.acceptReclamation(b, errekId);
             sut.close();
 
-            assertEquals("Onartua", errek.getOnartua());
+            assertEquals("Aceptada", errek.getOnartua());
             assertEquals(hasierakoDirua + salePrice, buyer.getDiruTotala(), 0.01);
 
         } catch (Exception e) {
-            fail();
+        	e.printStackTrace(); // Imprime el error real en la consola
+            fail("Error inesperado: " + e.getMessage());
         }
     }
 
@@ -116,11 +117,12 @@ public class AcceptReclamationMockBlackTest {
             sut.acceptReclamation(b, errekId);
             sut.close();
 
-            assertEquals("EzOnartua", errek.getOnartua());
+            assertEquals("Denegada", errek.getOnartua());
             assertEquals(hasierakoDirua, buyer.getDiruTotala(), 0.01);
 
         } catch (Exception e) {
-            fail();
+        	e.printStackTrace(); // Imprime el error real en la consola
+            fail("Error inesperado: " + e.getMessage());
         }
     }
 
