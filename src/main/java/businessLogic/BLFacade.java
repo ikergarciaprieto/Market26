@@ -9,7 +9,6 @@ import domain.Chat;
 import domain.Erreklamazioa;
 import domain.Eskaera;
 import domain.Mezua;
-import domain.Mugimendua;
 import domain.Sale;
 import domain.Seller;
 import exceptions.FileNotUploadedException;
