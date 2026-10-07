@@ -32,7 +32,7 @@ import java.io.IOException;
  */
 @WebService(endpointInterface = "businessLogic.BLFacade")
 public class BLFacadeImplementation  implements BLFacade {
-	 private static final int baseSize = 160;
+	 private static final int BASESIZE = 160;
 
 		private static final String basePath="src/main/resources/images/";
 	DataAccess dbManager;
