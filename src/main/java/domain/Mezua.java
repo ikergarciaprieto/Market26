@@ -15,27 +15,27 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @Entity
 public class Mezua {
 	@XmlID
-	@Id 
+	@Id
 	@GeneratedValue
-    private Long id;
-	private String mezua;
+	private Long id;
+	private String message;
 	private Date date;
 	private Seller bidaliDuena;
 	private Chat chat;
-	
-	public Mezua(String mezua, Date data,Seller bidali,Chat ch) {
-		this.mezua=mezua;
-		this.date=data;
-		this.bidaliDuena=bidali;
-		this.chat=ch;
+
+	public Mezua(String mezua, Date data, Seller bidali, Chat ch) {
+		this.message = mezua;
+		this.date = data;
+		this.bidaliDuena = bidali;
+		this.chat = ch;
 	}
 
 	public String getMezua() {
-		return mezua;
+		return message;
 	}
 
 	public void setMezua(String mezua) {
-		this.mezua = mezua;
+		this.message = mezua;
 	}
 
 	public Date getDate() {
@@ -64,8 +64,8 @@ public class Mezua {
 
 	@Override
 	public String toString() {
-		String a = (mezua+" ["+bidaliDuena.getEmail()+"; "+date+"]");
+		String a = (message + " [" + bidaliDuena.getEmail() + "; " + date + "]");
 		return a;
 	}
-	
+
 }
