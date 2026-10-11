@@ -30,6 +30,7 @@ public class ErreklamazioaJarriGUI extends JFrame {
 	private DefaultComboBoxModel<Sale> comboList = new DefaultComboBoxModel<Sale>();
 	private Sale selectedSale = null;
 	JLabel errorLabel = new JLabel();
+	private static final String FONT_NAME = "Tahoma";
 
 	/**
 	 * Create the frame.
@@ -100,7 +101,7 @@ public class ErreklamazioaJarriGUI extends JFrame {
 
 		JLabel produkAukeratuLabel = new JLabel(
 				ResourceBundle.getBundle("Etiquetas").getString("ErreklamazioaJarriGUI.produktuaAukeratu")); //$NON-NLS-1$ //$NON-NLS-2$
-		produkAukeratuLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		produkAukeratuLabel.setFont(new Font(FONT_NAME, Font.PLAIN, 13));
 		produkAukeratuLabel.setBounds(176, 25, 425, 31);
 		contentPane.add(produkAukeratuLabel);
 
@@ -111,12 +112,12 @@ public class ErreklamazioaJarriGUI extends JFrame {
 
 		JLabel azalpenaLabel = new JLabel(
 				ResourceBundle.getBundle("Etiquetas").getString("ErreklamazioaJarriGUI.azalpena")); //$NON-NLS-1$ //$NON-NLS-2$
-		azalpenaLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		azalpenaLabel.setFont(new Font(FONT_NAME, Font.PLAIN, 13));
 		azalpenaLabel.setBounds(217, 133, 203, 13);
 		contentPane.add(azalpenaLabel);
 
 		errorLabel = new JLabel(); // $NON-NLS-1$ //$NON-NLS-2$
-		errorLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		errorLabel.setFont(new Font(FONT_NAME, Font.PLAIN, 13));
 		errorLabel.setBounds(237, 284, 196, 13);
 		contentPane.add(errorLabel);
 		errorLabel.setVisible(false);
