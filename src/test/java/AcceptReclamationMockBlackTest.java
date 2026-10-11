@@ -102,8 +102,7 @@ public class AcceptReclamationMockBlackTest {
             assertEquals(hasierakoDirua + salePrice, buyer.getDiruTotala(), 0.01);
 
         } catch (Exception e) {
-        	e.printStackTrace(); // Imprime el error real en la consola
-            fail("Error inesperado: " + e.getMessage());
+        	fail();
         }
     }
 
@@ -121,8 +120,7 @@ public class AcceptReclamationMockBlackTest {
             assertEquals(hasierakoDirua, buyer.getDiruTotala(), 0.01);
 
         } catch (Exception e) {
-        	e.printStackTrace(); // Imprime el error real en la consola
-            fail("Error inesperado: " + e.getMessage());
+        	fail();
         }
     }
 
