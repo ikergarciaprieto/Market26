@@ -1,8 +1,12 @@
+package testPaketea;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.EntityManager;
@@ -22,9 +26,12 @@ import dataAccess.DataAccess;
 import domain.Erreklamazioa;
 import domain.Sale;
 import domain.Seller;
+import exceptions.MustBeLaterThanTodayException;
+import exceptions.ParamNullException;
+import exceptions.SaleAlreadyExistException;
 
-public class AcceptReclamationMockWhiteTest {
-static DataAccess sut;
+public class AcceptReclamationMockBlackTest {
+	static DataAccess sut;
 	
 	protected MockedStatic<Persistence> persistenceMock;
 
@@ -83,7 +90,7 @@ static DataAccess sut;
     }
 	
 	@Test
-	//Jarraitutako bidea: try1(F) - 3 - IF1(T) - IF2(T) - 7 - 9 - END
+	// b = true, errekId = 1 eta errekId existitzen da Mockito bidez sortutako datu basean
     public void test1() {
         boolean b = true;
 
@@ -94,7 +101,6 @@ static DataAccess sut;
 
             assertEquals("Aceptada", errek.getOnartua());
             assertEquals(hasierakoDirua + salePrice, buyer.getDiruTotala(), 0.01);
-            Mockito.verify(et).commit();
 
         } catch (Exception e) {
         	fail();
@@ -102,7 +108,7 @@ static DataAccess sut;
     }
 
     @Test
-  //Jarraitutako bidea: try1(F) - 3 - IF1(T) - IF2(F) - 8 - 9 - END
+    // b = false, errekId = 1 eta errekId existitzen da Mockito bidez sortutako datu basean
     public void test2() {
         boolean b = false;
 
@@ -112,41 +118,38 @@ static DataAccess sut;
             sut.close();
 
             assertEquals("Denegada", errek.getOnartua());
-            assertFalse(sale.isErreklamatuta());
-            Mockito.verify(et).commit();
+            assertEquals(hasierakoDirua, buyer.getDiruTotala(), 0.01);
 
         } catch (Exception e) {
         	fail();
-        
         }
     }
 
     @Test
-  //Jarraitutako bidea: try1(T) - EXC - END
+    // b = true eta errekId = 1 positiboa da baina ez da existitzen Mockito bidez sortutako datu basean
     public void test3() {
         boolean b = true;
-        Erreklamazioa errekSaleNull = new Erreklamazioa(null, new Date(), "Defectuoso", buyer);
+        long existituGabekoId = 999;
 
-        Mockito.when(db.find(Erreklamazioa.class, errekId)).thenReturn(errekSaleNull);
-        Mockito.when(et.isActive()).thenReturn(true);
+        Mockito.when(db.find(Erreklamazioa.class, existituGabekoId)).thenReturn(null);
 
         try {
             sut.open();
-            sut.acceptReclamation(b, errekId);
+            sut.acceptReclamation(b, existituGabekoId);
             sut.close();
-            
-            fail();
+
+            assertNull(db.find(Erreklamazioa.class, existituGabekoId));
 
         } catch (Exception e) {
-            Mockito.verify(et).rollback();
+            fail();
         }
     }
 
     @Test
-  //Jarraitutako bidea: try1(F) - 3 - IF1(F) - 5 - END
+    // b = true eta errekId = -1 positiboa baina ez da existitzen Mockito bidez sortutako datu basean
     public void test4() {
         boolean b = true;
-        long idNegatiboa = 999;
+        long idNegatiboa = -1;
 
         Mockito.when(db.find(Erreklamazioa.class, idNegatiboa)).thenReturn(null);
 
@@ -154,12 +157,8 @@ static DataAccess sut;
             sut.open();
             sut.acceptReclamation(b, idNegatiboa);
             sut.close();
-            
-            assertNull(db.find(Erreklamazioa.class, idNegatiboa));
-            
-            Mockito.verify(et).rollback();
 
-            
+            assertNull(db.find(Erreklamazioa.class, idNegatiboa));
 
         } catch (Exception e) {
             fail();

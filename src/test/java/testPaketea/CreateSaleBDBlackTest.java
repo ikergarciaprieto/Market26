@@ -1,3 +1,4 @@
+package testPaketea;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
