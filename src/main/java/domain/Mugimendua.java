@@ -1,5 +1,6 @@
 package domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -13,7 +14,8 @@ import javax.persistence.TemporalType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-public class Mugimendua {
+public class Mugimendua implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@XmlID
 	@Id 
