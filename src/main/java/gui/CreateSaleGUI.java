@@ -280,7 +280,6 @@ public class CreateSaleGUI extends JFrame {
 
 			return  ResourceBundle.getBundle("Etiquetas").getString("CreateSaleGUI.ErrorNumber");		
 		} catch (Exception e1) {
-			e1.printStackTrace();
 			return null;
 
 		}
