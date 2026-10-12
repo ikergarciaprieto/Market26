@@ -46,6 +46,7 @@ public class DataAccess {
 	private EntityManagerFactory emf;
 	private static final int baseSize = 160;
 
+	
 	private static final String basePath = "src/main/resources/images/";
 
 	ConfigXML c = ConfigXML.getInstance();
