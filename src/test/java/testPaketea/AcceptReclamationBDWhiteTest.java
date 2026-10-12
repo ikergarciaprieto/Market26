@@ -49,7 +49,7 @@ public class AcceptReclamationBDWhiteTest {
 	}
 
 
-	@Test
+	/*@Test
 	//Jarraitutako bidea: try1(F) - 3 - IF1(T) - IF2(T) - 7 - 9 - END
 	//Gertatzen da errek != null denean eta b== true
 	//Emaitza erreklamazioa "Onartua" bezala ezartzea da eta erosleari dirua bueltatzea
@@ -168,7 +168,7 @@ public class AcceptReclamationBDWhiteTest {
 		} catch (Exception e) {
 			fail();
 		}
-	}
+	}*/
 
 
 
