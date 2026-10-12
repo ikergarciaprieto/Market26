@@ -27,6 +27,7 @@ public class Seller implements Serializable {
 	private String name;
 	private String password;
 	private double diruTotala = 0;
+	@OneToOne(cascade = CascadeType.PERSIST) 
 	private ErosketaAnitza karrito = null;
 	@XmlIDREF
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)

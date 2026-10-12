@@ -12,10 +12,7 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 import configuration.ConfigXML;
-import domain.Chat;
-import domain.Erreklamazioa;
-import domain.Sale;
-import domain.Seller;
+import domain.*;
 
 public class TestDataAccess {
 	protected EntityManager db;
@@ -263,5 +260,79 @@ public class TestDataAccess {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void addErosketaAnitza(String buyerEmail, String sellerEmail, int saleNum, double salePrice, double hasierakoDirua, boolean besteSeller, boolean ezAnitza) {
+
+		db.getTransaction().begin();
+
+		Seller seller = new Seller(sellerEmail, "Kim", "aurrera");
+		Seller seller2 = new Seller(sellerEmail + ".eus", "Larry", "aurrera");
+
+		Sale sale2 = null;
+		if (besteSeller)
+		{
+			sale2 = seller2.addSale("Maila2", "Marroia", 1, (float)salePrice, new Date(), null);
+		}
+		else
+		{
+			sale2 = seller.addSale("Maila2", "Marroia", 1, (float)salePrice, new Date(), null);
+		}
+		sale2.setSaleNumber(saleNum);
+
+		Seller buyer = new Seller(buyerEmail, "Chris", "aurrera");
+		buyer.setDiruTotala(hasierakoDirua);
+
+		Sale sale = seller.addSale("Maila", "Marroia", 1, (float)salePrice, new Date(), null);
+		sale.setSaleNumber(saleNum + 1);
+		
+		if (!ezAnitza)
+		{
+			ErosketaAnitza ea = buyer.createErosketaAnitza(sale);
+			
+			ea.addSales(sale);
+			sale.setAnitza(ea);
+			ea.gehituPrezioa(sale.getPrice());
+		}
+
+		db.persist(buyer);
+		db.persist(seller);
+		db.persist(seller2);
+		//db.persist(ea);
+
+		db.getTransaction().commit();
+	}
+
+	public boolean removeErosketaAnitza(int saleNum, String buyerEmail, String sellerEmail) {
+		db.getTransaction().begin();
+
+		Sale sale2 = db.find(Sale.class, saleNum);
+		if (sale2 != null) {
+			db.remove(sale2);
+		}
+		Sale sale = db.find(Sale.class, saleNum + 1);
+		if (sale != null) {
+			db.remove(sale);
+		}
+
+		Seller buyer = db.find(Seller.class, buyerEmail);
+		if (buyer != null) {
+			db.remove(buyer);
+		}
+
+		Seller seller = db.find(Seller.class, sellerEmail);
+		if (seller != null) {
+			db.remove(seller);
+		} 
+		Seller seller2 = db.find(Seller.class, sellerEmail+ ".eus");
+		if (seller2 != null) {
+			db.remove(seller2);
+		} 
+		db.getTransaction().commit();
+		return true;
+	}
+	
+	public Sale getSale(Integer saleNum) {
+		return db.find(Sale.class, saleNum);
 	}
 }
