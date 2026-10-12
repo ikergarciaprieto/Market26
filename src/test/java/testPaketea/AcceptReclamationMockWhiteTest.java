@@ -83,7 +83,7 @@ static DataAccess sut;
 		persistenceMock.close();
     }
 	
-	/*@Test
+	@Test
 	//Jarraitutako bidea: try1(F) - 3 - IF1(T) - IF2(T) - 7 - 9 - END
     public void test1() {
         boolean b = true;
@@ -165,6 +165,6 @@ static DataAccess sut;
         } catch (Exception e) {
             fail();
         }
-    }*/
+    }
 
 }

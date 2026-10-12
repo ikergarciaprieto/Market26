@@ -89,7 +89,7 @@ public class AcceptReclamationMockBlackTest {
 		persistenceMock.close();
     }
 	
-	/*@Test
+	@Test
 	// b = true, errekId = 1 eta errekId existitzen da Mockito bidez sortutako datu basean
     public void test1() {
         boolean b = true;
@@ -163,6 +163,6 @@ public class AcceptReclamationMockBlackTest {
         } catch (Exception e) {
             fail();
         }
-    }*/
+    }
 
 }
