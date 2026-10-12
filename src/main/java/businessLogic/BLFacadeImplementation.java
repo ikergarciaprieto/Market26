@@ -28,21 +28,23 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 
 
+
 /**
  * It implements the business logic as a web service.
  */
 @WebService(endpointInterface = "businessLogic.BLFacade")
 public class BLFacadeImplementation  implements BLFacade {
-	 private static final int BASESIZE = 160;
-	 private static final Logger logger = Logger.getLogger(BLFacadeImplementation.class.getName());
+	private static final int BASESIZE = 160;
+	private static final Logger logger = Logger.getLogger(BLFacadeImplementation.class.getName());
 
-		private static final String basePath="src/main/resources/images/";
+	private static final String BASEPATH="src/main/resources/images/";
 	DataAccess dbManager;
 
 	public BLFacadeImplementation()  {		
 		logger.info("Creating BLFacadeImplementation instance");
 		dbManager=new DataAccess();		
 	}
+	
 	
     public BLFacadeImplementation(DataAccess da)  {
 		System.out.println("Creating BLFacadeImplementation instance with DataAccess parameter");
@@ -109,7 +111,7 @@ public class BLFacadeImplementation  implements BLFacade {
 	 * {@inheritDoc}
 	 */
     @WebMethod public Image downloadImage(String imageName) {
-        File image = new File(basePath+imageName);
+        File image = new File(BASEPATH+imageName);
         try {
             return ImageIO.read(image);
         } catch (IOException e) {
