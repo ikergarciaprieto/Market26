@@ -49,6 +49,9 @@
 
 		<sonar.organization>ikergarciaprieto</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		
+		<sonar.projectKey>ikergarciaprieto_Market26</sonar.projectKey> 
+		<sonar.token>04a4770b0def7f1eda41f59db893032f2e5bb4ca</sonar.token>
 	</properties>
 
 	<!-- https://mvnrepository.com/artifact/junit/junit -->
