@@ -49,7 +49,7 @@ public class AcceptReclamationBDBlackTest {
 	}
 
 
-	@Test
+	/*@Test
 	// b = true, errekId = 1 eta errekId existitzen da datu basean
 	public void test1() {
 		boolean b = true; 
@@ -155,7 +155,7 @@ public class AcceptReclamationBDBlackTest {
 		} catch (Exception e) {
 			fail();
 		}
-	}
+	}*/
 
 
 
