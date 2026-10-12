@@ -1,5 +1,6 @@
 package testPaketea;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -41,9 +42,11 @@ public class ChatIrekiBDWhiteTest {
 		try {
 			sut.open();
 			boolean result = sut.chatIreki(user1Mail, user2Mail);
+			int size = sut.chatakLortu(user1Mail).size();
 			sut.close();
 
 			assertFalse(result);
+			assertEquals(1, size);
 		} finally {
 			testDA.open();
 			testDA.removeChat(user1Mail, user2Mail);
@@ -63,9 +66,11 @@ public class ChatIrekiBDWhiteTest {
 		try {
 			sut.open();
 			boolean result = sut.chatIreki(user1Mail, user2Mail);
+			boolean isEmpty = sut.chatakLortu(user2Mail).isEmpty();
 			sut.close();
 
 			assertFalse(result);
+			assertTrue(isEmpty);
 		} finally {
 			testDA.open();
 			testDA.removeSeller(user2Mail);
@@ -83,9 +88,11 @@ public class ChatIrekiBDWhiteTest {
 		try {
 			sut.open();
 			boolean result = sut.chatIreki(user1Mail, user2Mail);
+			boolean isEmpty = sut.chatakLortu(user1Mail).isEmpty();
 			sut.close();
 
 			assertFalse(result);
+			assertTrue(isEmpty);
 		} finally {
 			testDA.open();
 			testDA.removeSeller(user1Mail);
@@ -104,9 +111,11 @@ public class ChatIrekiBDWhiteTest {
 		try {
 			sut.open();
 			boolean result = sut.chatIreki(user1Mail, user2Mail);
+			int size = sut.chatakLortu(user1Mail).size();
 			sut.close();
 
 			assertTrue(result);
+			assertEquals(1, size);
 		} finally {
 			testDA.open();
 			testDA.removeChat(user1Mail, user2Mail);
