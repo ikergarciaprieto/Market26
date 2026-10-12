@@ -47,7 +47,8 @@ public class ChatIrekiMockWhiteTest {
 	private String user2Mail;
 	private String user2Name;
 
-	private List<Chat> chats = new ArrayList<Chat>();
+	private List<Chat> chats;
+	private Chat chat;
 
 	@Before
 	public void init() {
@@ -68,6 +69,10 @@ public class ChatIrekiMockWhiteTest {
 		user2Name = "user2";
 		user2 = new Seller(user2Mail, user2Name, "aurrera");
 
+		chats = new ArrayList<Chat>();
+		chat = new Chat(user1, user2);
+		chats.add(chat);
+
 		Mockito.when(db.find(Seller.class, user1.getEmail())).thenReturn(user1);
 		Mockito.when(db.find(Seller.class, user2.getEmail())).thenReturn(user2);
 	}
@@ -79,12 +84,9 @@ public class ChatIrekiMockWhiteTest {
 
 	@Test
 	public void test1() {
-		// Chat exists on BD (list is not empty) -> return false
+		// Chat exists on BD -> return false
 		@SuppressWarnings("unchecked")
 		TypedQuery<Chat> query = Mockito.mock(TypedQuery.class);
-
-		Chat chat = new Chat(user1, user2);
-		chats.add(chat);
 
 		Mockito.when(db.createQuery(anyString(), eq(Chat.class))).thenReturn(query);
 		Mockito.when(query.getResultList()).thenReturn(chats);
@@ -135,7 +137,7 @@ public class ChatIrekiMockWhiteTest {
 
 	@Test
 	public void test4() {
-		// Chat doesn't exist on BD (valid users) -> return true
+		// Chat doesn't exist on BD (valid users) -> return true and open new chat
 		@SuppressWarnings("unchecked")
 		TypedQuery<Chat> query = Mockito.mock(TypedQuery.class);
 
