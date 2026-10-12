@@ -37,7 +37,7 @@ public class RegisterGUI extends JFrame {
 					RegisterGUI frame = new RegisterGUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+
 				}
 			}
 		});
