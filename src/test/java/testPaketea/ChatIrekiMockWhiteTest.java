@@ -82,7 +82,7 @@ public class ChatIrekiMockWhiteTest {
 		persistenceMock.close();
 	}
 
-	/*@Test
+	@Test
 	public void test1() {
 		// Chat exists on BD -> return false
 		@SuppressWarnings("unchecked")
@@ -150,5 +150,5 @@ public class ChatIrekiMockWhiteTest {
 		Mockito.verify(et).begin();
 		Mockito.verify(db).persist(Mockito.any(Chat.class));
 		Mockito.verify(et).commit();
-	}*/
+	}
 }

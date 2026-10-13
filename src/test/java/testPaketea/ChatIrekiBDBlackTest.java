@@ -30,7 +30,7 @@ public class ChatIrekiBDBlackTest {
 		user2Name = "user2";
 	}
 
-	/*@Test
+	@Test
 	public void test1() {
 		// Both mails on BD (no chat between them) -> return true and open new chat
 		testDA.open();
@@ -79,7 +79,7 @@ public class ChatIrekiBDBlackTest {
 			testDA.removeSeller(user2Mail);
 			testDA.close();
 		}
-	}*/
+	}
 
 	@Test
 	public void test3() {

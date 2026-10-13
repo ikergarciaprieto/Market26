@@ -82,7 +82,7 @@ public class ChatIrekiMockBlackTest {
 		persistenceMock.close();
 	}
 
-	/*@Test
+	@Test
 	public void test1() {
 		// Both mails on BD (no chat between them) -> return true and open new chat
 		@SuppressWarnings("unchecked")
@@ -150,5 +150,5 @@ public class ChatIrekiMockBlackTest {
 		Mockito.verify(et).begin();
 		Mockito.verify(et).commit();
 		Mockito.verify(db, Mockito.never()).persist(Mockito.any());
-	}*/
+	}
 }
