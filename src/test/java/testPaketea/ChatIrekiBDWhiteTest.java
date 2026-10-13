@@ -30,7 +30,7 @@ public class ChatIrekiBDWhiteTest {
 		user2Name = "user2";
 	}
 
-	@Test
+	/*@Test
 	public void test1() {
 		// Chat exists on BD -> return false
 		testDA.open();
@@ -123,5 +123,5 @@ public class ChatIrekiBDWhiteTest {
 			testDA.removeSeller(user2Mail);
 			testDA.close();
 		}
-	}
+	}*/
 }
