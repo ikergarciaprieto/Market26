@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
+import dataAccess.CreateSaleData;
 import dataAccess.DataAccess;
 import domain.Admin;
 import domain.Chat;
@@ -16,6 +17,7 @@ import domain.Mezua;
 import domain.Mugimendua;
 import domain.Sale;
 import domain.Seller;
+import dataAccess.CreateSaleData;
 import exceptions.FileNotUploadedException;
 import exceptions.MustBeLaterThanTodayException;
 import exceptions.ParamNullException;
@@ -56,12 +58,14 @@ public class BLFacadeImplementation  implements BLFacade {
 	 * {@inheritDoc}
 	 */
    @WebMethod
-	public Sale createSale(String title, String description,int status, float price, Date pubDate, String sellerEmail, File file) throws  FileNotUploadedException, MustBeLaterThanTodayException, SaleAlreadyExistException, ParamNullException {
+	public Sale createSale(String title, String description, int status, float price, Date pubDate, String sellerEmail, File file) 
+			throws  FileNotUploadedException, MustBeLaterThanTodayException, SaleAlreadyExistException, ParamNullException {
 		dbManager.open();
-		Sale product=dbManager.createSale(title, description, status, price, pubDate, sellerEmail, file);		
+		CreateSaleData param = new CreateSaleData(title, description, status, price, pubDate, sellerEmail, file);
+		Sale product=dbManager.createSale(param);		
 		dbManager.close();
 		return product;
-   };
+   }
 	
    /**
     * {@inheritDoc}
@@ -318,6 +322,9 @@ public class BLFacadeImplementation  implements BLFacade {
     	dbManager.close();
     	
     }
+
+
+
     
 }
 

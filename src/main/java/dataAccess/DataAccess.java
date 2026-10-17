@@ -139,47 +139,48 @@ public class DataAccess {
 	 * @throws SaleAlreadyExistException if the same product already exists for the
 	 *                                   seller
 	 */
-	public Sale createSale(String title, String description, int status, float price, Date pubDate, String sellerEmail,
-			File file) throws FileNotUploadedException, MustBeLaterThanTodayException, SaleAlreadyExistException,
+	public Sale createSale(CreateSaleData param) throws FileNotUploadedException, MustBeLaterThanTodayException, SaleAlreadyExistException,
 			ParamNullException {
 
-		System.out.println(">> DataAccess: createProduct=> title= " + title + " seller=" + sellerEmail);
-		try {
+		    System.out.println(">> DataAccess: createProduct=> title= " + param.getTitle() + " seller=" + param.getSellerEmail());
+		    try {
+		        if (param.getPubDate().before(UtilDate.trim(new Date()))) {
+		            throw new MustBeLaterThanTodayException(
+		                ResourceBundle.getBundle("Etiquetas").getString("DataAccess.ErrorSaleMustBeLaterThanToday"));
+		        }
+		        isFileNull(param.getFile());
 
-			if (pubDate.before(UtilDate.trim(new Date()))) {
-				throw new MustBeLaterThanTodayException(
-						ResourceBundle.getBundle("Etiquetas").getString("DataAccess.ErrorSaleMustBeLaterThanToday"));
-			}
-			if (file == null)
-				throw new FileNotUploadedException(
-						ResourceBundle.getBundle("Etiquetas").getString("DataAccess.ErrorFileNotUploadedException"));
+		        db.getTransaction().begin();
 
-			db.getTransaction().begin();
+		        Seller seller = db.find(Seller.class, param.getSellerEmail());
+		        if (seller.doesSaleExist(param.getTitle())) {
+		            db.getTransaction().commit();
+		            throw new SaleAlreadyExistException(
+		                ResourceBundle.getBundle("Etiquetas").getString("DataAccess.SaleAlreadyExist"));
+		        }
 
-			Seller seller = db.find(Seller.class, sellerEmail);
-			if (seller.doesSaleExist(title)) {
-				db.getTransaction().commit();
-				throw new SaleAlreadyExistException(
-						ResourceBundle.getBundle("Etiquetas").getString("DataAccess.SaleAlreadyExist"));
-			}
+		        
+		        Sale sale = seller.addSale(param.getTitle(), param.getDescription(), param.getStatus(), 
+		                                   param.getPrice(), param.getPubDate(), param.getFile());
 
-			Sale sale = seller.addSale(title, description, status, price, pubDate, file);
-			// next instruction can be obviated
+		        db.persist(seller);
+		        db.getTransaction().commit();
+		        System.out.println("sale stored " + sale + " " + seller);
 
-			db.persist(seller);
-			db.getTransaction().commit();
-			System.out.println("sale stored " + sale + " " + seller);
+		        return sale;
+		    } catch (NullPointerException e) {
+		        e.printStackTrace();
+		        db.getTransaction().commit();
+		        return null;
+		    }
+		
 
-			System.out.println("hasta aqui");
+	}
 
-			return sale;
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-			// TODO Auto-generated catch block
-			db.getTransaction().commit();
-			return null;
-		}
-
+	private void isFileNull(File file) throws FileNotUploadedException {
+		if (file == null)
+			throw new FileNotUploadedException(
+					ResourceBundle.getBundle("Etiquetas").getString("DataAccess.ErrorFileNotUploadedException"));
 	}
 
 	/**
@@ -335,23 +336,26 @@ public class DataAccess {
 		Seller u = db.find(Seller.class, mail);
 		return u.getDiruTotala();
 	}
+	private void diruaMugimendua(String mail,double dirua,boolean sartu) {
 
-	public void diruaSartu(String mail, double dirua) {
 		Seller u = db.find(Seller.class, mail);
 		db.getTransaction().begin();
 		Date today = UtilDate.trim(new Date());
-		u.diruaSartu(dirua, today);
-		db.getTransaction().commit();
 
+		if (sartu) {
+			u.diruaSartu(dirua, today);
+		} else {
+			u.diruaAtera(dirua, today);
+		}
+		db.getTransaction().commit();
+	}
+
+	public void diruaSartu(String mail, double dirua) {
+		diruaMugimendua(mail, dirua, true);
 	}
 
 	public void diruaAtera(String mail, double dirua) {
-		Seller u = db.find(Seller.class, mail);
-		db.getTransaction().begin();
-		Date today = UtilDate.trim(new Date());
-		u.diruaAtera(dirua, today);
-		db.getTransaction().commit();
-
+		diruaMugimendua(mail, dirua, false);
 	}
 
 	public Admin isAdminLogin(String nan, String password) {
@@ -411,24 +415,7 @@ public class DataAccess {
 			db.getTransaction().begin();
 			Erreklamazioa errek = db.find(Erreklamazioa.class, errekId);
 			if (errek != null) {
-				if (b) {
-					errek.setOnartua(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.Onartua"));
-					// erosleari dirua itzuli@WebMethod public List<Sale> obtainList(String
-					// usermail)
-					Double diru = (double) errek.getSale().getPrice();
-
-					errek.getErreklamatzenDuena().setDiruTotala(errek.getErreklamatzenDuena().getDiruTotala() + diru);
-					errek.getErreklamatzenDuena().removeBought(errek.getSale());
-					String desk = errek.getSale().getTitle();
-					errek.getErreklamatzenDuena().addMugimendua(UtilDate.trim(new Date()), desk, diru);
-
-					// seller-ari dirua kendu
-
-				} else {
-					errek.setOnartua(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.EzOnartua"));
-					errek.getSale().setErreklamatuta(false);
-					// dirua ez itzuli
-				}
+				onartutaJarri(b, errek);
 
 				db.getTransaction().commit();
 			} else {
@@ -440,6 +427,27 @@ public class DataAccess {
 				
 			}
 			throw e;
+		}
+	}
+
+	private void onartutaJarri(boolean b, Erreklamazioa errek) {
+		if (b) {
+			errek.setOnartua(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.Onartua"));
+			// erosleari dirua itzuli@WebMethod public List<Sale> obtainList(String
+			// usermail)
+			Double diru = (double) errek.getSale().getPrice();
+
+			errek.getErreklamatzenDuena().setDiruTotala(errek.getErreklamatzenDuena().getDiruTotala() + diru);
+			errek.getErreklamatzenDuena().removeBought(errek.getSale());
+			String desk = errek.getSale().getTitle();
+			errek.getErreklamatzenDuena().addMugimendua(UtilDate.trim(new Date()), desk, diru);
+
+			// seller-ari dirua kendu
+
+		} else {
+			errek.setOnartua(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.EzOnartua"));
+			errek.getSale().setErreklamatuta(false);
+			// dirua ez itzuli
 		}
 	}
 
