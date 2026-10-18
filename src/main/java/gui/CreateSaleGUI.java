@@ -268,18 +268,13 @@ public class CreateSaleGUI extends JFrame {
 	private String check_fields_Errors() {
 
 		try {
-			if ((fieldTitle.getText().length() == 0) || (fieldDescription.getText().length() == 0)
-					|| (jTextFieldPrice.getText().length() == 0))
+			if (isAnyFieldEmpty())
 				return ResourceBundle.getBundle(ETIQUETAS).getString("CreateSaleGUI.ErrorQuery");
 			else {
 
 				// trigger an exception if the introduced string is not a number
 				float price = Float.parseFloat(jTextFieldPrice.getText());
-				if (price <= 0)
-					return ResourceBundle.getBundle(ETIQUETAS).getString("CreateSaleGUI.PriceMustBeGreaterThan0");
-
-				else
-					return null;
+				return checkPrize(price);
 			}
 		} catch (java.lang.NumberFormatException e1) {
 
@@ -288,6 +283,19 @@ public class CreateSaleGUI extends JFrame {
 			return null;
 
 		}
+	}
+
+	private String checkPrize(float price) {
+		if (price <= 0)
+			return ResourceBundle.getBundle(ETIQUETAS).getString("CreateSaleGUI.PriceMustBeGreaterThan0");
+
+		else
+			return null;
+	}
+
+	private boolean isAnyFieldEmpty() {
+		return (fieldTitle.getText().length() == 0) || (fieldDescription.getText().length() == 0)
+				|| (jTextFieldPrice.getText().length() == 0);
 	}
 
 	public String encodeFileToBase64Binary(File file) {

@@ -12,6 +12,7 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 import configuration.ConfigXML;
+import dataAccess.CreateSaleData;
 import domain.*;
 
 public class TestDataAccess {
@@ -96,7 +97,7 @@ public class TestDataAccess {
 				seller = new Seller(email, sellerName, "aurrera");
 				db.persist(seller);
 			}
-			seller.addSale(title, description, status, price, pubDate, file);
+			seller.addSale(new CreateSaleData(title, description, status, price, pubDate, seller.getEmail(), file));
 			db.getTransaction().commit();
 			System.out.println("Seller created " + seller);
 
@@ -151,7 +152,8 @@ public class TestDataAccess {
 
 		Seller seller = new Seller(sellerEmail, "Iker", "aurrera");
 
-		Sale sale = seller.addSale("Ordenagailua", "6Gb-ko memoria", 1, (float) salePrice, new Date(), null);
+		Sale sale = seller.addSale(new CreateSaleData("Ordenagailua", "6Gb-ko memoria", 1, (float) salePrice,
+				new Date(), seller.getEmail(), null));
 		sale.setErreklamatuta(true);
 
 		Seller erreklamatzenDuena = new Seller(buyerEmail, "Aitzol", "aurrera");
@@ -175,7 +177,8 @@ public class TestDataAccess {
 
 		Seller seller = new Seller(sellerEmail, "Iker", "aurrera");
 
-		Sale sale = seller.addSale("Ordenagailua", "6Gb-ko memoria", 1, (float) salePrice, new Date(), null);
+		Sale sale = seller.addSale(new CreateSaleData("Ordenagailua", "6Gb-ko memoria", 1, (float) salePrice,
+				new Date(), seller.getEmail(), null));
 		sale.setErreklamatuta(true);
 
 		Seller erreklamatzenDuena = new Seller(buyerEmail, "Aitzol", "aurrera");
@@ -261,8 +264,9 @@ public class TestDataAccess {
 			e.printStackTrace();
 		}
 	}
-	
-	public void addErosketaAnitza(String buyerEmail, String sellerEmail, int saleNum, double salePrice, double hasierakoDirua, boolean besteSeller, boolean ezAnitza) {
+
+	public void addErosketaAnitza(String buyerEmail, String sellerEmail, int saleNum, double salePrice,
+			double hasierakoDirua, boolean besteSeller, boolean ezAnitza) {
 
 		db.getTransaction().begin();
 
@@ -270,26 +274,25 @@ public class TestDataAccess {
 		Seller seller2 = new Seller(sellerEmail + ".eus", "Larry", "aurrera");
 
 		Sale sale2 = null;
-		if (besteSeller)
-		{
-			sale2 = seller2.addSale("Maila2", "Marroia", 1, (float)salePrice, new Date(), null);
-		}
-		else
-		{
-			sale2 = seller.addSale("Maila2", "Marroia", 1, (float)salePrice, new Date(), null);
+		if (besteSeller) {
+			sale2 = seller2.addSale(new CreateSaleData("Maila2", "Marroia", 1, (float) salePrice, new Date(),
+					seller2.getEmail(), null));
+		} else {
+			sale2 = seller.addSale(
+					new CreateSaleData("Maila2", "Marroia", 1, (float) salePrice, new Date(), seller.getEmail(), null));
 		}
 		sale2.setSaleNumber(saleNum);
 
 		Seller buyer = new Seller(buyerEmail, "Chris", "aurrera");
 		buyer.setDiruTotala(hasierakoDirua);
 
-		Sale sale = seller.addSale("Maila", "Marroia", 1, (float)salePrice, new Date(), null);
+		Sale sale = seller.addSale(
+				new CreateSaleData("Maila", "Marroia", 1, (float) salePrice, new Date(), seller.getEmail(), null));
 		sale.setSaleNumber(saleNum + 1);
-		
-		if (!ezAnitza)
-		{
+
+		if (!ezAnitza) {
 			ErosketaAnitza ea = buyer.createErosketaAnitza(sale);
-			
+
 			ea.addSales(sale);
 			sale.setAnitza(ea);
 			ea.gehituPrezioa(sale.getPrice());
@@ -298,7 +301,7 @@ public class TestDataAccess {
 		db.persist(buyer);
 		db.persist(seller);
 		db.persist(seller2);
-		//db.persist(ea);
+		// db.persist(ea);
 
 		db.getTransaction().commit();
 	}
@@ -323,15 +326,15 @@ public class TestDataAccess {
 		Seller seller = db.find(Seller.class, sellerEmail);
 		if (seller != null) {
 			db.remove(seller);
-		} 
-		Seller seller2 = db.find(Seller.class, sellerEmail+ ".eus");
+		}
+		Seller seller2 = db.find(Seller.class, sellerEmail + ".eus");
 		if (seller2 != null) {
 			db.remove(seller2);
-		} 
+		}
 		db.getTransaction().commit();
 		return true;
 	}
-	
+
 	public Sale getSale(Integer saleNum) {
 		return db.find(Sale.class, saleNum);
 	}

@@ -1,4 +1,5 @@
 package testPaketea;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -22,6 +23,7 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import dataAccess.CreateSaleData;
 import dataAccess.DataAccess;
 import domain.Erreklamazioa;
 import domain.Sale;
@@ -32,137 +34,142 @@ import exceptions.SaleAlreadyExistException;
 
 public class AcceptReclamationMockBlackTest {
 	static DataAccess sut;
-	
+
 	protected MockedStatic<Persistence> persistenceMock;
 
 	@Mock
-	protected  EntityManagerFactory entityManagerFactory;
+	protected EntityManagerFactory entityManagerFactory;
 	@Mock
-	protected  EntityManager db;
+	protected EntityManager db;
 	@Mock
-    protected  EntityTransaction  et;
-	
-	private  long errekId;
+	protected EntityTransaction et;
+
+	private long errekId;
 	private String buyerEmail;
 	private String sellerEmail;
 	private double salePrice;
 	private double hasierakoDirua;
-	
+
 	private Seller buyer;
-    private Seller seller;
-    private Sale sale;
-    private Erreklamazioa errek;
-	
+	private Seller seller;
+	private Sale sale;
+	private Erreklamazioa errek;
+
 	@Before
 	public void init() {
 		MockitoAnnotations.openMocks(this);
 		persistenceMock = Mockito.mockStatic(Persistence.class);
 		persistenceMock.when(() -> Persistence.createEntityManagerFactory(Mockito.any()))
-		.thenReturn(entityManagerFactory);
+				.thenReturn(entityManagerFactory);
 
 		Mockito.doReturn(db).when(entityManagerFactory).createEntityManager();
 		Mockito.doReturn(et).when(db).getTransaction();
 		sut = new DataAccess(db);
-		
+
 		buyerEmail = "buyerTest@ehu.eus";
 		sellerEmail = "sellerTest@ehu.eus";
 		salePrice = 10;
 		hasierakoDirua = 1000;
 		errekId = 1;
-		
+
 		seller = new Seller(sellerEmail, "Iker", "aurrera");
-		
-		sale = seller.addSale("Ordenagailua", "6Gb-ko memoria", 1, (float) salePrice, new Date(), null);
+
+		sale = seller.addSale(new CreateSaleData("Ordenagailua", "6Gb-ko memoria", 1, (float) salePrice, new Date(),
+				seller.getEmail(), null));
 		sale.setErreklamatuta(true);
-		
+
 		buyer = new Seller(buyerEmail, "Aitzol", "aurrera");
 		buyer.setDiruTotala(hasierakoDirua);
-		
+
 		errek = new Erreklamazioa(sale, new Date(), "Oso ondo dago", buyer);
-		
+
 		Mockito.when(db.find(Erreklamazioa.class, errekId)).thenReturn(errek);
 
 	}
-	
+
 	@After
-    public  void tearDown() {
+	public void tearDown() {
 		persistenceMock.close();
-    }
-	
+	}
+
 	@Test
-	// b = true, errekId = 1 eta errekId existitzen da Mockito bidez sortutako datu basean
-    public void test1() {
-        boolean b = true;
+	// b = true, errekId = 1 eta errekId existitzen da Mockito bidez sortutako datu
+	// basean
+	public void test1() {
+		boolean b = true;
 
-        try {
-            sut.open();
-            sut.acceptReclamation(b, errekId);
-            sut.close();
+		try {
+			sut.open();
+			sut.acceptReclamation(b, errekId);
+			sut.close();
 
-            assertEquals("Aceptada", errek.getOnartua());
-            assertEquals(hasierakoDirua + salePrice, buyer.getDiruTotala(), 0.01);
+			assertEquals("Aceptada", errek.getOnartua());
+			assertEquals(hasierakoDirua + salePrice, buyer.getDiruTotala(), 0.01);
 
-        } catch (Exception e) {
-        	fail();
-        }
-    }
+		} catch (Exception e) {
+			fail();
+		}
+	}
 
-    @Test
-    // b = false, errekId = 1 eta errekId existitzen da Mockito bidez sortutako datu basean
-    public void test2() {
-        boolean b = false;
+	@Test
+	// b = false, errekId = 1 eta errekId existitzen da Mockito bidez sortutako datu
+	// basean
+	public void test2() {
+		boolean b = false;
 
-        try {
-            sut.open();
-            sut.acceptReclamation(b, errekId);
-            sut.close();
+		try {
+			sut.open();
+			sut.acceptReclamation(b, errekId);
+			sut.close();
 
-            assertEquals("Denegada", errek.getOnartua());
-            assertEquals(hasierakoDirua, buyer.getDiruTotala(), 0.01);
+			assertEquals("Denegada", errek.getOnartua());
+			assertEquals(hasierakoDirua, buyer.getDiruTotala(), 0.01);
 
-        } catch (Exception e) {
-        	fail();
-        }
-    }
+		} catch (Exception e) {
+			fail();
+		}
+	}
 
-    @Test
-    // b = true eta errekId = 1 positiboa da baina ez da existitzen Mockito bidez sortutako datu basean
-    public void test3() {
-        boolean b = true;
-        long existituGabekoId = 999;
+	@Test
+	// b = true eta errekId = 1 positiboa da baina ez da existitzen Mockito bidez
+	// sortutako datu basean
+	public void test3() {
+		boolean b = true;
+		long existituGabekoId = 999;
 
-        Mockito.when(db.find(Erreklamazioa.class, existituGabekoId)).thenReturn(null);
+		Mockito.when(db.find(Erreklamazioa.class, existituGabekoId)).thenReturn(null);
 
-        try {
-            sut.open();
-            sut.acceptReclamation(b, existituGabekoId);
-            sut.close();
+		try {
+			sut.open();
+			sut.acceptReclamation(b, existituGabekoId);
+			sut.close();
 
-            assertNull(db.find(Erreklamazioa.class, existituGabekoId));
+			assertNull(db.find(Erreklamazioa.class, existituGabekoId));
 
-        } catch (Exception e) {
-            fail();
-        }
-    }
+		} catch (Exception e) {
+			fail();
+		}
+	}
 
-    @Test
-    // b = true eta errekId = -1 positiboa baina ez da existitzen Mockito bidez sortutako datu basean
-    public void test4() {
-        boolean b = true;
-        long idNegatiboa = -1;
+	@Test
+	// b = true eta errekId = -1 positiboa baina ez da existitzen Mockito bidez
+	// sortutako datu basean
+	public void test4() {
+		boolean b = true;
+		long idNegatiboa = -1;
 
-        Mockito.when(db.find(Erreklamazioa.class, idNegatiboa)).thenReturn(null);
+		Mockito.when(db.find(Erreklamazioa.class, idNegatiboa)).thenReturn(null);
 
-        try {
-            sut.open();
-            sut.acceptReclamation(b, idNegatiboa);
-            sut.close();
+		try {
+			sut.open();
+			sut.acceptReclamation(b, idNegatiboa);
+			sut.close();
 
-            assertNull(db.find(Erreklamazioa.class, idNegatiboa));
+			assertNull(db.find(Erreklamazioa.class, idNegatiboa));
 
-        } catch (Exception e) {
-            fail();
-        }
-    }
+		} catch (Exception e) {
+			fail();
+		}
+	}
 
 }

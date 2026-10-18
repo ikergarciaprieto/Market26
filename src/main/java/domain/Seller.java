@@ -11,6 +11,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlID;
 import javax.xml.bind.annotation.XmlIDREF;
+
+import dataAccess.CreateSaleData;
 import domain.Eskaera;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -27,7 +29,7 @@ public class Seller implements Serializable {
 	private String name;
 	private String password;
 	private double diruTotala = 0;
-	@OneToOne(cascade = CascadeType.PERSIST) 
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private ErosketaAnitza karrito = null;
 	@XmlIDREF
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
@@ -181,9 +183,9 @@ public class Seller implements Serializable {
 	 * @return Sale
 	 */
 
-	public Sale addSale(String title, String description, int status, float price, Date pubDate, File file) {
-
-		Sale sale = new Sale(title, description, status, price, pubDate, file, this);
+	public Sale addSale(CreateSaleData data) {
+		Sale sale = new Sale(data.getTitle(), data.getDescription(), data.getStatus(), data.getPrice(),
+				data.getPubDate(), data.getFile(), this);
 		sales.add(sale);
 		return sale;
 	}

@@ -46,7 +46,6 @@ public class DataAccess {
 	private EntityManagerFactory emf;
 	private static final int baseSize = 160;
 
-	
 	private static final String basePath = "src/main/resources/images/";
 
 	ConfigXML c = ConfigXML.getInstance();
@@ -84,6 +83,7 @@ public class DataAccess {
 	 * BLFacadeImplementation) when the option "initialize" is declared in the tag
 	 * dataBaseOpenMode of resources/config.xml file
 	 */
+
 	public void initializeDB() {
 
 		db.getTransaction().begin();
@@ -99,18 +99,26 @@ public class DataAccess {
 			// Create products
 			Date today = UtilDate.trim(new Date());
 
-			seller1.addSale("futbol baloia", "oso polita, gutxi erabilita", 2, 10, today, null);
-			seller1.addSale("salomon mendiko botak", "44 zenbakia, 3 ateraldi", 2, 20, today, null);
-			seller1.addSale("samsung 42\" telebista", "berria, erabili gabe", 1, 175, today, null);
+			seller1.addSale(new CreateSaleData("futbol baloia", "oso polita, gutxi erabilita", 2, 10, today,
+					seller1.getEmail(), null));
+			seller1.addSale(new CreateSaleData("salomon mendiko botak", "44 zenbakia, 3 ateraldi", 2, 20, today,
+					seller1.getEmail(), null));
+			seller1.addSale(new CreateSaleData("samsung 42\" telebista", "berria, erabili gabe", 1, 175, today,
+					seller1.getEmail(), null));
 			seller1.addMugimendua(today, "ur botila", -10.00);
 			seller1.addMugimendua(today, "Betaurrekoak", +200.00);
 
-			seller2.addSale("imac 27", "7 urte, dena ondo dabil", 1, 200, today, null);
-			seller2.addSale("iphone 17", "oso gutxi erabilita", 2, 400, today, null);
-			seller2.addSale("orbea mendiko bizikleta", "29\" 10 urte, mantenua behar du", 3, 225, today, null);
-			seller2.addSale("polar kilor erlojua", "Vantage M, ondo dago", 3, 30, today, null);
+			seller2.addSale(
+					new CreateSaleData("imac 27", "7 urte, dena ondo dabil", 1, 200, today, seller2.getEmail(), null));
+			seller2.addSale(
+					new CreateSaleData("iphone 17", "oso gutxi erabilita", 2, 400, today, seller2.getEmail(), null));
+			seller2.addSale(new CreateSaleData("orbea mendiko bizikleta", "29\" 10 urte, mantenua behar du", 3, 225,
+					today, seller2.getEmail(), null));
+			seller2.addSale(new CreateSaleData("polar kilor erlojua", "Vantage M, ondo dago", 3, 30, today,
+					seller2.getEmail(), null));
 
-			seller3.addSale("sukaldeko mahaia", "1.8*0.8, 4 aulkiekin. Prezio finkoa", 3, 45, today, null);
+			seller3.addSale(new CreateSaleData("sukaldeko mahaia", "1.8*0.8, 4 aulkiekin. Prezio finkoa", 3, 45, today,
+					seller3.getEmail(), null));
 
 			db.persist(seller1);
 			db.persist(seller2);
@@ -139,41 +147,40 @@ public class DataAccess {
 	 * @throws SaleAlreadyExistException if the same product already exists for the
 	 *                                   seller
 	 */
-	public Sale createSale(CreateSaleData param) throws FileNotUploadedException, MustBeLaterThanTodayException, SaleAlreadyExistException,
-			ParamNullException {
 
-		    System.out.println(">> DataAccess: createProduct=> title= " + param.getTitle() + " seller=" + param.getSellerEmail());
-		    try {
-		        if (param.getPubDate().before(UtilDate.trim(new Date()))) {
-		            throw new MustBeLaterThanTodayException(
-		                ResourceBundle.getBundle("Etiquetas").getString("DataAccess.ErrorSaleMustBeLaterThanToday"));
-		        }
-		        isFileNull(param.getFile());
+	public Sale createSale(CreateSaleData param) throws FileNotUploadedException, MustBeLaterThanTodayException,
+			SaleAlreadyExistException, ParamNullException {
 
-		        db.getTransaction().begin();
+		System.out.println(
+				">> DataAccess: createProduct=> title= " + param.getTitle() + " seller=" + param.getSellerEmail());
+		try {
+			if (param.getPubDate().before(UtilDate.trim(new Date()))) {
+				throw new MustBeLaterThanTodayException(
+						ResourceBundle.getBundle("Etiquetas").getString("DataAccess.ErrorSaleMustBeLaterThanToday"));
+			}
+			isFileNull(param.getFile());
 
-		        Seller seller = db.find(Seller.class, param.getSellerEmail());
-		        if (seller.doesSaleExist(param.getTitle())) {
-		            db.getTransaction().commit();
-		            throw new SaleAlreadyExistException(
-		                ResourceBundle.getBundle("Etiquetas").getString("DataAccess.SaleAlreadyExist"));
-		        }
+			db.getTransaction().begin();
 
-		        
-		        Sale sale = seller.addSale(param.getTitle(), param.getDescription(), param.getStatus(), 
-		                                   param.getPrice(), param.getPubDate(), param.getFile());
+			Seller seller = db.find(Seller.class, param.getSellerEmail());
+			if (seller.doesSaleExist(param.getTitle())) {
+				db.getTransaction().commit();
+				throw new SaleAlreadyExistException(
+						ResourceBundle.getBundle("Etiquetas").getString("DataAccess.SaleAlreadyExist"));
+			}
 
-		        db.persist(seller);
-		        db.getTransaction().commit();
-		        System.out.println("sale stored " + sale + " " + seller);
+			Sale sale = seller.addSale(param);
 
-		        return sale;
-		    } catch (NullPointerException e) {
-		        e.printStackTrace();
-		        db.getTransaction().commit();
-		        return null;
-		    }
-		
+			db.persist(seller);
+			db.getTransaction().commit();
+			System.out.println("sale stored " + sale + " " + seller);
+
+			return sale;
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			db.getTransaction().commit();
+			return null;
+		}
 
 	}
 
@@ -286,16 +293,25 @@ public class DataAccess {
 		return res;
 	}
 
-	public Seller isUserLogin(String username, String password) {
-		TypedQuery<Seller> query = db.createQuery("SELECT s FROM Seller s WHERE s.name=?1 AND s.password=?2",
-				Seller.class);
-		query.setParameter(1, username);
+	private <T> T findByCredentials(Class<T> type, String jpql, String user, String password) {
+		TypedQuery<T> query = db.createQuery(jpql, type);
+		query.setParameter(1, user);
 		query.setParameter(2, password);
 		if (!query.getResultList().isEmpty()) {
 			return query.getResultList().get(0);
 		} else {
 			return null;
 		}
+	}
+
+	public Seller isUserLogin(String username, String password) {
+		return findByCredentials(Seller.class, "SELECT s FROM Seller s WHERE s.name=?1 AND s.password=?2", username,
+				password);
+	}
+
+	public Admin isAdminLogin(String nan, String password) {
+		return findByCredentials(Admin.class, "SELECT s FROM Seller s WHERE s.NAN=?1 AND s.pasahitza=?2", nan,
+				password);
 	}
 
 	public Seller exist(String email) {// find EMAIL behar du
@@ -336,7 +352,8 @@ public class DataAccess {
 		Seller u = db.find(Seller.class, mail);
 		return u.getDiruTotala();
 	}
-	private void diruaMugimendua(String mail,double dirua,boolean sartu) {
+
+	private void diruaMugimendua(String mail, double dirua, boolean sartu) {
 
 		Seller u = db.find(Seller.class, mail);
 		db.getTransaction().begin();
@@ -356,18 +373,6 @@ public class DataAccess {
 
 	public void diruaAtera(String mail, double dirua) {
 		diruaMugimendua(mail, dirua, false);
-	}
-
-	public Admin isAdminLogin(String nan, String password) {
-		TypedQuery<Admin> query = db.createQuery("SELECT s FROM Admin s WHERE s.NAN=?1 AND s.pasahitza=?2",
-				Admin.class);
-		query.setParameter(1, nan);
-		query.setParameter(2, password);
-		if (!query.getResultList().isEmpty()) {
-			return query.getResultList().get(0);
-		} else {
-			return null;
-		}
 	}
 
 	public List<Sale> getAllBought(String zuremail) {
@@ -424,7 +429,7 @@ public class DataAccess {
 		} catch (Exception e) {
 			if (db.getTransaction() != null && db.getTransaction().isActive()) {
 				db.getTransaction().rollback(); // Aldaketak desegiten ditu errek null bada
-				
+
 			}
 			throw e;
 		}
@@ -515,29 +520,36 @@ public class DataAccess {
 
 	public boolean chatIreki(String mail, String mail2) {
 		// true ondo joan bada
-		boolean b = true;
-
 		Seller nor = db.find(Seller.class, mail);
 		Seller nori = db.find(Seller.class, mail2);
+		boolean b = !chatExists(nor, nori);
+
+		db.getTransaction().begin();
+		if (b) {
+			b = createChat(nor, nori);
+		} else {// listan ez dago, hau da, dagoeneko ez da ireki
+			return createChat(nor, nori);
+		}
+		db.getTransaction().commit();
+		return b;
+	}
+
+	private boolean chatExists(Seller nor, Seller nori) {
 		TypedQuery<Chat> query = db.createQuery(
 				"SELECT s FROM Chat s WHERE (user1=?1 AND user2=?2) OR (user1=?2 AND user2=?1)", Chat.class);
 		query.setParameter(1, nor);
 		query.setParameter(2, nori);
-		List<Chat> list = query.getResultList();// begiratu hasieratu ez dela dagoeneko
-		db.getTransaction().begin();
-		if (!list.isEmpty()) {
-			b = false;
-		} else {// listan ez dago, hau da, dagoeneko ez da ireki
-			if (nor == null || nori == null) {
-				// mail-a gaizki dago
-				b = false;
-			} else {
-				Chat c = nor.createChat(nori);
-				db.persist(c);
-			}
+		return !query.getResultList().isEmpty();
+	}
+
+	private boolean createChat(Seller nor, Seller nori) {
+		if (nor == null || nori == null) {
+			// mail-a gaizki dago
+			return false;
+		} else {
+			db.persist(nor.createChat(nori));
+			return true;
 		}
-		db.getTransaction().commit();
-		return b;
 	}
 
 	public void mezuaBidali(String mail, Long idchat, String text) {
