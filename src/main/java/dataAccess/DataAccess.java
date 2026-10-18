@@ -383,18 +383,18 @@ public class DataAccess {
 		return l;
 	}
 
-	public void erreklamazioaJarri(String zuremail, int saleNumber, String azalpena) {
-		Seller user = db.find(Seller.class, zuremail);
-		Sale sale = db.find(Sale.class, saleNumber);
+	public void erreklamazioaJarri(ErreklamazioaJarriData data) {
+		Seller user = db.find(Seller.class, data.getMail());
+		Sale sale = db.find(Sale.class, data.getSaleNumber());
 		db.getTransaction().begin();
 		sale.setErreklamatuta(true);
-		Erreklamazioa errek = new Erreklamazioa(sale, UtilDate.trim(new Date()), azalpena, user);
+		Erreklamazioa errek = new Erreklamazioa(sale, UtilDate.trim(new Date()), data.getAzalpena(), user);
 		user.addJarritakoErreklamazioak(errek);
 		sale.getSeller().addJasotakoErreklamazioak(errek);
 		db.getTransaction().commit();
 	}
 
-	public List<Erreklamazioa> getJrerreklamazioak(String mail) {
+	/*public List<Erreklamazioa> getJrerreklamazioak(String mail) {
 		Seller user = db.find(Seller.class, mail);
 		List<Erreklamazioa> jErreList = user.getJarritakoErreklamazioak();
 		return jErreList;
@@ -406,6 +406,19 @@ public class DataAccess {
 		List<Erreklamazioa> jErreList = user.getJasotakoErreklamazioak();
 		return jErreList;
 
+	}*/
+	public List<Erreklamazioa> getErreklamazioak(String mail, boolean jasotako) {
+		Seller user = db.find(Seller.class, mail);
+		List<Erreklamazioa> jErreList;
+		if (!jasotako)
+		{
+			jErreList = user.getJarritakoErreklamazioak();
+		}
+		else
+		{
+			jErreList = user.getJasotakoErreklamazioak();
+		}
+		return jErreList;
 	}
 
 	public List<Seller> getAllUsers() {
@@ -478,19 +491,27 @@ public class DataAccess {
 			if (ea == null) {
 				ea = user.createErosketaAnitza(sale);
 			} else {// konprobatu pertsona berdinaren produktuak direla
-				if (sale.getSeller() != ea.getSeller()) {
-					throw new UserAlreadyExistException();// Ez dut beste bat egingo bakarrik honetarako
-				}
+				konprobatuSeller(ea, sale);
 			}
 			db.persist(ea);
-			ea.addSales(sale);
-			sale.setAnitza(ea);
-			ea.gehituPrezioa(sale.getPrice());
+			addSaleToErosketaAnitza(ea, sale);
 		} catch (UserAlreadyExistException e) {
 			b = false;
 		}
 		db.getTransaction().commit();
 		return b;
+	}
+	public void konprobatuSeller(ErosketaAnitza ea, Sale sale) throws UserAlreadyExistException
+	{
+		if (sale.getSeller() != ea.getSeller()) {
+			throw new UserAlreadyExistException();// Ez dut beste bat egingo bakarrik honetarako
+		}
+	}
+	public void addSaleToErosketaAnitza(ErosketaAnitza ea, Sale sale)
+	{
+		ea.addSales(sale);
+		sale.setAnitza(ea);
+		ea.gehituPrezioa(sale.getPrice());
 	}
 
 	public boolean karrituaErosi(String mail) {

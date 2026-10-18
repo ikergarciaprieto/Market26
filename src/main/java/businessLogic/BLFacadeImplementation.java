@@ -199,19 +199,19 @@ public class BLFacadeImplementation  implements BLFacade {
     }
     @WebMethod public void erreklamazioaJarri(String zuremail,int saleNumber, String azalpena) {
     	dbManager.open();
-    	dbManager.erreklamazioaJarri(zuremail, saleNumber, azalpena);
+    	dbManager.erreklamazioaJarri(new dataAccess.ErreklamazioaJarriData(zuremail, saleNumber, azalpena));
     	dbManager.close();
     }
     @WebMethod public List<Erreklamazioa> getJrerreklamazioak(String mail){
     	dbManager.open();
-    	List<Erreklamazioa> jErreList=dbManager.getJrerreklamazioak(mail);
+    	List<Erreklamazioa> jErreList=dbManager.getErreklamazioak(mail, false);
     	dbManager.close();
     	return jErreList;
     	
     }
     @WebMethod public List<Erreklamazioa> getJserreklamazioak(String mail){
     	dbManager.open();
-    	List<Erreklamazioa> jErreList=dbManager.getJserreklamazioak(mail);
+    	List<Erreklamazioa> jErreList=dbManager.getErreklamazioak(mail, true);
     	dbManager.close();
     	return jErreList;
     	
