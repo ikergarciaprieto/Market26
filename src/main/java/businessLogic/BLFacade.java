@@ -137,4 +137,6 @@ public interface BLFacade  {
 	@WebMethod public Eskaera getEskaera(Long eskaeraNumber);
 	
 	@WebMethod public void DESTROYEskaera(Long eskaeraNumber);
+	
+	@WebMethod public ExtendedIterator<Sale> getSalesIterator(String desc);
 }

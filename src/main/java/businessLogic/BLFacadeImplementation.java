@@ -322,6 +322,15 @@ public class BLFacadeImplementation  implements BLFacade {
     	dbManager.close();
     	
     }
+    
+    @Override
+    public ExtendedIterator<Sale> getSalesIterator(String desc) {
+        dbManager.open();
+        List<Sale> sales = dbManager.getSales(desc);
+        dbManager.close();
+
+        return new ExtendedIteratorSales(sales);
+    }
 
 
 
